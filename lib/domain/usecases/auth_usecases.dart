@@ -1,4 +1,5 @@
 import 'package:diaries/domain/domain.dart';
+import 'package:diaries/domain/models/Product_detail_model.dart';
 
 class AuthUsecases {
   AuthUsecases(this.repository);
@@ -52,4 +53,6 @@ class AuthUsecases {
     roleid: roleid,
     isLoading: isLoading,
   );
+
+
 }

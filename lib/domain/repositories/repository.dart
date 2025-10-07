@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:diaries/data/data.dart';
 import 'package:diaries/device/device.dart';
 import 'package:diaries/domain/domain.dart';
+import 'package:diaries/domain/models/Product_detail_model.dart';
 
 import '../../app/app.dart';
 
@@ -131,6 +132,28 @@ class Repository {
       );
 
       return response;
+    } catch (_) {
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
+  Future<ProductDetailModel?> getProductApi({
+    bool isLoading = false,
+    required String srjobno,
+  }) async {
+    try {
+      var response = await _dataRepository.getProductApi(
+        isLoading: isLoading,
+        srjobno: srjobno,
+      );
+      var productDetailModel = productDetailModelFromJson(response.data);
+      if (productDetailModel.data != null) {
+        return productDetailModel;
+      } else {
+        return productDetailModel;
+      }
     } catch (_) {
       Utility.closeDialog();
       UnimplementedError();

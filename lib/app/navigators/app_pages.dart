@@ -1,3 +1,4 @@
+import 'package:diaries/app/pages/home_screen/productDetail.dart';
 import 'package:diaries/app/pages/pages.dart';
 import 'package:get/get.dart';
 
@@ -55,6 +56,13 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: ResetPasswordScreen.new,
       binding: AuthBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<ProductDetailScreen>(
+      name: _Paths.scannerDetailScreen,
+      transitionDuration: transitionDuration,
+      page: ProductDetailScreen.new,
+      binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),
   ];

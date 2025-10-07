@@ -111,4 +111,12 @@ class DataRepository extends DomainRepository {
     roleid: roleid,
     isLoading: isLoading,
   );
+
+  Future<ResponseModel> getProductApi({
+    bool isLoading = false,
+    required String srjobno,
+  }) async => await connectHelper.getProductApi(
+    srjobno: srjobno,
+    isLoading: isLoading,
+  );
 }

@@ -1,3 +1,4 @@
+import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/pages.dart';
 import 'package:diaries/app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,11 @@ class ScannerScreen extends StatelessWidget {
             fit: BoxFit.cover,
             tapToFocus: true,
             onDetect: (BarcodeCapture capture) {
-              print(
-                'Valid barcode detected: ${capture.barcodes.first.rawValue}',
-              );
+              controller.getProductApi(
+                  srjobno: capture.barcodes.first.rawValue ?? '');
+              // print(
+              //   'Valid barcode detected: ${capture.barcodes.first.rawValue}',
+              // );
               Get.back();
             },
           ),

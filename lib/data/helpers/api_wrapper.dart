@@ -13,7 +13,7 @@ import 'package:http_parser/src/media_type.dart' as media_type;
 
 /// API WRAPPER to call all the APIs and handle the error status codes
 class ApiWrapper {
-  final String _baseUrl = 'https://dev.npjnxt.com/';
+  final String _baseUrl = 'https://api.diaaries.in/';
   static String imageUrl = 'https://eventopackage.s3.ap-south-1.amazonaws.com/';
 
   static http.Client client = http.Client();

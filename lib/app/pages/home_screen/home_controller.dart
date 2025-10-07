@@ -1,6 +1,10 @@
+import 'dart:nativewrappers/_internal/vm/bin/vmservice_io.dart';
+
+import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/pages.dart';
 import 'package:diaries/app/theme/dimens.dart';
 import 'package:diaries/app/utils/utils.dart';
+import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,4 +44,23 @@ class HomeController extends GetxController {
     Center(child: const Text("Setting")),
     Center(child: const Text("Profile")),
   ];
+
+  ProductDetailData? productDetail;
+
+  Future<void> getProductApi({required String srjobno}) async {
+    var response = await bottomBarPresenter.getProductApi(
+      isLoading: false,
+      srjobno: srjobno,
+    );
+    productDetail = null;
+    if (response?.data != null) {
+      productDetail = response?.data;
+      if(productDetail != null) {
+      RouteManagement.goToScannerDetailScreen(productDetail!);
+      }
+      update();
+    }
+  }
+
+  List<Map<String, String>>? data;
 }

@@ -1,3 +1,4 @@
+import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/models.dart';
 import 'package:diaries/domain/usecases/usecases.dart';
 
