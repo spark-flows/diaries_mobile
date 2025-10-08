@@ -1,4 +1,5 @@
 import 'package:diaries/app/app.dart';
+import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,99 +9,165 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
-      initState: (state) {
-        final controller = Get.find<HomeController>();
-        final argument = Get.arguments;
-        controller.data = [
-          {"Design No.": "argument"},
-          {"Collection": "Ring"},
-          {"Inwardno": "SP479"},
-          {"Category": "Necklace"},
-          {"Sub Category": "Regular"},
-          {"Size": "7 Inch"},
-          {"Metal Type": "Gold 14K"},
-          {"Metal Color": "Yellow"},
-          {"Gross Weight": "10.6"},
-          {"Metal Weight": "10.6"},
-          {"Purchase Fine": "2.165"},
-          {"Sale Fine": "2.165"},
-          {"Diam. Ctw": "2.165"},
-          {"Diam. Pcs": "2.165"},
-          {"Cs Ctw": "2.165"},
-          {"Cs Pcs": "2.165"},
-          {"Misc Ctw": "2.165"},
-          {"Misc Pcs": "2.165"},
-          {"Status": "On Hand"},
-          {"Invoice No.": "000001"},
-          {"Customer": "PY01"},
-          {"MRP": "99999.99"},
-          {"Location": "INDIA HEAD OFFICE"},
-          {"HUID": "0000022"},
-          {"Product Type": "Gold Jewelry"},
-          {"Certification": "Gold Jewelry"},
-        ];
-      },
       builder: (controller) {
+        ProductDetailData element = Get.arguments;
         return Scaffold(
-          backgroundColor: ColorsValue.whiteColor,
+          backgroundColor: ColorsValue.appBg,
           appBar: AppBar(
             title: Text(
-              "Sr.Job :- 1/4536",
+              "Sr.Job :- ${element.srjobno}",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
           body: SafeArea(
-            child: Column(
-              children: [
-                const Divider(height: 1),
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: controller.data?.length ?? 0,
-                    separatorBuilder:
-                        (context, index) => const Divider(height: 1),
-                    itemBuilder: (context, index) {
-                      final entry = controller.data![index];
-                      final key = entry.keys.first;
-                      final value = entry.values.first;
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: Text(
-                                key,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                            Divider(color: Colors.amber, thickness: 2),
-                            Expanded(
-                              flex: 5,
-                              child: Text(
-                                value,
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(color: Colors.black87),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20).copyWith(top: 0),
+                child: _productDetail(productData: element),
+              ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _productDetail({required ProductDetailData productData}) {
+    return Table(
+      border: TableBorder.all(width: 1),
+      children: [
+        _tableRow(
+          title: "Design No:",
+          value: productData.designno,
+          isFirst: true,
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Metal Type",
+          value: productData.metaltype,
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Metal Color",
+          value: productData.metalcolor,
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Gross Weight",
+          value: '${productData.gWt}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Metal Weight",
+          value: '${productData.metalweight}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Diam. Ctw",
+          value: '${productData.dCt}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Diam. Pcs",
+          value: '${productData.diamondpcs}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Cs Ctw",
+          value: '${productData.csct}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Cs Pcs",
+          value: '${productData.cspcs}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Misc Ctw",
+          value: '${productData.miscct}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Misc Pcs",
+          value: '${productData.miscpcs}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Status",
+          value: productData.status,
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "MRP",
+          value: '\$ ${productData.price.toStringAsFixed(2)}',
+          valueColor: ColorsValue.whiteColor,
+        ),
+        _tableRow(
+          title: "Product Type",
+          value: productData.producttype,
+          valueColor: ColorsValue.whiteColor,
+          isLast: true,
+        ),
+      ],
+    );
+  }
+
+  TableRow _tableRow({
+    required String title,
+    required String value,
+    bool isLast = false,
+    bool isFirst = false,
+    Color color = Colors.white,
+    Color valueColor = Colors.white,
+    double borderRadius = 10,
+  }) {
+    return TableRow(
+      decoration: BoxDecoration(
+        borderRadius:
+            isLast
+                ? BorderRadius.only(
+                  bottomRight: Radius.circular(borderRadius),
+                  bottomLeft: Radius.circular(borderRadius),
+                )
+                : isFirst
+                ? BorderRadius.only(
+                  topLeft: Radius.circular(borderRadius),
+                  topRight: Radius.circular(borderRadius),
+                )
+                : null,
+        gradient: LinearGradient(
+          colors: [Colors.white, color],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            textAlign: TextAlign.start,
+            style: Styles.appColorW50016.copyWith(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            value,
+            textAlign: TextAlign.start,
+            style: Styles.appColorW50016.copyWith(
+              color: Colors.grey,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
