@@ -1,6 +1,9 @@
-import 'package:diaries/app/pages/home_screen/productDetail.dart';
+import 'package:diaries/app/pages/home_screen/screens/productDetail.dart';
 import 'package:diaries/app/pages/pages.dart';
 import 'package:get/get.dart';
+
+import '../pages/home_screen/screens/add_customer.dart';
+import '../pages/home_screen/screens/cart_screen.dart';
 
 part 'app_routes.dart';
 
@@ -62,6 +65,22 @@ class AppPages {
       name: _Paths.scannerDetailScreen,
       transitionDuration: transitionDuration,
       page: ProductDetailScreen.new,
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage<AddCustomerScreen>(
+      name: _Paths.addCustomerScreen,
+      transitionDuration: transitionDuration,
+      page: AddCustomerScreen.new,
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage<CartScreen>(
+      name: _Paths.cartScreen,
+      transitionDuration: transitionDuration,
+      page: CartScreen.new,
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),

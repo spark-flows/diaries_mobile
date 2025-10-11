@@ -17,5 +17,7 @@ abstract class AssetConstants {
   static const String ic_reset_password = "assets/svg/ic_reset_password.svg";
   static const String scan = "assets/json/scan.json";
   static const String scanner = "assets/json/scanner.json";
+  static const String cart_icon = "assets/svg/cart_icon.svg";
+  static const String remove_icon = "assets/svg/remove_cart.svg";
   static const String ssss = "";
 }

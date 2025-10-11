@@ -94,6 +94,30 @@ class DataRepository extends DomainRepository {
     isLoading: true,
   );
 
+  Future<ResponseModel> postCreateCustomer({
+    bool isLoading = false,
+    required String customerid,
+    required String name,
+    required String mobile,
+    required String email,
+    required String address,
+    required String state,
+    required String city,
+    required String area,
+    required String zipcode,
+  }) async => await connectHelper.postCreateCustomer(
+    customerid: customerid,
+    name: name,
+    mobile: mobile,
+    email: email,
+    address: address,
+    state: state,
+    city: city,
+    area: area,
+    zipcode: zipcode,
+    isLoading: true,
+  );
+
   Future<ResponseModel> postRegisterApi({
     bool isLoading = false,
     required String name,

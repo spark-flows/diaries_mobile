@@ -9,6 +9,7 @@ ThemeData themeData(BuildContext context) => ThemeData(
   bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: Colors.transparent,
   ),
+  dividerColor: Colors.transparent,
   primaryColorLight: ColorsValue.appColor,
   datePickerTheme: DatePickerThemeData(
     rangeSelectionBackgroundColor: ColorsValue.appColor.withAlpha(50),
@@ -82,6 +83,7 @@ ThemeData darkThemeData(BuildContext context) => ThemeData(
     iconTheme: IconThemeData(color: Colors.white),
     actionsIconTheme: IconThemeData(color: Colors.white),
   ),
+  dividerColor: Colors.transparent,
   secondaryHeaderColor: const Color.fromRGBO(23, 166, 221, 1),
   iconTheme: const IconThemeData(color: Colors.white),
   primaryColor: const Color(0xFFF31B82),

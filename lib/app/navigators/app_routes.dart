@@ -9,7 +9,9 @@ abstract class Routes {
   static const resetPasswordScreen = _Paths.resetPasswordScreen;
   static const scannerScreen = _Paths.scannerScreen;
   static const scannerDetailScreen = _Paths.scannerDetailScreen;
-}
+  static const addCustomerScreen = _Paths.addCustomerScreen;
+  static const cartScreen = _Paths.cartScreen;
+  }
 
 abstract class _Paths {
   static const splashScreen = '/splashScreen';
@@ -20,4 +22,7 @@ abstract class _Paths {
   static const resetPasswordScreen = '/resetPasswordScreen';
   static const scannerScreen = '/scannerScreen';
   static const scannerDetailScreen = '/scannerDetailScreen';
+  static const addCustomerScreen = '/AddCustomerScreen';
+  static const cartScreen = '/CartScreen';
+  
 }

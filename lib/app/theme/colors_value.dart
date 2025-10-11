@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 abstract class ColorsValue {
   static Color transparent = Colors.transparent;
   static Color appColor = const Color(0xFFD5A976);
+  static Color appColorEBBD87 = const Color(0xFFEBBD87);
   static Color lightAppColor = const Color(0xFFD5A976).withAlpha(60);
   static Color whiteColor = const Color(0xFFFFFFFF);
   static Color blackColor = const Color(0xFF000000);

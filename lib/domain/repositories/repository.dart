@@ -204,6 +204,45 @@ class Repository {
     }
   }
 
+  Future<PostCreateUser?> postCreateCustomer({
+    bool isLoading = false,
+    required String customerid,
+    required String name,
+    required String mobile,
+    required String email,
+    required String address,
+    required String state,
+    required String city,
+    required String area,
+    required String zipcode,
+  }) async {
+    try {
+      var response = await _dataRepository.postCreateCustomer(
+        customerid: customerid,
+        name: name,
+        mobile: mobile,
+        email: email,
+        address: address,
+        state: state,
+        city: city,
+        area: area,
+        zipcode: zipcode,
+        isLoading: isLoading,
+      );
+      var postCreateUserModel = postCreateUserFromJson(response.data);
+      if (postCreateUserModel.data != null) {
+        return postCreateUserModel;
+      } else {
+        return postCreateUserModel;
+      }
+    } catch (e) {
+      print('Tjhis is The Error >>>>>>>>>>>>>>>>>>>>>>>>>>> $e');
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
   Future<AuthModel?> postLoginApi({
     bool isLoading = false,
     required String username,

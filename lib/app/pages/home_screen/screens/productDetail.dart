@@ -1,16 +1,20 @@
 import 'package:diaries/app/app.dart';
+import 'package:diaries/app/widgets/CRUD_sqflite.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+  ProductDetailScreen({super.key});
+  final dbHelper = ProductDbHelper();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return GetBuilder<HomeController>(
       builder: (controller) {
-        ProductDetailData element = Get.arguments;
+        final element = Get.arguments;
         return Scaffold(
           backgroundColor: ColorsValue.appBg,
           appBar: AppBar(
@@ -19,6 +23,99 @@ class ProductDetailScreen extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
+            actions: [
+              TextButton(
+                onPressed: () {
+                  RouteManagement.goToAddNewCustomerScreen();
+                },
+                child: Text('Confirm', style: Styles.appColorW50012),
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              RouteManagement.goToCartScreen();
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(100),
+            ),
+            child: SvgPicture.asset(AssetConstants.cart_icon),
+          ),
+          bottomNavigationBar: Padding(
+            padding: Dimens.edgeInsets20_00_20_00.copyWith(bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () async {
+                      Get.back();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height:
+                          Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: ColorsValue.whiteColor,
+                        borderRadius: BorderRadius.circular(Dimens.ten),
+                        border: Border.all(
+                          color: ColorsValue.blackColor,
+                          width: Dimens.one,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset(AssetConstants.scanner),
+                          Dimens.boxWidth5,
+                          Text(
+                            'Scane New'.tr,
+                            style: Styles.txtBlackColorW50014.copyWith(
+                              fontSize:
+                                  Utility.isTablet()
+                                      ? Dimens.twenty
+                                      : Dimens.fourteen,
+                              color: ColorsValue.blackColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Dimens.boxWidth20,
+                Expanded(
+                  child: InkWell(
+                    onTap: () async {
+                      await dbHelper.insertProduct(element);
+                      // await ProductDBManager.instance.insert(element);
+                      // RouteManagement.goToAddNewCustomerScreen();
+                      },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height:
+                          Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: ColorsValue.appColor,
+                        borderRadius: BorderRadius.circular(Dimens.ten),
+                      ),
+                      child: Text(
+                        'Add To Cart',
+                        style: Styles.whiteColorW50014.copyWith(
+                          fontSize:
+                              Utility.isTablet()
+                                  ? Dimens.twenty
+                                  : Dimens.fourteen,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           body: SafeArea(
             child: SingleChildScrollView(

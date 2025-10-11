@@ -17,7 +17,12 @@ abstract class RouteManagement {
   static void goToForgotScreen() => Get.toNamed<void>(Routes.forgotScreen);
 
   static void goToScannerScreen() => Get.toNamed<void>(Routes.scannerScreen);
-
+  
   static void goToScannerDetailScreen(ProductDetailData element) =>
       Get.toNamed<void>(Routes.scannerDetailScreen,arguments: element);
+
+  static void goToAddNewCustomerScreen() => Get.toNamed<void>(Routes.addCustomerScreen);
+
+  static void goToCartScreen() => Get.toNamed<void>(Routes.cartScreen);
+
 }

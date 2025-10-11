@@ -9,6 +9,10 @@ class ScannerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
+      initState: (state) async {
+        // final controller = Get.find<HomeController>();
+        // await controller.getProductApi(srjobno: '1/2750');
+      },
       builder: (controller) {
         return Scaffold(
           backgroundColor: ColorsValue.appBg,
