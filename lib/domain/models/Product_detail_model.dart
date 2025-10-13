@@ -66,6 +66,8 @@ class ProductDetailData {
   String certificateno;
   DateTime createdAt;
   DateTime updatedAt;
+       int quantity;
+
 
   ProductDetailData({
     required this.id,
@@ -98,6 +100,7 @@ class ProductDetailData {
     required this.certificateno,
     required this.createdAt,
     required this.updatedAt,
+this.quantity = 0,
   });
 
   factory ProductDetailData.fromJson(Map<String, dynamic> json) =>
@@ -132,6 +135,7 @@ class ProductDetailData {
         certificateno: json["certificateno"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+     quantity: json["quantity"] ?? 0,
         );
 
   Map<String, dynamic> toJson() => {
@@ -165,6 +169,7 @@ class ProductDetailData {
     "certificateno": certificateno,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
+  "quantity": quantity,
   };
 
   Map<String, dynamic> toMap() {
@@ -199,6 +204,7 @@ class ProductDetailData {
       'certificateno': certificateno,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
+      "quantity": quantity,
       };
   }
 
@@ -234,6 +240,7 @@ class ProductDetailData {
       certificateno: map['certificateno'],
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),
+    quantity: map["quantity"] ?? 0,
     );
   }
 
@@ -268,6 +275,8 @@ class ProductDetailData {
     String? certificateno,
     DateTime? createdAt,
     DateTime? updatedAt,
+
+    int? quantity,
   }) {
     return ProductDetailData(
       id: id ?? this.id,
@@ -300,6 +309,7 @@ class ProductDetailData {
       certificateno: certificateno ?? this.certificateno,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+    quantity: quantity ?? this.quantity,
     );
   }
 }

@@ -19,7 +19,7 @@ class ProductDetailScreen extends StatelessWidget {
           backgroundColor: ColorsValue.appBg,
           appBar: AppBar(
             title: Text(
-              "Sr.Job :- ${element.srjobno}",
+              "Sr.Job :- ${element.srjobno ?? ''}",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             centerTitle: true,

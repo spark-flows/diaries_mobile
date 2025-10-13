@@ -1,4 +1,6 @@
+import 'package:diaries/data/data.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
+import 'package:diaries/domain/models/cart_product_add_model.dart';
 import 'package:diaries/domain/models/models.dart';
 import 'package:diaries/domain/repositories/repository.dart';
 
@@ -36,6 +38,24 @@ class HomeUsecases {
         city: city,
         area: area,
         zipcode: zipcode,
+    isLoading: isLoading,
+  );
+
+  Future<CartProductUpdate?> postAddToCart({
+    bool isLoading = false,
+    required String orderId,
+    required String customerId,
+    required String discount,
+    required String total,
+    required String status,
+    required List<ProducModel> products,
+  }) async => await repository.postAddToCart(
+    customerId: customerId,
+    discount: discount,
+    orderId: orderId,
+    products: products,
+    status: status,
+    total: total,
     isLoading: isLoading,
   );
 }

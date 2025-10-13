@@ -208,7 +208,8 @@ class ProductDbHelper {
             producttype TEXT,
             certificateno TEXT,
             createdAt TEXT,
-            updatedAt TEXT
+            updatedAt TEXT,
+            quantity INTEGER
           )
         ''');
       },

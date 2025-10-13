@@ -136,6 +136,24 @@ class DataRepository extends DomainRepository {
     isLoading: isLoading,
   );
 
+  Future<ResponseModel> postAddToCart({
+    bool isLoading = false,
+    required String orderId,
+    required String customerId,
+    required String discount,
+    required String total,
+    required String status,
+    required List<ProducModel> products,
+  }) async => await connectHelper.postAddToCart(
+    customerId: customerId,
+    discount: discount,
+    orderId: orderId,
+    products: products,
+    status: status,
+    total: total,
+    isLoading: isLoading,
+  );
+
   Future<ResponseModel> getProductApi({
     bool isLoading = false,
     required String srjobno,

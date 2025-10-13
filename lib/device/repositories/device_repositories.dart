@@ -20,6 +20,23 @@ class DeviceRepository extends DomainRepository {
       await Hive.initFlutter();
       await Hive.openBox<dynamic>(StringConstants.appName);
     }
+
+  //   if (!Hive.isBoxOpen(StringConstants.appName)) {
+  //   try {
+  //     await Hive.openBox<dynamic>(StringConstants.appName);
+  //     print('📦 Hive box "${StringConstants.appName}" opened successfully');
+  //   } on HiveError catch (e) {
+  //     // If another async call already opened it
+  //     if (e.message.contains('already open')) {
+  //       print('⚠️ Hive box "${StringConstants.appName}" already open, ignoring.');
+  //     } else {
+  //       rethrow;
+  //     }
+  //   }
+  // } else {
+  //   print('📦 Hive box "${StringConstants.appName}" already open, skipping.');
+  // }
+
   }
 
   /// Returns the box in which the data is stored.
@@ -33,7 +50,7 @@ class DeviceRepository extends DomainRepository {
   /// Delete the box
   @override
   void deleteBox() {
-    Hive.box<void>(StringConstants.appName).clear();
+    Hive.box<dynamic>(StringConstants.appName).clear();
   }
 
   /// returns stored string value

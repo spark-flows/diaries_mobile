@@ -173,7 +173,7 @@ class ConnectHelper {
       Request.post,
       data,
       isLoading,
-      Utility.commonHeader(isDefaultAuthorizationKeyAdd: false),
+      Utility.commonHeader(),
     );
     return response;
   }
@@ -204,4 +204,54 @@ class ConnectHelper {
     );
     return response;
   }
+
+  Future<ResponseModel> postAddToCart({
+    bool isLoading = false,
+    required String orderId,
+    required String customerId,
+    required String discount,
+    required String total,
+    required String status,
+    required List<ProducModel> products,
+  }) async {
+    var data = {
+      "orderid": orderId,
+      "customerid": customerId,
+      "products": products,
+      "discount": discount,
+      "total": total,
+      "sttus": status,
+    };
+    var response = await apiWrapper.makeRequest(
+      EndPoints.createOrder,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+}
+
+class ProducModel {
+  final String? productId;
+  final int? qta;
+  final String? total;
+
+  ProducModel({
+    required this.productId,
+    required this.qta,
+    required this.total,
+  });
+  Map<String, dynamic> toJson() => {
+        "productId": productId,
+        "qta": qta,
+        "total": total,
+      };
+
+  factory ProducModel.fromJson(Map<String, dynamic> json) => ProducModel(
+        productId: json["productId"] as String?,
+        qta: json["qta"] as int?,
+        total: json["total"] as String?,
+      );
 }

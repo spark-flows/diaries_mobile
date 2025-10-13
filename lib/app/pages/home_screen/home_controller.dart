@@ -1,4 +1,6 @@
 import 'package:diaries/app/app.dart';
+import 'package:diaries/data/helpers/connect_helper.dart';
+import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/models.dart';
 import 'package:flutter/material.dart';
@@ -15,17 +17,19 @@ class HomeController extends GetxController {
 
   List<ProductDetailData> localProductList = [];
 
-  // void increment() {
-  //   productDetail?.quatity++;
+  // increment(int item) {
+  //   final existing = productManager.getProducts().first;
+  // await productManager.updateProduct(existing.copyWith(price: 3.0));
+  //   item++;
   //   update();
   // }
 
-  // void decrement() {
-  //   if (productDetail!.quatity > 1) {
-  //     productDetail?.quatity--;
-  //   }
-  //   update();
-  // }
+  decrement(int item) {
+    if (item > 1) {
+      item--;
+    }
+    update();
+  }
 
   Future<void> getProductApi({required String srjobno}) async {
     var response = await bottomBarPresenter.getProductApi(
@@ -47,6 +51,7 @@ class HomeController extends GetxController {
   }
 
   PostCreateUserData? userData;
+  String customerId = ''; 
 
   Future<void> postCreateCustomer({
     required String area,
@@ -73,14 +78,40 @@ class HomeController extends GetxController {
     userData = null;
     if (response?.data != null) {
       userData = response?.data;
-      if (userData != null) {
-        print(userData);
-      }
+      customerId = response?.data.id ?? '';
+      RouteManagement.goToCartScreen();
       Utility.closeLoader();
       update();
     } else {
       Utility.closeLoader();
       Utility.errorMessage(response?.message ?? "");
+    }
+  }
+
+  Future<void> postAddToCart({
+    required String discount,
+    required String orderId,
+    required List<ProducModel> product,
+    required String total,
+  }) async {
+    var response = await bottomBarPresenter.postAddToCart(
+      isLoading: false,
+      customerId: customerId,
+      discount: discount,
+      orderId: orderId,
+      products: product,
+      status: 'Pending',
+      total: total,
+    );
+    userData = null;
+    if (response?.data != null) {
+      Utility.snacBar('OrderSuccessFull', ColorsValue.appColor);
+      Utility.closeLoader();
+      update();
+    } else {
+      Utility.closeLoader();
+      Utility.errorMessage(response?.message ?? "");
+      
     }
   }
 
@@ -95,6 +126,7 @@ class HomeController extends GetxController {
   TextEditingController cityController = TextEditingController();
   TextEditingController areaController = TextEditingController();
   TextEditingController zipCodeController = TextEditingController();
+  TextEditingController discountController = TextEditingController();
 
   bool expanded = false;
 }

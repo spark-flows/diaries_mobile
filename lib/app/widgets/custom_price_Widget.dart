@@ -1,11 +1,12 @@
 import 'package:diaries/app/app.dart';
+import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   final List<ProductDetailData> jobList;
-  final double discountPercent;
+  final num discountPercent;
   final double pricePerJob;
   final VoidCallback onOrderNow;
   final VoidCallback onDiscountClick;
@@ -29,17 +30,34 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double totalPrice = jobList.fold<double>(
+      0,
+      (sum, job) => sum + (job.price * job.quantity),
+    );
+
+    double discountedPrice = totalPrice;
+
+    // controller.discountController.addListener(() {
+    //   final discountText = controller.discountController.text;
+    //   double discountPercent = double.tryParse(discountText) ?? 0;
+
+    //   discountedPrice = totalPrice - (totalPrice * discountPercent / 100);
+
+    //   controller.update();
+    // });
+    
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: Dimens.edgeInsets0.copyWith(left: 20,right: 20),
+          padding: Dimens.edgeInsets0.copyWith(left: 20, right: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: CustomTextFormField(
+                  controller: controller.discountController,
                   isTitle: true,
                   title: "Discount (%)",
                   titleStyle: Styles.txtBlackColorW70014,
@@ -57,9 +75,17 @@ class OrderSummaryCard extends StatelessWidget {
                 child: CustomButton(
                   backgroundColor: ColorsValue.appColor,
                   onPressed: () {
+                    double discountPercent =
+                        double.tryParse(controller.discountController.text) ??
+                        0;
+                    discountedPrice =
+                        totalPrice - (totalPrice * discountPercent / 100);
                     controller.update();
-                  }, text: 'Apply',widthBtn: 70,),
-              )
+                  },
+                  text: 'Apply',
+                  widthBtn: 70,
+                ),
+              ),
             ],
           ),
         ),
@@ -112,13 +138,14 @@ class OrderSummaryCard extends StatelessWidget {
                     ),
                     Divider(thickness: 1, color: ColorsValue.greyAAA),
                     ...jobList.map((job) {
+                      final total = (job.price) * (job.quantity);
                       return Padding(
                         padding: Dimens.edgeInsets0.copyWith(left: 4, right: 4),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(job.srjobno),
-                            Text("\$${job.price.toStringAsFixed(2)}"),
+                            Text("\$${total.toStringAsFixed(2)}"),
                           ],
                         ),
                       );
@@ -150,7 +177,7 @@ class OrderSummaryCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "\$${totalAfterDiscount.toStringAsFixed(2)}",
+                          "\$${discountedPrice.toStringAsFixed(2)}",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -171,7 +198,27 @@ class OrderSummaryCard extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    onPressed: onOrderNow,
+                    onPressed: () {
+                      //                       final double totalPrice = jobList.fold<double>(
+                      //   0,
+                      //   (sum, job) => sum + (job.price * job.quantity),
+                      // );
+                      controller.postAddToCart(
+                        discount: controller.discountController.text,
+                        orderId: '',
+                        product: List.generate(jobList.length, (index) {
+                          final total =
+                              (jobList[index].price) *
+                              (jobList[index].quantity);
+                          return ProducModel(
+                            productId: jobList[index].id,
+                            qta: jobList[index].quantity,
+                            total: total.toString(),
+                          );
+                        }),
+                        total: totalPrice.toString(),
+                      );
+                    },
                     child: const Text(
                       "Order Now",
                       style: TextStyle(
@@ -192,7 +239,7 @@ class OrderSummaryCard extends StatelessWidget {
 
 Widget buildOrderSummaryCard({
   required List<ProductDetailData> jobList,
-  required double discountPercent,
+  required num discountPercent,
   required double pricePerJob,
   required VoidCallback onOrderNow,
   required VoidCallback onDiscountClick,

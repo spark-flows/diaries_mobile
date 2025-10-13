@@ -4,6 +4,8 @@ import 'package:diaries/data/data.dart';
 import 'package:diaries/device/device.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
+import 'package:diaries/domain/models/cart_product_add_model.dart';
+import 'package:get/get.dart';
 
 import '../../app/app.dart';
 
@@ -149,11 +151,8 @@ class Repository {
         srjobno: srjobno,
       );
       var productDetailModel = productDetailModelFromJson(response.data);
-      if (productDetailModel.data != null) {
-        return productDetailModel;
-      } else {
-        return productDetailModel;
-      }
+      productDetailModel.data.quantity = 1;
+      return productDetailModel;
     } catch (_) {
       Utility.closeDialog();
       UnimplementedError();
@@ -204,6 +203,35 @@ class Repository {
     }
   }
 
+  Future<CartProductUpdate?> postAddToCart({
+    bool isLoading = false,
+    required String orderId,
+    required String customerId,
+    required String discount,
+    required String total,
+    required String status,
+    required List<ProducModel> products,
+  }) async {
+    try {
+      var response = await _dataRepository.postAddToCart(
+        customerId: customerId,
+        discount: discount,
+        orderId: orderId,
+        products: products,
+        status: status,
+        total: total,
+        isLoading: isLoading,
+      );
+      var cartProductModel = cartProductUpdateFromJson(response.data);
+      return cartProductModel;
+    } catch (e) {
+      print('This is The error ................>>>>>>>> $e');
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
   Future<PostCreateUser?> postCreateCustomer({
     bool isLoading = false,
     required String customerid,
@@ -230,11 +258,7 @@ class Repository {
         isLoading: isLoading,
       );
       var postCreateUserModel = postCreateUserFromJson(response.data);
-      if (postCreateUserModel.data != null) {
-        return postCreateUserModel;
-      } else {
-        return postCreateUserModel;
-      }
+      return postCreateUserModel;
     } catch (e) {
       print('Tjhis is The Error >>>>>>>>>>>>>>>>>>>>>>>>>>> $e');
       Utility.closeDialog();
@@ -262,6 +286,8 @@ class Repository {
           LocalKeys.authToken,
           productListModel.data?.accessToken ?? "",
         );
+        // Get.find<Repository>().saveSecureValue( LocalKeys.authToken,
+        //   productListModel.data?.accessToken ?? "",);
         return productListModel;
       } else {
         return productListModel;

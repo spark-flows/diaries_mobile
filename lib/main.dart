@@ -9,6 +9,10 @@ import 'package:diaries/device/device.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:upgrader/upgrader.dart';
 
+
+// admin@pureyou.com
+// PY@002025
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();

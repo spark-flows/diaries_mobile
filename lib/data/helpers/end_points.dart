@@ -5,4 +5,5 @@ class EndPoints {
   static String postResetApi = 'api/auth/resetpassword';
   static String getScan = 'api/products/scan';
   static String createCustomer = 'api/customer/create';
+  static String createOrder = 'api/carts/order';
 }

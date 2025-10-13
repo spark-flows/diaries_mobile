@@ -112,6 +112,6 @@ class PostCreateUserData {
         "_id": id,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        "__v": v,
+        "__v": v,  
     };
 }

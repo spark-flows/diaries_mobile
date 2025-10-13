@@ -1,6 +1,7 @@
 import 'package:diaries/app/app.dart';
 import 'package:diaries/app/widgets/CRUD_sqflite.dart';
 import 'package:diaries/app/widgets/custom_price_Widget.dart';
+import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -27,18 +28,19 @@ class CartScreen extends StatelessWidget {
             title: "Cart",
             isCenter: true,
           ),
-          bottomNavigationBar: controller.localProductList.isEmpty ? SizedBox.shrink() : buildOrderSummaryCard(
-            jobList: controller.localProductList,
-            discountPercent: 10,
-            pricePerJob: 69,
-            onOrderNow: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Order Placed Successfully!")),
-              );
-            },
-            onDiscountClick: () {},
-            controller: controller,
-          ),
+          bottomNavigationBar:
+              controller.localProductList.isEmpty
+                  ? SizedBox.shrink()
+                  : buildOrderSummaryCard(
+                    jobList: controller.localProductList,
+                    discountPercent:
+                        int.tryParse(controller.discountController.text) ?? 0,
+                    pricePerJob: 69,
+                    onOrderNow: () {
+                    },
+                    onDiscountClick: () {},
+                    controller: controller,
+                  ),
           body: SafeArea(
             child:
                 controller.localProductList.isEmpty
@@ -132,27 +134,48 @@ class CartScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.start,
-                                //   children: [
-                                //     IconButton(
-                                //       icon: Icon(Icons.remove_circle_outline),
-                                //       onPressed: () {},
-                                //       // onPressed: controller.decrement,
-                                //     ),
-                                //     Text(
-                                //       '${controller.productDetail?.quatity}',
-                                //       style: TextStyle(
-                                //         fontSize: 18,
-                                //         fontWeight: FontWeight.bold,
-                                //       ),
-                                //     ),
-                                //     IconButton(
-                                //       icon: Icon(Icons.add_circle_outline),
-                                //       onPressed: controller.increment,
-                                //     ),
-                                //   ],
-                                // ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.remove_circle_outline),
+                                      onPressed: () async {
+                                        if (element.quantity > 1) {
+                                          element.quantity--;
+                                        }
+                                        controller.update();
+                                        final existing = element;
+                                        await dbHelper.updateProduct(
+                                          existing.copyWith(
+                                            quantity: element.quantity,
+                                          ),
+                                        );
+                                      },
+                                      // onPressed: controller.decrement(element.quantity),
+                                    ),
+                                    Text(
+                                      '${element.quantity}',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.add_circle_outline),
+                                      onPressed: () async {
+                                        element.quantity++;
+                                        controller.update();
+                                        final existing = element;
+                                        await dbHelper.updateProduct(
+                                          existing.copyWith(
+                                            quantity: element.quantity,
+                                          ),
+                                        );
+                                      },
+                                      // controller.increment(element.quantity),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
