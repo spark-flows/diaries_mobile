@@ -244,14 +244,14 @@ class ProducModel {
     required this.total,
   });
   Map<String, dynamic> toJson() => {
-        "productId": productId,
-        "qta": qta,
+        "productid": productId,
+        "qty": qta,
         "total": total,
       };
 
   factory ProducModel.fromJson(Map<String, dynamic> json) => ProducModel(
-        productId: json["productId"] as String?,
-        qta: json["qta"] as int?,
+        productId: json["productid"] as String?,
+        qta: json["qty"] as int?,
         total: json["total"] as String?,
       );
 }

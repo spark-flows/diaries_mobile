@@ -225,7 +225,7 @@ class Repository {
       var cartProductModel = cartProductUpdateFromJson(response.data);
       return cartProductModel;
     } catch (e) {
-      print('This is The error ................>>>>>>>> $e');
+      print('This is The Error >>>>>>>>>>>>>>>>>>>>>>>>>>> $e');
       Utility.closeDialog();
       UnimplementedError();
       return null;

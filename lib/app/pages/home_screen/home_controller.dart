@@ -15,14 +15,10 @@ class HomeController extends GetxController {
 
   ProductDetailData? productDetail;
 
-  List<ProductDetailData> localProductList = [];
+  double discountedPrice = 0;
+  double totalPrice = 0;
 
-  // increment(int item) {
-  //   final existing = productManager.getProducts().first;
-  // await productManager.updateProduct(existing.copyWith(price: 3.0));
-  //   item++;
-  //   update();
-  // }
+  List<ProductDetailData> localProductList = [];
 
   decrement(int item) {
     if (item > 1) {
@@ -51,7 +47,7 @@ class HomeController extends GetxController {
   }
 
   PostCreateUserData? userData;
-  String customerId = ''; 
+  String customerId = '';
 
   Future<void> postCreateCustomer({
     required String area,
@@ -80,6 +76,24 @@ class HomeController extends GetxController {
       userData = response?.data;
       customerId = response?.data.id ?? '';
       RouteManagement.goToCartScreen();
+
+      await postAddToCart(
+        customerId: customerId,
+        discount: discountController.text,
+        orderId: '',
+        product: List.generate(localProductList.length, (index) {
+          final total =
+              (localProductList[index].price) *
+              (localProductList[index].quantity);
+          return ProducModel(
+            productId: localProductList[index].id,
+            qta: localProductList[index].quantity,
+            total: total.toString(),
+          );
+        }),
+        total: totalPrice.toString(),
+      );
+
       Utility.closeLoader();
       update();
     } else {
@@ -93,25 +107,30 @@ class HomeController extends GetxController {
     required String orderId,
     required List<ProducModel> product,
     required String total,
+    required String customerId,
   }) async {
     var response = await bottomBarPresenter.postAddToCart(
       isLoading: false,
       customerId: customerId,
-      discount: discount,
+      discount: (discount != null || discount.isNotEmpty) ? '$discount%' : discount,
       orderId: orderId,
       products: product,
       status: 'Pending',
       total: total,
     );
-    userData = null;
     if (response?.data != null) {
       Utility.snacBar('OrderSuccessFull', ColorsValue.appColor);
+      localProductList.clear();
+      discountedPrice = 0;
+      totalPrice = 0;
+      discountController.text = '0';
+      Get.find<Repository>().clearData(customerId);
+      RouteManagement.goToHomeScreen();
       Utility.closeLoader();
       update();
     } else {
       Utility.closeLoader();
       Utility.errorMessage(response?.message ?? "");
-      
     }
   }
 
@@ -126,7 +145,7 @@ class HomeController extends GetxController {
   TextEditingController cityController = TextEditingController();
   TextEditingController areaController = TextEditingController();
   TextEditingController zipCodeController = TextEditingController();
-  TextEditingController discountController = TextEditingController();
+  TextEditingController discountController = TextEditingController(text: '0');
 
   bool expanded = false;
 }

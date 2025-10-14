@@ -1,7 +1,6 @@
 import 'package:diaries/app/app.dart';
 import 'package:diaries/app/widgets/CRUD_sqflite.dart';
 import 'package:diaries/app/widgets/custom_price_Widget.dart';
-import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -36,10 +35,8 @@ class CartScreen extends StatelessWidget {
                     discountPercent:
                         int.tryParse(controller.discountController.text) ?? 0,
                     pricePerJob: 69,
-                    onOrderNow: () {
-                    },
+                    onOrderNow: () {},
                     onDiscountClick: () {},
-                    controller: controller,
                   ),
           body: SafeArea(
             child:
@@ -150,6 +147,7 @@ class CartScreen extends StatelessWidget {
                                             quantity: element.quantity,
                                           ),
                                         );
+                                        controller.update();
                                       },
                                       // onPressed: controller.decrement(element.quantity),
                                     ),
@@ -171,6 +169,7 @@ class CartScreen extends StatelessWidget {
                                             quantity: element.quantity,
                                           ),
                                         );
+                                        controller.update();
                                       },
                                       // controller.increment(element.quantity),
                                     ),

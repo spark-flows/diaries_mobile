@@ -100,7 +100,7 @@ class ProductDetailData {
     required this.certificateno,
     required this.createdAt,
     required this.updatedAt,
-this.quantity = 0,
+this.quantity = 1,
   });
 
   factory ProductDetailData.fromJson(Map<String, dynamic> json) =>
@@ -135,7 +135,7 @@ this.quantity = 0,
         certificateno: json["certificateno"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-     quantity: json["quantity"] ?? 0,
+     quantity: json["quantity"] ?? 1,
         );
 
   Map<String, dynamic> toJson() => {
@@ -240,7 +240,7 @@ this.quantity = 0,
       certificateno: map['certificateno'],
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),
-    quantity: map["quantity"] ?? 0,
+    quantity: map["quantity"] ?? 1,
     );
   }
 
