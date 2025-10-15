@@ -2,7 +2,6 @@ import 'package:diaries/app/app.dart';
 import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
-import 'package:diaries/domain/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

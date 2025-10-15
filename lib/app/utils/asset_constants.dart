@@ -19,5 +19,6 @@ abstract class AssetConstants {
   static const String scanner = "assets/json/scanner.json";
   static const String cart_icon = "assets/svg/cart_icon.svg";
   static const String remove_icon = "assets/svg/remove_cart.svg";
+  static const String calender_icon = "assets/svg/calender.svg";
   static const String ssss = "";
 }

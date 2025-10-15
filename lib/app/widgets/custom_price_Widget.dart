@@ -223,7 +223,7 @@ class OrderSummaryCard extends StatelessWidget {
                           // );
                         },
                         child: const Text(
-                          "Order Now",
+                          "Generate Bill",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

@@ -26,7 +26,8 @@ class HomeScreen extends StatelessWidget {
                   //   'https://www.freepik.com/free-vector/people-connecting-web-network-diagram-background_225668598.htm#fromView=keyword&page=1&position=0&uuid=a3ebe0aa-a01c-478e-bad2-2429d1693176&query=Network+png',
                   // ];
                   // controller.shareProductUrls(urls);
-                  RouteManagement.goToScannerScreen();
+                  controller.getProductApi(srjobno: '1/2750');
+                  // RouteManagement.goToScannerScreen();
                 },
                 child: Lottie.asset(AssetConstants.scanner),
               ),

@@ -24,5 +24,6 @@ abstract class RouteManagement {
   static void goToAddNewCustomerScreen() => Get.toNamed<void>(Routes.addCustomerScreen);
 
   static void goToCartScreen() => Get.toNamed<void>(Routes.cartScreen);
+  static void goToOrderHistoryScreen() => Get.toNamed<void>(Routes.orderHistoryScreen);
 
 }

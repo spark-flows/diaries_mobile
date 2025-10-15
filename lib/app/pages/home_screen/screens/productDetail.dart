@@ -26,9 +26,9 @@ class ProductDetailScreen extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                  RouteManagement.goToAddNewCustomerScreen();
+                  RouteManagement.goToOrderHistoryScreen();
                 },
-                child: Text('Confirm', style: Styles.appColorW50012),
+                child: Text('Order History', style: Styles.appColorW50012),
               ),
             ],
           ),
