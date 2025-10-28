@@ -37,7 +37,12 @@ class AuthController extends GetxController {
       isLoading: false,
     );
     if (response?.data != null) {
-      RouteManagement.goToHomeScreen();
+      Get.find<Repository>().saveSecureValue(
+        LocalKeys.authToken,
+        response?.data?.accessToken ?? '',
+      );
+      RouteManagement.goToSelectOptionsScreen();
+      // RouteManagement.goToHomeScreen();
       Utility.closeLoader();
     } else {
       Utility.closeLoader();

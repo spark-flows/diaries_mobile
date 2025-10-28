@@ -11,6 +11,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.isVisible = true,
     this.isCenter = false,
     this.actions,
+    this.style,
+    this.paddingBackArrow,
   });
 
   void Function()? onTapBack;
@@ -18,26 +20,43 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   bool isVisible;
   bool isCenter;
   List<Widget>? actions;
+  TextStyle? style;
+  EdgeInsetsGeometry? paddingBackArrow;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: ColorsValue.appBg,
+      backgroundColor: ColorsValue.whiteColor,
       centerTitle: isCenter ? true : false,
       automaticallyImplyLeading: false,
-      leadingWidth: isVisible ? Dimens.fifty : Dimens.twenty,
+      leadingWidth:
+          isVisible
+              ? Utility.isTablet()
+                  ? Dimens.eighty
+                  : Dimens.fifty
+              : Dimens.twenty,
       leading: Visibility(
         visible: isVisible,
         child: Padding(
-          padding: Dimens.edgeInsets12,
+          padding: paddingBackArrow ?? Dimens.edgeInsets12,
           child: InkWell(
             onTap: onTapBack,
-            child: SvgPicture.asset(AssetConstants.back_arrow),
+            child: SvgPicture.asset(
+              AssetConstants.back_arrow,
+              height: Utility.isTablet() ? Dimens.thirty : Dimens.twentyFour,
+              width: Utility.isTablet() ? Dimens.thirty : Dimens.twentyFour,
+            ),
           ),
         ),
       ),
       titleSpacing: Dimens.zero,
-      title: Text(title, style: Styles.txtBlackColorW70020),
+      title: Text(
+        title ?? "",
+        style:
+            Utility.isTablet()
+                ? Styles.txtBlackColorW70024
+                : Styles.txtBlackColorW70020,
+      ),
       actions: actions,
     );
   }

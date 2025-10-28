@@ -1,5 +1,4 @@
 import 'package:diaries/app/app.dart';
-import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,6 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // controller.discountController.addListener(() {
     //   final discountText = controller.discountController.text;
     //   double discountPercent = double.tryParse(discountText) ?? 0;
@@ -43,12 +41,22 @@ class OrderSummaryCard extends StatelessWidget {
       initState: (state) {
         final controller = Get.find<HomeController>();
         controller.totalPrice = jobList.fold<double>(
-      0,
-      (sum, job) => sum + (job.price * job.quantity),
-    );
+          0,
+          (sum, job) => sum + (job.price * job.quantity),
+        );
         controller.discountedPrice = controller.totalPrice;
       },
       builder: (controller) {
+        controller.totalPrice = jobList.fold<double>(
+          0,
+          (sum, job) => sum + (job.price * job.quantity),
+        );
+
+        double discountPercent =
+            double.tryParse(controller.discountController.text) ?? 0;
+        controller.discountedPrice =
+            controller.totalPrice -
+            (controller.totalPrice * discountPercent / 100);
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -80,12 +88,17 @@ class OrderSummaryCard extends StatelessWidget {
                       onPressed: () {
                         FocusScope.of(context).unfocus();
                         double discountPercent =
-                            double.tryParse(controller.discountController.text) ??
+                            double.tryParse(
+                              controller.discountController.text,
+                            ) ??
                             0;
                         controller.discountedPrice =
-                            controller.totalPrice - (controller.totalPrice * discountPercent / 100);
+                            controller.totalPrice -
+                            (controller.totalPrice * discountPercent / 100);
 
-                            print('Total Discounted Price ====>>>>>   ${controller.discountedPrice}');
+                        print(
+                          'Total Discounted Price ====>>>>>   ${controller.discountedPrice}',
+                        );
                         controller.update();
                       },
                       text: 'Apply',
@@ -122,7 +135,10 @@ class OrderSummaryCard extends StatelessWidget {
                       trailing: AnimatedRotation(
                         turns: !controller.expanded ? 0.5 : 0.0,
                         duration: const Duration(milliseconds: 200),
-                        child: const Icon(Icons.expand_more, color: Colors.black54),
+                        child: const Icon(
+                          Icons.expand_more,
+                          color: Colors.black54,
+                        ),
                       ),
                       onExpansionChanged: (value) {
                         controller.expanded = value;
@@ -146,7 +162,10 @@ class OrderSummaryCard extends StatelessWidget {
                         ...jobList.map((job) {
                           final total = (job.price) * (job.quantity);
                           return Padding(
-                            padding: Dimens.edgeInsets0.copyWith(left: 4, right: 4),
+                            padding: Dimens.edgeInsets0.copyWith(
+                              left: 4,
+                              right: 4,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -237,7 +256,7 @@ class OrderSummaryCard extends StatelessWidget {
             ),
           ],
         );
-      }
+      },
     );
   }
 }

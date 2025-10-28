@@ -22,7 +22,8 @@ class SplashController extends GetxController {
       if (Get.find<Repository>()
           .getStringValue(LocalKeys.authToken)
           .isNotEmpty) {
-        RouteManagement.goToHomeScreen();
+        RouteManagement.goToSelectOptionsScreen();
+        // RouteManagement.goToHomeScreen();
       } else {
         RouteManagement.goToAuthScreen();
       }

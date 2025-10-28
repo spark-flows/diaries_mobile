@@ -1,5 +1,6 @@
 import 'package:diaries/app/pages/home_screen/screens/order_history_screen.dart';
 import 'package:diaries/app/pages/home_screen/screens/productDetail.dart';
+import 'package:diaries/app/pages/home_screen/screens/show_options.dart';
 import 'package:diaries/app/pages/pages.dart';
 import 'package:get/get.dart';
 
@@ -74,6 +75,14 @@ class AppPages {
       name: _Paths.addCustomerScreen,
       transitionDuration: transitionDuration,
       page: AddCustomerScreen.new,
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage<SelectOptionsScreen>(
+      name: _Paths.selectOptionsScreen,
+      transitionDuration: transitionDuration,
+      page: SelectOptionsScreen.new,
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),

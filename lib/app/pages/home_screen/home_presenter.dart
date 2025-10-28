@@ -12,10 +12,12 @@ class HomePresenter {
   Future<ProductDetailModel?> getProductApi({
     bool isLoading = false,
     required String srjobno,
-  }) async =>
-      await bottomBarUsecases.getProductApi(srjobno: srjobno, isLoading: isLoading);
+  }) async => await bottomBarUsecases.getProductApi(
+    srjobno: srjobno,
+    isLoading: isLoading,
+  );
 
-      Future<PostCreateUser?> postCreateCustomer({
+  Future<PostCreateUser?> postCreateCustomer({
     bool isLoading = false,
     required String customerid,
     required String name,
@@ -28,14 +30,14 @@ class HomePresenter {
     required String zipcode,
   }) async => await bottomBarUsecases.postCreateCustomer(
     customerid: customerid,
-        name: name,
-        mobile: mobile,
-        email: email,
-        address: address,
-        state: state,
-        city: city,
-        area: area,
-        zipcode: zipcode,
+    name: name,
+    mobile: mobile,
+    email: email,
+    address: address,
+    state: state,
+    city: city,
+    area: area,
+    zipcode: zipcode,
     isLoading: isLoading,
   );
 
@@ -45,10 +47,14 @@ class HomePresenter {
     required String customerId,
     required String discount,
     required String total,
+    required String userId,
+    required String finalAmount,
     required String status,
     required List<ProducModel> products,
   }) async => bottomBarUsecases.postAddToCart(
     customerId: customerId,
+    finalAmount: finalAmount,
+    userId: userId,
     discount: discount,
     orderId: orderId,
     products: products,
@@ -57,7 +63,7 @@ class HomePresenter {
     isLoading: isLoading,
   );
 
-   Future<CustomerOrderHistory?> postOrderHistoryApi({
+  Future<CustomerOrderHistory?> postOrderHistoryApi({
     bool isLoading = false,
     required int page,
     required int limit,

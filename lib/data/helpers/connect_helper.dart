@@ -144,7 +144,7 @@ class ConnectHelper {
     );
     return response;
   }
-  
+
   Future<ResponseModel> getProfileApi({bool isLoading = false}) async {
     var response = await apiWrapper.makeRequest(
       EndPoints.getProfileApi,
@@ -216,7 +216,7 @@ class ConnectHelper {
     return response;
   }
 
-   Future<ResponseModel> postOrderHistoryApi({
+  Future<ResponseModel> postOrderHistoryApi({
     bool isLoading = false,
     required int page,
     required int limit,
@@ -243,6 +243,8 @@ class ConnectHelper {
     bool isLoading = false,
     required String orderId,
     required String customerId,
+    required String userId,
+    required String finalAmount,
     required String discount,
     required String total,
     required String status,
@@ -250,11 +252,13 @@ class ConnectHelper {
   }) async {
     var data = {
       "orderid": orderId,
+      "userid": userId,
       "customerid": customerId,
       "products": products,
       "discount": discount,
       "total": total,
-      "sttus": status,
+      "finalAmount": finalAmount,
+      "status": status,
     };
     var response = await apiWrapper.makeRequest(
       EndPoints.createOrder,
@@ -278,14 +282,14 @@ class ProducModel {
     required this.total,
   });
   Map<String, dynamic> toJson() => {
-        "productid": productId,
-        "qty": qta,
-        "total": total,
-      };
+    "productid": productId,
+    "qty": qta,
+    "total": total,
+  };
 
   factory ProducModel.fromJson(Map<String, dynamic> json) => ProducModel(
-        productId: json["productid"] as String?,
-        qta: json["qty"] as int?,
-        total: json["total"] as String?,
-      );
+    productId: json["productid"] as String?,
+    qta: json["qty"] as int?,
+    total: json["total"] as String?,
+  );
 }

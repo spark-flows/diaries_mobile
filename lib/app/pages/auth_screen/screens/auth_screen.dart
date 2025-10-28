@@ -47,7 +47,7 @@ class AuthScreen extends StatelessWidget {
                       style: Styles.txtGreyColorW40014,
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Sign Up',
+                          text: 'Log In',
                           style: Styles.appColorW70016,
                           recognizer:
                               TapGestureRecognizer()

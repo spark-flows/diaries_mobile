@@ -146,11 +146,15 @@ class DataRepository extends DomainRepository {
     required String discount,
     required String total,
     required String status,
+    required String userId,
+    required String finalAmount,
     required List<ProducModel> products,
   }) async => await connectHelper.postAddToCart(
     customerId: customerId,
     discount: discount,
     orderId: orderId,
+    finalAmount: finalAmount,
+    userId: userId,
     products: products,
     status: status,
     total: total,
@@ -174,8 +178,6 @@ class DataRepository extends DomainRepository {
   Future<ResponseModel> getProductApi({
     bool isLoading = false,
     required String srjobno,
-  }) async => await connectHelper.getProductApi(
-    srjobno: srjobno,
-    isLoading: isLoading,
-  );
+  }) async =>
+      await connectHelper.getProductApi(srjobno: srjobno, isLoading: isLoading);
 }

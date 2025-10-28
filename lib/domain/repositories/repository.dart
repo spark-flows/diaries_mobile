@@ -7,7 +7,6 @@ import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:diaries/domain/models/profile_model.dart';
-import 'package:get/get.dart';
 
 import '../../app/app.dart';
 
@@ -228,6 +227,8 @@ class Repository {
     required String discount,
     required String total,
     required String status,
+    required String userId,
+    required String finalAmount,
     required List<ProducModel> products,
   }) async {
     try {
@@ -235,6 +236,8 @@ class Repository {
         customerId: customerId,
         discount: discount,
         orderId: orderId,
+        finalAmount: finalAmount,
+        userId: userId,
         products: products,
         status: status,
         total: total,
@@ -250,7 +253,7 @@ class Repository {
     }
   }
 
-    Future<CustomerOrderHistory?> postOrderHistoryApi({
+  Future<CustomerOrderHistory?> postOrderHistoryApi({
     bool isLoading = false,
     required int page,
     required int limit,
@@ -266,11 +269,7 @@ class Repository {
         isLoading: isLoading,
       );
       var customerOrderHistory = customerOrderHistoryFromJson(response.data);
-      if (customerOrderHistory.data != null) {
-        return customerOrderHistory;
-      } else {
-        return customerOrderHistory;
-      }
+      return customerOrderHistory;
     } catch (_) {
       Utility.closeDialog();
       UnimplementedError();

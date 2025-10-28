@@ -5,12 +5,25 @@ import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/src/core/paging_controller.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HomeController extends GetxController {
   HomeController(this.bottomBarPresenter);
 
   final HomePresenter bottomBarPresenter;
+
+  List<HomeModel> homeList = [
+    HomeModel(
+      name: 'Trannsict',
+      icon: AssetConstants.trannsict_icon,
+      onTap: () => RouteManagement.goToHomeScreen(),
+    ),
+    HomeModel(
+      name: 'Order',
+      icon: AssetConstants.order_history_icon,
+      onTap: () => RouteManagement.goToOrderHistoryScreen(),
+    ),
+  ];
 
   int currentIndex = 0;
 
@@ -80,6 +93,8 @@ class HomeController extends GetxController {
 
       await postAddToCart(
         customerId: customerId,
+        finalAmount: totalPrice.toString(),
+        userId: '',
         discount: discountController.text,
         orderId: '',
         product: List.generate(localProductList.length, (index) {
@@ -109,11 +124,16 @@ class HomeController extends GetxController {
     required List<ProducModel> product,
     required String total,
     required String customerId,
+    required String userId,
+    required String finalAmount,
   }) async {
     var response = await bottomBarPresenter.postAddToCart(
       isLoading: false,
       customerId: customerId,
-      discount: (discount != null || discount.isNotEmpty) ? '$discount%' : discount,
+      userId: userId,
+      finalAmount: total,
+      discount: discount,
+      // (discount != null || discount.isNotEmpty) ? '$discount' : discount,
       orderId: orderId,
       products: product,
       status: 'Pending',
@@ -136,31 +156,76 @@ class HomeController extends GetxController {
   }
 
   List<CustomerOrderHistoryDoc> orderHistoryDocList = [];
-  PagingController<int, CustomerOrderHistoryDoc> customerOrderHistoryPagingController = PagingController(
-    firstPageKey: 1,
-  );
+  PagingController<int, CustomerOrderHistoryDoc>
+  customerOrderHistoryPagingController = PagingController(firstPageKey: 1);
 
-  Future<void> postOrderHistoryApi(pageKey, {required String date,}) async {
-    var response = await bottomBarPresenter.postOrderHistoryApi(
-      page: pageKey,
-      limit: 50,
-      customerId: customerId,
-      date: date,
-    );
-    if (response?.data != null) {
-      if (pageKey == 1) {
-        orderHistoryDocList.clear();
-      }
-      orderHistoryDocList = response?.data.docs ?? [];
+  // Future<void> postOrderHistoryApi(pageKey, {required String date}) async {
+  //   var response = await bottomBarPresenter.postOrderHistoryApi(
+  //     page: pageKey,
+  //     limit: 50,
+  //     customerId: customerId,
+  //     date: date,
+  //   );
+  //   if (response?.data != null) {
+  //     if (pageKey == 1) {
+  //       orderHistoryDocList.clear();
+  //     }
+  //     orderHistoryDocList = response?.data ?? [];
 
-      final isLastPage = orderHistoryDocList.length < 10;
-      if (isLastPage) {
-        customerOrderHistoryPagingController.appendLastPage(orderHistoryDocList);
+  //     final isLastPage = orderHistoryDocList.length < 10;
+  //     if (isLastPage) {
+  //       customerOrderHistoryPagingController.appendLastPage(
+  //         orderHistoryDocList,
+  //       );
+  //     } else {
+  //       var nextPageKey = pageKey + 1;
+  //       customerOrderHistoryPagingController.appendPage(
+  //         orderHistoryDocList,
+  //         nextPageKey,
+  //       );
+  //     }
+  //     update();
+  //   } else {
+  //     Utility.closeLoader();
+  //     Utility.errorMessage(response?.message ?? "");
+  //   }
+  // }
+
+  Future<void> postOrderHistoryApi(int pageKey, {required String date}) async {
+    try {
+      // Call API
+      final response = await bottomBarPresenter.postOrderHistoryApi(
+        page: pageKey,
+        limit: 50,
+        customerId: customerId,
+        date: date,
+      );
+
+      // Check if data is valid
+      if (response != null && response.data.isNotEmpty) {
+        final newItems = response.data;
+
+        final isLastPage = newItems.length < 10;
+        if (isLastPage) {
+          customerOrderHistoryPagingController.appendLastPage(newItems);
+        } else {
+          final nextPageKey = pageKey + 1;
+          customerOrderHistoryPagingController.appendPage(
+            newItems,
+            nextPageKey,
+          );
+        }
+
+        update();
       } else {
-        var nextPageKey = pageKey + 1;
-        customerOrderHistoryPagingController.appendPage(orderHistoryDocList, nextPageKey);
+        // No data or empty list
+        customerOrderHistoryPagingController.appendLastPage([]);
+        Utility.errorMessage(response?.message ?? "No order history found");
       }
-      update();
+    } catch (error) {
+      Utility.closeLoader();
+      customerOrderHistoryPagingController.error = error;
+      Utility.errorMessage("Failed to fetch order history: $error");
     }
   }
 
@@ -178,4 +243,12 @@ class HomeController extends GetxController {
   TextEditingController discountController = TextEditingController(text: '0');
 
   bool expanded = false;
+}
+
+class HomeModel {
+  String? name;
+  String? icon;
+  void Function()? onTap;
+
+  HomeModel({this.name, this.icon, this.onTap});
 }

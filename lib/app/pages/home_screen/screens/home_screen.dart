@@ -13,9 +13,10 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: ColorsValue.appBg,
           appBar: AppBarWidget(
-            onTapBack: () {},
+            onTapBack: () {
+              RouteManagement.goToSelectOptionsScreen();
+            },
             title: 'Diaries',
-            isVisible: false,
             isCenter: true,
             actions: [
               GestureDetector(

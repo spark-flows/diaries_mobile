@@ -20,5 +20,7 @@ abstract class AssetConstants {
   static const String cart_icon = "assets/svg/cart_icon.svg";
   static const String remove_icon = "assets/svg/remove_cart.svg";
   static const String calender_icon = "assets/svg/calender.svg";
+  static const String trannsict_icon = "assets/svg/transict_icon.svg";
+  static const String order_history_icon = "assets/svg/Order_icon.svg";
   static const String ssss = "";
 }

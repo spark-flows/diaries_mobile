@@ -93,6 +93,49 @@ class OrderHistoyScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Expanded(
+                  //   child: RefreshIndicator(
+                  //     onRefresh:
+                  //         () => Future.sync(
+                  //           () =>
+                  //               controller.customerOrderHistoryPagingController
+                  //                   .refresh(),
+                  //         ),
+                  //     child: PagedListView<int, CustomerOrderHistoryDoc>(
+                  //       pagingController:
+                  //           controller.customerOrderHistoryPagingController,
+                  //       builderDelegate:
+                  //           PagedChildBuilderDelegate<CustomerOrderHistoryDoc>(
+                  //             noItemsFoundIndicatorBuilder: (context) {
+                  //               return Center(
+                  //                 child: Text(
+                  //                   "Order history not found...!",
+                  //                   style: Styles.txtBlackColorW60014.copyWith(
+                  //                     fontSize:
+                  //                         Utility.isTablet()
+                  //                             ? Dimens.twenty
+                  //                             : Dimens.fourteen,
+                  //                   ),
+                  //                 ),
+                  //               );
+                  //             },
+                  //             itemBuilder: (context, item, index) {
+                  //               return OrderCard(
+                  //                 name: item.customer.name,
+                  //                 orderNo: item.orderNo,
+                  //                 products:
+                  //                     item.products
+                  //                         .map((product) => product)
+                  //                         .toList(),
+                  //                 qty: item.qty,
+                  //                 price: item.totalAmount,
+                  //                 date: item.orderDate,
+                  //               );
+                  //             },
+                  //           ),
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                     child: RefreshIndicator(
                       onRefresh:
@@ -119,6 +162,30 @@ class OrderHistoyScreen extends StatelessWidget {
                                   ),
                                 );
                               },
+                              firstPageErrorIndicatorBuilder: (context) {
+                                return Center(
+                                  child: Text(
+                                    "Failed to load order history",
+                                    style: Styles.txtBlackColorW60014.copyWith(
+                                      fontSize:
+                                          Utility.isTablet()
+                                              ? Dimens.twenty
+                                              : Dimens.fourteen,
+                                    ),
+                                  ),
+                                );
+                              },
+                              firstPageProgressIndicatorBuilder:
+                                  (context) => const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                              newPageProgressIndicatorBuilder:
+                                  (context) => const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(16.0),
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
                               itemBuilder: (context, item, index) {
                                 return OrderCard(
                                   name: item.customer.name,

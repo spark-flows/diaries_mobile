@@ -13,10 +13,8 @@ class HomeUsecases {
   Future<ProductDetailModel?> getProductApi({
     bool isLoading = false,
     required String srjobno,
-  }) async => await repository.getProductApi(
-    srjobno: srjobno,
-    isLoading: isLoading,
-  );
+  }) async =>
+      await repository.getProductApi(srjobno: srjobno, isLoading: isLoading);
 
   Future<PostCreateUser?> postCreateCustomer({
     bool isLoading = false,
@@ -31,14 +29,14 @@ class HomeUsecases {
     required String zipcode,
   }) async => await repository.postCreateCustomer(
     customerid: customerid,
-        name: name,
-        mobile: mobile,
-        email: email,
-        address: address,
-        state: state,
-        city: city,
-        area: area,
-        zipcode: zipcode,
+    name: name,
+    mobile: mobile,
+    email: email,
+    address: address,
+    state: state,
+    city: city,
+    area: area,
+    zipcode: zipcode,
     isLoading: isLoading,
   );
 
@@ -49,9 +47,13 @@ class HomeUsecases {
     required String discount,
     required String total,
     required String status,
+    required String userId,
+    required String finalAmount,
     required List<ProducModel> products,
   }) async => await repository.postAddToCart(
     customerId: customerId,
+    finalAmount: finalAmount,
+    userId: userId,
     discount: discount,
     orderId: orderId,
     products: products,

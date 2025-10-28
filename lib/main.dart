@@ -1,14 +1,13 @@
+import 'package:diaries/app/app.dart';
+import 'package:diaries/data/data.dart';
+import 'package:diaries/device/device.dart';
+import 'package:diaries/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:diaries/app/app.dart';
-import 'package:diaries/data/data.dart';
-import 'package:diaries/device/device.dart';
-import 'package:diaries/domain/domain.dart';
 import 'package:upgrader/upgrader.dart';
-
 
 // admin@pureyou.com
 // PY@002025
@@ -77,7 +76,7 @@ class MyApp extends StatelessWidget {
               darkTheme: darkThemeData(context),
               themeMode: ThemeMode.light,
               getPages: AppPages.pages,
-              initialRoute: Routes.authScreen,
+              initialRoute: Routes.splashScreen,
               translations: TranslationsFile(),
               navigatorKey: Get.key,
               enableLog: true,
