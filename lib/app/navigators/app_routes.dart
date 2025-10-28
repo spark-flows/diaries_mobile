@@ -12,6 +12,7 @@ abstract class Routes {
   static const addCustomerScreen = _Paths.addCustomerScreen;
   static const cartScreen = _Paths.cartScreen;
   static const orderHistoryScreen = _Paths.orderHistoryScreen;
+  static const profileScreen = _Paths.profileScreen;
   }
 
 abstract class _Paths {
@@ -26,5 +27,6 @@ abstract class _Paths {
   static const addCustomerScreen = '/AddCustomerScreen';
   static const cartScreen = '/CartScreen';
   static const orderHistoryScreen = '/OrderHistoryScreen';
+  static const profileScreen = '/profileScreen';
   
 }

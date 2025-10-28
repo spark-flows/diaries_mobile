@@ -41,80 +41,82 @@ class ProductDetailScreen extends StatelessWidget {
             ),
             child: SvgPicture.asset(AssetConstants.cart_icon),
           ),
-          bottomNavigationBar: Padding(
-            padding: Dimens.edgeInsets20_00_20_00.copyWith(bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () async {
-                      Get.back();
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height:
-                          Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: ColorsValue.whiteColor,
-                        borderRadius: BorderRadius.circular(Dimens.ten),
-                        border: Border.all(
-                          color: ColorsValue.blackColor,
-                          width: Dimens.one,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Lottie.asset(AssetConstants.scanner),
-                          Dimens.boxWidth5,
-                          Text(
-                            'Scane New'.tr,
-                            style: Styles.txtBlackColorW50014.copyWith(
-                              fontSize:
-                                  Utility.isTablet()
-                                      ? Dimens.twenty
-                                      : Dimens.fourteen,
-                              color: ColorsValue.blackColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Dimens.boxWidth20,
-                Expanded(
-                  child: InkWell(
-                    onTap: () async {
-                      await dbHelper.insertProduct(element);
-                      // await ProductDBManager.instance.insert(element);
-                      // RouteManagement.goToAddNewCustomerScreen();
+          bottomNavigationBar: SafeArea(
+            child: Padding(
+              padding: Dimens.edgeInsets20_00_20_00.copyWith(bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () async {
+                        Get.back();
                       },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height:
-                          Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: ColorsValue.appColor,
-                        borderRadius: BorderRadius.circular(Dimens.ten),
-                      ),
-                      child: Text(
-                        'Add To Cart',
-                        style: Styles.whiteColorW50014.copyWith(
-                          fontSize:
-                              Utility.isTablet()
-                                  ? Dimens.twenty
-                                  : Dimens.fourteen,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height:
+                            Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                          color: ColorsValue.whiteColor,
+                          borderRadius: BorderRadius.circular(Dimens.ten),
+                          border: Border.all(
+                            color: ColorsValue.blackColor,
+                            width: Dimens.one,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset(AssetConstants.scanner),
+                            Dimens.boxWidth5,
+                            Text(
+                              'Scane New'.tr,
+                              style: Styles.txtBlackColorW50014.copyWith(
+                                fontSize:
+                                    Utility.isTablet()
+                                        ? Dimens.twenty
+                                        : Dimens.fourteen,
+                                color: ColorsValue.blackColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Dimens.boxWidth20,
+                  Expanded(
+                    child: InkWell(
+                      onTap: () async {
+                        await dbHelper.insertProduct(element);
+                        // await ProductDBManager.instance.insert(element);
+                        // RouteManagement.goToAddNewCustomerScreen();
+                        },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height:
+                            Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                          color: ColorsValue.appColor,
+                          borderRadius: BorderRadius.circular(Dimens.ten),
+                        ),
+                        child: Text(
+                          'Add To Cart',
+                          style: Styles.whiteColorW50014.copyWith(
+                            fontSize:
+                                Utility.isTablet()
+                                    ? Dimens.twenty
+                                    : Dimens.fourteen,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           body: SafeArea(

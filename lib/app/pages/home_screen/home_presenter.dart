@@ -2,6 +2,7 @@ import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
+import 'package:diaries/domain/models/orderHistory_model.dart';
 
 class HomePresenter {
   HomePresenter(this.bottomBarUsecases);
@@ -54,5 +55,19 @@ class HomePresenter {
     status: status,
     total: total,
     isLoading: isLoading,
+  );
+
+   Future<CustomerOrderHistory?> postOrderHistoryApi({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String customerId,
+    required String date,
+  }) async => await bottomBarUsecases.postOrderHistoryApi(
+    isLoading: isLoading,
+    page: page,
+    limit: limit,
+    customerId: customerId,
+    date: date,
   );
 }

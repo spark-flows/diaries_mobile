@@ -144,6 +144,17 @@ class ConnectHelper {
     );
     return response;
   }
+  
+  Future<ResponseModel> getProfileApi({bool isLoading = false}) async {
+    var response = await apiWrapper.makeRequest(
+      EndPoints.getProfileApi,
+      Request.get,
+      null,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
 
   Future<ResponseModel> postCreateCustomer({
     bool isLoading = false,
@@ -201,6 +212,29 @@ class ConnectHelper {
       data,
       isLoading,
       Utility.commonHeader(isDefaultAuthorizationKeyAdd: false),
+    );
+    return response;
+  }
+
+   Future<ResponseModel> postOrderHistoryApi({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String customerid,
+    required String date,
+  }) async {
+    var data = {
+      'page': page,
+      'limit': limit,
+      'customerid': customerid,
+      'date': date,
+    };
+    var response = await apiWrapper.makeRequest(
+      EndPoints.orderHistory,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
     );
     return response;
   }

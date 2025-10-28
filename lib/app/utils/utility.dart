@@ -8,6 +8,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:diaries/app/app.dart';
 import 'package:diaries/data/data.dart';
 import 'package:diaries/domain/domain.dart';
+import 'package:diaries/domain/models/profile_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 abstract class Utility {
   static bool isFilter = false;
+  static ProfileData? profileData;
 
   static Future<bool> isNetworkAvailable() async {
     var connectivityResult = await Connectivity().checkConnectivity();

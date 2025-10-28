@@ -1,7 +1,9 @@
 import 'package:diaries/app/app.dart';
+import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 
 class OrderHistoyScreen extends StatelessWidget {
@@ -10,91 +12,136 @@ class OrderHistoyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
-      builder:
-          (controller) => Scaffold(
-            appBar: AppBar(
-              title: Text('Order History'),
-              backgroundColor: ColorsValue.appBg,
-              elevation: 0,
-              centerTitle: true,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
+      initState: (state) {
+        var controller = Get.find<HomeController>();
+        controller.customerOrderHistoryPagingController = PagingController(
+          firstPageKey: 1,
+        );
+        controller.customerOrderHistoryPagingController.addPageRequestListener((
+          pageKey,
+        ) async {
+          await controller.postOrderHistoryApi(pageKey, date: '');
+        });
+      },
+      builder: (controller) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Order History'),
+            backgroundColor: ColorsValue.appBg,
+            elevation: 0,
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Get.back();
+              },
             ),
-            body: Scaffold(
-              backgroundColor: ColorsValue.appBg,
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    CustomTextFormField(
-                      hintText: 'Search',
-                      prefixIcon: Icon(Icons.search, color: Colors.grey),
-                      onChanged: (value) {
-                        controller.update();
-                      },
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Card(
-                          elevation: 0,
-                          color: ColorsValue.appBg,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                            side: BorderSide(color: ColorsValue.textFieldBg),
+          ),
+          body: Scaffold(
+            backgroundColor: ColorsValue.appBg,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  CustomTextFormField(
+                    hintText: 'Search',
+                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    onChanged: (value) {
+                      controller.update();
+                    },
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Card(
+                        elevation: 0,
+                        color: ColorsValue.appBg,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          side: BorderSide(color: ColorsValue.textFieldBg),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 4,
+                            right: 4,
+                            top: 4,
+                            bottom: 4,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Select Date',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Select Date',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Dimens.boxWidth5,
-                                SvgPicture.asset(
-                                  AssetConstants.calender_icon,
-                                  colorFilter: ColorFilter.mode(
-                                    Colors.black87,
-                                    BlendMode.srcIn,
-                                  ),
+                              ),
+                              Dimens.boxWidth5,
+                              SvgPicture.asset(
+                                AssetConstants.calender_icon,
+                                colorFilter: ColorFilter.mode(
+                                  Colors.black87,
+                                  BlendMode.srcIn,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return OrderCard(
-                            name: "Sagar Miyani",
-                            orderNo: "py-166-2025",
-                            products: ["1/4862...", "2/4862...", "3/4862..."],
-                            qty: 10,
-                            price: 500,
-                            date: DateTime(2025, 5, 25),
-                          );
-                        },
+                  ),
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh:
+                          () => Future.sync(
+                            () =>
+                                controller.customerOrderHistoryPagingController
+                                    .refresh(),
+                          ),
+                      child: PagedListView<int, CustomerOrderHistoryDoc>(
+                        pagingController:
+                            controller.customerOrderHistoryPagingController,
+                        builderDelegate:
+                            PagedChildBuilderDelegate<CustomerOrderHistoryDoc>(
+                              noItemsFoundIndicatorBuilder: (context) {
+                                return Center(
+                                  child: Text(
+                                    "Order history not found...!",
+                                    style: Styles.txtBlackColorW60014.copyWith(
+                                      fontSize:
+                                          Utility.isTablet()
+                                              ? Dimens.twenty
+                                              : Dimens.fourteen,
+                                    ),
+                                  ),
+                                );
+                              },
+                              itemBuilder: (context, item, index) {
+                                return OrderCard(
+                                  name: item.customer.name,
+                                  orderNo: item.orderNo,
+                                  products:
+                                      item.products
+                                          .map((product) => product)
+                                          .toList(),
+                                  qty: item.qty,
+                                  price: item.totalAmount,
+                                  date: item.orderDate,
+                                );
+                              },
+                            ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
+        );
+      },
     );
   }
 }
@@ -102,7 +149,7 @@ class OrderHistoyScreen extends StatelessWidget {
 class OrderCard extends StatelessWidget {
   final String name;
   final String orderNo;
-  final List<String> products;
+  final List<CustomerOrderHistoryProduct> products;
   final int qty;
   final double price;
   final DateTime date;
@@ -134,7 +181,10 @@ class OrderCard extends StatelessWidget {
         ),
         child: ExpansionTile(
           tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          childrenPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -202,14 +252,14 @@ class OrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-Dimens.boxHeight4,
+              Dimens.boxHeight4,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RichText(
-                    text: const TextSpan(
-                      text: "Product : ",
-                      style: TextStyle(
+                    text: TextSpan(
+                      text: "Product : ${products.length}",
+                      style: const TextStyle(
                         color: Colors.black54,
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
@@ -233,99 +283,115 @@ Dimens.boxHeight4,
             const Divider(thickness: 0.5, color: Colors.grey),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: products
-                  .map(
-                    (product) {
-                      return Padding(
+              children:
+                  products.map((product) {
+                    return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Container(
-                            color: ColorsValue.textFieldBg,
-                            // padding: Dimens.edgeInsets20_00_20_10,
-                            margin: Dimens.edgeInsetsBottom10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  dense: true,
-                                  visualDensity: VisualDensity(
-                                    vertical: Dimens.zero,
-                                    horizontal: Dimens.zero,
+                        color: ColorsValue.textFieldBg,
+                        // padding: Dimens.edgeInsets20_00_20_10,
+                        margin: Dimens.edgeInsetsBottom10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              dense: true,
+                              visualDensity: VisualDensity(
+                                vertical: Dimens.zero,
+                                horizontal: Dimens.zero,
+                              ),
+                              contentPadding: Dimens.edgeInsets0,
+                              minVerticalPadding: Dimens.zero,
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Sr.Job :- ${product.srjobno} (${product.qty}x)",
+                                    style: Styles.txtBlackColorW70018,
                                   ),
-                                  contentPadding: Dimens.edgeInsets0,
-                                  minVerticalPadding: Dimens.zero,
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Sr.Job :- srjobno (8x)",
-                                        style: Styles.txtBlackColorW70018,
-                                      ),
 
-                                      // InkWell(
-                                      //   onTap: () async {
-                                      //     // await dbHelper.deleteProduct(
-                                      //     //   element.id,
-                                      //     // );
-                                      //     // controller.localProductList =
-                                      //     //     await dbHelper.getAllProducts();
-                                      //     // controller.update();
-                                      //     // await productManager.deleteProduct(element.id);
-                                      //   },
-                                      //   child: Row(
-                                      //     children: [
-                                      //       SvgPicture.asset(
-                                      //         AssetConstants.remove_icon,
-                                      //         height: 18,
-                                      //       ),
-                                      //       Dimens.boxWidth4,
-                                      //       Text(
-                                      //         'Remove',
-                                      //         style: Styles.whiteColorW50010
-                                      //             .copyWith(
-                                      //               color: ColorsValue.redColor,
-                                      //             ),
-                                      //       ),
-                                      //     ],
-                                      //   ),
+                                  // InkWell(
+                                  //   onTap: () async {
+                                  //     // await dbHelper.deleteProduct(
+                                  //     //   element.id,
+                                  //     // );
+                                  //     // controller.localProductList =
+                                  //     //     await dbHelper.getAllProducts();
+                                  //     // controller.update();
+                                  //     // await productManager.deleteProduct(element.id);
+                                  //   },
+                                  //   child: Row(
+                                  //     children: [
+                                  //       SvgPicture.asset(
+                                  //         AssetConstants.remove_icon,
+                                  //         height: 18,
+                                  //       ),
+                                  //       Dimens.boxWidth4,
+                                  //       Text(
+                                  //         'Remove',
+                                  //         style: Styles.whiteColorW50010
+                                  //             .copyWith(
+                                  //               color: ColorsValue.redColor,
+                                  //             ),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                              subtitle: Padding(
+                                padding: Dimens.edgeInsetsTop05,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      // constraints: BoxConstraints(
+                                      //   maxWidth:
+                                      //       100,
                                       // ),
-                                    ],
-                                  ),
-                                  subtitle: Padding(
-                                    padding: Dimens.edgeInsetsTop05,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Design No :- ",
+                                            style: Styles.txtBlackColorW60014,
+                                          ),
+                                          Text(
+                                            product.designno,
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: true,
+                                            style: Styles.txtBlackColorW40014,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Dimens.boxWidth5,
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Design No. :- designno",
+                                          "Price :- ",
                                           style: Styles.txtBlackColorW60014,
                                         ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Price :- ",
-                                              style: Styles.txtBlackColorW60014,
-                                            ),
-                                            Text(
-                                              "price\$",
-                                              style: Styles.txtBlackColorW40014,
-                                            ),
-                                          ],
+                                        Text(
+                                          "${product.price.toStringAsFixed(2)}\$",
+                                          style: Styles.txtBlackColorW40014,
                                         ),
                                       ],
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
+                        ),
+                      ),
                     );
-                    },
-                  )
-                  .toList(),
+                  }).toList(),
             ),
           ],
         ),

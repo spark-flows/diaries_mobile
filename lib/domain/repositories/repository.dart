@@ -5,6 +5,8 @@ import 'package:diaries/device/device.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
+import 'package:diaries/domain/models/orderHistory_model.dart';
+import 'package:diaries/domain/models/profile_model.dart';
 import 'package:get/get.dart';
 
 import '../../app/app.dart';
@@ -141,6 +143,22 @@ class Repository {
     }
   }
 
+  Future<ProfileModel?> getProfileApi({bool isLoading = false}) async {
+    try {
+      var response = await _dataRepository.getProfileApi(isLoading: isLoading);
+      var productListModel = profileModelFromJson(response.data);
+      if (productListModel.data != null) {
+        return productListModel;
+      } else {
+        return productListModel;
+      }
+    } catch (_) {
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
   Future<ProductDetailModel?> getProductApi({
     bool isLoading = false,
     required String srjobno,
@@ -226,6 +244,34 @@ class Repository {
       return cartProductModel;
     } catch (e) {
       print('This is The Error >>>>>>>>>>>>>>>>>>>>>>>>>>> $e');
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
+    Future<CustomerOrderHistory?> postOrderHistoryApi({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String customerId,
+    required String date,
+  }) async {
+    try {
+      var response = await _dataRepository.postOrderHistoryApi(
+        page: page,
+        limit: limit,
+        customerId: customerId,
+        date: date,
+        isLoading: isLoading,
+      );
+      var customerOrderHistory = customerOrderHistoryFromJson(response.data);
+      if (customerOrderHistory.data != null) {
+        return customerOrderHistory;
+      } else {
+        return customerOrderHistory;
+      }
+    } catch (_) {
       Utility.closeDialog();
       UnimplementedError();
       return null;

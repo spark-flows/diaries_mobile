@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
               darkTheme: darkThemeData(context),
               themeMode: ThemeMode.light,
               getPages: AppPages.pages,
-              initialRoute: Routes.splashScreen,
+              initialRoute: Routes.authScreen,
               translations: TranslationsFile(),
               navigatorKey: Get.key,
               enableLog: true,

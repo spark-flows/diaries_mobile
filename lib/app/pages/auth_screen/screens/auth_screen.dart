@@ -30,7 +30,7 @@ class AuthScreen extends StatelessWidget {
                         controller.postLoginApi();
                       }
                     },
-                    text: 'Sign Up'.tr,
+                    text: 'Log in',
                     textStyle: Styles.whiteColorW80018.copyWith(
                       fontSize:
                           Utility.isTablet() ? Dimens.twenty : Dimens.eighteen,

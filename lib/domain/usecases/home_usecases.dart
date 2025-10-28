@@ -2,6 +2,7 @@ import 'package:diaries/data/data.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
 import 'package:diaries/domain/models/models.dart';
+import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:diaries/domain/repositories/repository.dart';
 
 class HomeUsecases {
@@ -57,5 +58,19 @@ class HomeUsecases {
     status: status,
     total: total,
     isLoading: isLoading,
+  );
+
+  Future<CustomerOrderHistory?> postOrderHistoryApi({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String customerId,
+    required String date,
+  }) async => await repository.postOrderHistoryApi(
+    isLoading: isLoading,
+    page: page,
+    limit: limit,
+    customerId: customerId,
+    date: date,
   );
 }

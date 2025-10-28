@@ -2,8 +2,10 @@ import 'package:diaries/app/app.dart';
 import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
+import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/src/core/paging_controller.dart';
 
 class HomeController extends GetxController {
   HomeController(this.bottomBarPresenter);
@@ -130,6 +132,35 @@ class HomeController extends GetxController {
     } else {
       Utility.closeLoader();
       Utility.errorMessage(response?.message ?? "");
+    }
+  }
+
+  List<CustomerOrderHistoryDoc> orderHistoryDocList = [];
+  PagingController<int, CustomerOrderHistoryDoc> customerOrderHistoryPagingController = PagingController(
+    firstPageKey: 1,
+  );
+
+  Future<void> postOrderHistoryApi(pageKey, {required String date,}) async {
+    var response = await bottomBarPresenter.postOrderHistoryApi(
+      page: pageKey,
+      limit: 50,
+      customerId: customerId,
+      date: date,
+    );
+    if (response?.data != null) {
+      if (pageKey == 1) {
+        orderHistoryDocList.clear();
+      }
+      orderHistoryDocList = response?.data.docs ?? [];
+
+      final isLastPage = orderHistoryDocList.length < 10;
+      if (isLastPage) {
+        customerOrderHistoryPagingController.appendLastPage(orderHistoryDocList);
+      } else {
+        var nextPageKey = pageKey + 1;
+        customerOrderHistoryPagingController.appendPage(orderHistoryDocList, nextPageKey);
+      }
+      update();
     }
   }
 
