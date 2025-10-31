@@ -3,6 +3,7 @@ import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
+import 'package:diaries/domain/models/pdf_genrate_model.dart';
 
 class HomePresenter {
   HomePresenter(this.bottomBarUsecases);
@@ -15,6 +16,16 @@ class HomePresenter {
   }) async => await bottomBarUsecases.getProductApi(
     srjobno: srjobno,
     isLoading: isLoading,
+  );
+
+  Future<GetPdfModel?> getPdfApi({
+    bool isLoading = false,
+    required String customerId,
+    required String orderId,
+  }) async => await bottomBarUsecases.getPdfApi(
+    isLoading: isLoading,
+    customerId: customerId,
+    orderId: orderId,
   );
 
   Future<PostCreateUser?> postCreateCustomer({
@@ -68,10 +79,12 @@ class HomePresenter {
     required int page,
     required int limit,
     required String customerId,
+    required String search,
     required String date,
   }) async => await bottomBarUsecases.postOrderHistoryApi(
     isLoading: isLoading,
     page: page,
+    search: search,
     limit: limit,
     customerId: customerId,
     date: date,

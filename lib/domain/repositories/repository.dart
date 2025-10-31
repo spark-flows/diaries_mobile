@@ -6,7 +6,9 @@ import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
+import 'package:diaries/domain/models/pdf_genrate_model.dart';
 import 'package:diaries/domain/models/profile_model.dart';
+import 'package:flutter/material.dart';
 
 import '../../app/app.dart';
 
@@ -158,6 +160,30 @@ class Repository {
     }
   }
 
+  Future<GetPdfModel?> getPdfApi({
+    bool isLoading = false,
+    required String customerId,
+    required String orderId,
+  }) async {
+    try {
+      var response = await _dataRepository.getPdfApi(
+        isLoading: isLoading,
+        customerId: customerId,
+        orderId: orderId,
+      );
+      var getPDFModel = getPdfModelFromJson(response.data);
+      if (getPDFModel.data != null) {
+        return getPDFModel;
+      } else {
+        return getPDFModel;
+      }
+    } catch (_) {
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
   Future<ProductDetailModel?> getProductApi({
     bool isLoading = false,
     required String srjobno,
@@ -170,9 +196,9 @@ class Repository {
       var productDetailModel = productDetailModelFromJson(response.data);
       productDetailModel.data.quantity = 1;
       return productDetailModel;
-    } catch (_) {
+    } catch (_, e) {
       Utility.closeDialog();
-      UnimplementedError();
+      Utility.snacBar(e.toString(), Colors.deepOrange);
       return null;
     }
   }
@@ -258,12 +284,14 @@ class Repository {
     required int page,
     required int limit,
     required String customerId,
+    required String search,
     required String date,
   }) async {
     try {
       var response = await _dataRepository.postOrderHistoryApi(
         page: page,
         limit: limit,
+        search: search,
         customerId: customerId,
         date: date,
         isLoading: isLoading,

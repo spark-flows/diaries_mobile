@@ -11,7 +11,7 @@ class ProductDetailScreen extends StatelessWidget {
   final dbHelper = ProductDbHelper();
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (controller) {
         final element = Get.arguments;
@@ -20,25 +20,25 @@ class ProductDetailScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               "Sr.Job :- ${element.srjobno ?? ''}",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
-            actions: [
-              TextButton(
-                onPressed: () {
-                  RouteManagement.goToOrderHistoryScreen();
-                },
-                child: Text('Order History', style: Styles.appColorW50012),
-              ),
-            ],
+            // actions: [
+            //   TextButton(
+            //     onPressed: () {
+            //       RouteManagement.goToOrderHistoryScreen();
+            //     },
+            //     child: Text('Order History', style: Styles.appColorW50012),
+            //   ),
+            // ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               RouteManagement.goToCartScreen();
             },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(100),
-            ),
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadiusGeometry.circular(100),
+            // ),
             child: SvgPicture.asset(AssetConstants.cart_icon),
           ),
           bottomNavigationBar: SafeArea(
@@ -56,7 +56,9 @@ class ProductDetailScreen extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.center,
                         height:
-                            Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
+                            Utility.isTablet()
+                                ? Dimens.fiftyFive
+                                : Dimens.fourty,
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                           color: ColorsValue.whiteColor,
@@ -93,11 +95,13 @@ class ProductDetailScreen extends StatelessWidget {
                         await dbHelper.insertProduct(element);
                         // await ProductDBManager.instance.insert(element);
                         // RouteManagement.goToAddNewCustomerScreen();
-                        },
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         height:
-                            Utility.isTablet() ? Dimens.fiftyFive : Dimens.fourty,
+                            Utility.isTablet()
+                                ? Dimens.fiftyFive
+                                : Dimens.fourty,
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                           color: ColorsValue.appColor,

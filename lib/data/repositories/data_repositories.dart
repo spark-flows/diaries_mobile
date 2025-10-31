@@ -97,6 +97,16 @@ class DataRepository extends DomainRepository {
   Future<ResponseModel> getProfileApi({bool isLoading = false}) async =>
       await connectHelper.getProfileApi(isLoading: isLoading);
 
+  Future<ResponseModel> getPdfApi({
+    bool isLoading = false,
+    required String customerId,
+    required String orderId,
+  }) async => await connectHelper.getPdfApi(
+    isLoading: isLoading,
+    customerId: customerId,
+    orderId: orderId,
+  );
+
   Future<ResponseModel> postCreateCustomer({
     bool isLoading = false,
     required String customerid,
@@ -164,11 +174,13 @@ class DataRepository extends DomainRepository {
   Future<ResponseModel> postOrderHistoryApi({
     bool isLoading = false,
     required String customerId,
+    required String search,
     required int limit,
     required int page,
     required String date,
   }) async => await connectHelper.postOrderHistoryApi(
     customerid: customerId,
+    search: search,
     date: date,
     page: page,
     limit: limit,

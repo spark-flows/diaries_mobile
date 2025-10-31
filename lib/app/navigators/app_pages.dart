@@ -1,6 +1,7 @@
 import 'package:diaries/app/pages/home_screen/screens/order_history_screen.dart';
 import 'package:diaries/app/pages/home_screen/screens/productDetail.dart';
 import 'package:diaries/app/pages/home_screen/screens/show_options.dart';
+import 'package:diaries/app/pages/home_screen/screens/view_pdf.dart';
 import 'package:diaries/app/pages/pages.dart';
 import 'package:get/get.dart';
 
@@ -98,6 +99,13 @@ class AppPages {
       name: _Paths.orderHistoryScreen,
       transitionDuration: transitionDuration,
       page: OrderHistoyScreen.new,
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<ViewPDFinFullScreen>(
+      name: _Paths.viewPDFScreen,
+      transitionDuration: transitionDuration,
+      page: ViewPDFinFullScreen.new,
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),

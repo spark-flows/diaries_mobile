@@ -6,7 +6,6 @@ class ProfileUsecases {
 
   final Repository repository;
 
-
-      Future<ProfileModel?> getProfileApi({bool isLoading = false}) async =>
+  Future<ProfileModel?> getProfileApi({bool isLoading = false}) async =>
       await repository.getProfileApi(isLoading: isLoading);
 }

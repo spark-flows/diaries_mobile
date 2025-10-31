@@ -4,15 +4,14 @@
 
 import 'dart:convert';
 
-CartProductUpdate cartProductUpdateFromJson(String str) =>
-    CartProductUpdate.fromJson(json.decode(str));
 
-String cartProductUpdateToJson(CartProductUpdate data) =>
-    json.encode(data.toJson());
+CartProductUpdate cartProductUpdateFromJson(String str) => CartProductUpdate.fromJson(json.decode(str));
+
+String cartProductUpdateToJson(CartProductUpdate data) => json.encode(data.toJson());
 
 class CartProductUpdate {
   final String message;
-  final Data data;
+  final CartProductData data;
   final int status;
   final bool isSuccess;
 
@@ -25,23 +24,23 @@ class CartProductUpdate {
 
   CartProductUpdate copyWith({
     String? message,
-    Data? data,
+    CartProductData? data,
     int? status,
     bool? isSuccess,
-  }) => CartProductUpdate(
-    message: message ?? this.message,
-    data: data ?? this.data,
-    status: status ?? this.status,
-    isSuccess: isSuccess ?? this.isSuccess,
-  );
-
-  factory CartProductUpdate.fromJson(Map<String, dynamic> json) =>
+  }) =>
       CartProductUpdate(
-        message: json["Message"],
-        data: Data.fromJson(json["Data"]),
-        status: json["Status"],
-        isSuccess: json["IsSuccess"],
+        message: message ?? this.message,
+        data: data ?? this.data,
+        status: status ?? this.status,
+        isSuccess: isSuccess ?? this.isSuccess,
       );
+
+  factory CartProductUpdate.fromJson(Map<String, dynamic> json) => CartProductUpdate(
+    message: json["Message"],
+    data: CartProductData.fromJson(json["Data"]),
+    status: json["Status"],
+    isSuccess: json["IsSuccess"],
+  );
 
   Map<String, dynamic> toJson() => {
     "Message": message,
@@ -51,142 +50,102 @@ class CartProductUpdate {
   };
 }
 
-class Data {
-  final String id;
-  final List<Item> items;
+class CartProductData {
+  final String orderid;
   final String customerid;
-  final double totalAmount;
-  final int discount;
-  final double finalAmount;
+  final String userid;
+  final List<CartProduct> products;
+  final String total;
+  final String discount;
+  final String finalAmount;
   final String status;
-  final bool isDeleted;
-  final String deletedBy;
-  final String createdBy;
-  final String updatedBy;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final int v;
 
-  Data({
-    required this.id,
-    required this.items,
+  CartProductData({
+    required this.orderid,
     required this.customerid,
-    required this.totalAmount,
+    required this.userid,
+    required this.products,
+    required this.total,
     required this.discount,
     required this.finalAmount,
     required this.status,
-    required this.isDeleted,
-    required this.deletedBy,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
   });
 
-  Data copyWith({
-    String? id,
-    List<Item>? items,
+  CartProductData copyWith({
+    String? orderid,
     String? customerid,
-    double? totalAmount,
-    int? discount,
-    double? finalAmount,
+    String? userid,
+    List<CartProduct>? products,
+    String? total,
+    String? discount,
+    String? finalAmount,
     String? status,
-    bool? isDeleted,
-    String? deletedBy,
-    String? createdBy,
-    String? updatedBy,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    int? v,
-  }) => Data(
-    id: id ?? this.id,
-    items: items ?? this.items,
-    customerid: customerid ?? this.customerid,
-    totalAmount: totalAmount ?? this.totalAmount,
-    discount: discount ?? this.discount,
-    finalAmount: finalAmount ?? this.finalAmount,
-    status: status ?? this.status,
-    isDeleted: isDeleted ?? this.isDeleted,
-    deletedBy: deletedBy ?? this.deletedBy,
-    createdBy: createdBy ?? this.createdBy,
-    updatedBy: updatedBy ?? this.updatedBy,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    v: v ?? this.v,
-  );
+  }) =>
+      CartProductData(
+        orderid: orderid ?? this.orderid,
+        customerid: customerid ?? this.customerid,
+        userid: userid ?? this.userid,
+        products: products ?? this.products,
+        total: total ?? this.total,
+        discount: discount ?? this.discount,
+        finalAmount: finalAmount ?? this.finalAmount,
+        status: status ?? this.status,
+      );
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["_id"] ?? '',
-    items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
-    customerid: json["customerid"] ?? '',
-    totalAmount: json["totalAmount"]?.toDouble() ?? 0.0,
-    discount: json["discount"] ?? 0,
-    finalAmount: json["finalAmount"]?.toDouble() ?? 0.0,
-    status: json["status"] ?? '',
-    isDeleted: json["isDeleted"] ?? false,
-    deletedBy: json["deletedBy"] ?? '',
-    createdBy: json["createdBy"] ?? '',
-    updatedBy: json["updatedBy"] ?? '',
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-    v: json["__v"] ?? 0,
+  factory CartProductData.fromJson(Map<String, dynamic> json) => CartProductData(
+    orderid: json["orderid"],
+    customerid: json["customerid"],
+    userid: json["userid"],
+    products: List<CartProduct>.from(json["products"].map((x) => CartProduct.fromJson(x))),
+    total: json["total"],
+    discount: json["discount"],
+    finalAmount: json["finalAmount"],
+    status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
-    "items": List<dynamic>.from(items.map((x) => x.toJson())),
+    "orderid": orderid,
     "customerid": customerid,
-    "totalAmount": totalAmount,
+    "userid": userid,
+    "products": List<dynamic>.from(products.map((x) => x.toJson())),
+    "total": total,
     "discount": discount,
     "finalAmount": finalAmount,
     "status": status,
-    "isDeleted": isDeleted,
-    "deletedBy": deletedBy,
-    "createdBy": createdBy,
-    "updatedBy": updatedBy,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
-    "__v": v,
   };
 }
 
-class Item {
+class CartProduct {
   final String productid;
-  final int quantity;
-  final double itemTotal;
-  final String id;
+  final int qty;
+  final String total;
 
-  Item({
+  CartProduct({
     required this.productid,
-    required this.quantity,
-    required this.itemTotal,
-    required this.id,
+    required this.qty,
+    required this.total,
   });
 
-  Item copyWith({
+  CartProduct copyWith({
     String? productid,
-    int? quantity,
-    double? itemTotal,
-    String? id,
-  }) => Item(
-    productid: productid ?? this.productid,
-    quantity: quantity ?? this.quantity,
-    itemTotal: itemTotal ?? this.itemTotal,
-    id: id ?? this.id,
-  );
+    int? qty,
+    String? total,
+  }) =>
+      CartProduct(
+        productid: productid ?? this.productid,
+        qty: qty ?? this.qty,
+        total: total ?? this.total,
+      );
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
-    productid: json["productid"] ?? '',
-    quantity: json["quantity"] ?? 0,
-    itemTotal: json["itemTotal"]?.toDouble() ?? 0.0,
-    id: json["_id"] ?? '',
+  factory CartProduct.fromJson(Map<String, dynamic> json) => CartProduct(
+    productid: json["productid"],
+    qty: json["qty"],
+    total: json["total"],
   );
 
   Map<String, dynamic> toJson() => {
     "productid": productid,
-    "quantity": quantity,
-    "itemTotal": itemTotal,
-    "_id": id,
+    "qty": qty,
+    "total": total,
   };
 }

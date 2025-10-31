@@ -1,4 +1,5 @@
 import 'package:diaries/app/app.dart';
+import 'package:diaries/app/widgets/custom_calender.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,46 +15,70 @@ class OrderHistoyScreen extends StatelessWidget {
     return GetBuilder<HomeController>(
       initState: (state) {
         var controller = Get.find<HomeController>();
-        controller.customerOrderHistoryPagingController = PagingController(
-          firstPageKey: 1,
-        );
         controller.customerOrderHistoryPagingController.addPageRequestListener((
           pageKey,
         ) async {
-          await controller.postOrderHistoryApi(pageKey, date: '');
+          await controller.postOrderHistoryApi(pageKey);
         });
       },
       builder: (controller) {
         return Scaffold(
+          backgroundColor: ColorsValue.appBg,
           appBar: AppBar(
-            title: Text('Order History'),
+            title: const Text('Order History'),
             backgroundColor: ColorsValue.appBg,
             elevation: 0,
             centerTitle: true,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
                 Get.back();
               },
             ),
           ),
-          body: Scaffold(
-            backgroundColor: ColorsValue.appBg,
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
                   CustomTextFormField(
                     hintText: 'Search',
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
-                    onChanged: (value) {
-                      controller.update();
-                    },
-                  ),
+                  controller: controller.searchTextController,
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  onChanged: (value) {
+                    controller.debouncer.run(
+                      () {
+                        Future.sync(
+                          () {
+                            return controller.customerOrderHistoryPagingController.refresh();
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        final selectedDate = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                          ),
+                          builder: (context) => const FilterCalendarSheet(),
+                        );
+                        if (selectedDate != null) {
+                          print('User selected: $selectedDate');
+                          controller.customerOrderHistoryPagingController.refresh();
+                        } else {
+                          print('User canceled the date selection.');
+                          controller.customerOrderHistoryPagingController.refresh();
+                        }
+                      },
                       child: Card(
                         elevation: 0,
                         color: ColorsValue.appBg,
@@ -71,7 +96,7 @@ class OrderHistoyScreen extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
+                              const Text(
                                 'Select Date',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -82,13 +107,14 @@ class OrderHistoyScreen extends StatelessWidget {
                               Dimens.boxWidth5,
                               SvgPicture.asset(
                                 AssetConstants.calender_icon,
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                   Colors.black87,
                                   BlendMode.srcIn,
                                 ),
                               ),
                             ],
                           ),
+                        ),
                         ),
                       ),
                     ),
@@ -206,17 +232,18 @@ class OrderHistoyScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
         );
       },
     );
   }
+
+  void showFilterBottomSheet(BuildContext context) {}
 }
 
 class OrderCard extends StatelessWidget {
   final String name;
   final String orderNo;
-  final List<CustomerOrderHistoryProduct> products;
+  final List<Product> products;
   final int qty;
   final double price;
   final DateTime date;
@@ -427,9 +454,9 @@ class OrderCard extends StatelessWidget {
                                             style: Styles.txtBlackColorW60014,
                                           ),
                                           Text(
-                                            product.designno,
-                                            overflow: TextOverflow.ellipsis,
-                                            softWrap: true,
+                                        product.designno ?? '',
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
                                             style: Styles.txtBlackColorW40014,
                                           ),
                                         ],

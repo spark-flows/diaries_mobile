@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -1131,7 +1132,6 @@ abstract class Utility {
   static Future<void> downloadAndSavePDF(
     String url,
     String folderName,
-    int invoiceNo,
   ) async {
     // late AwesomeNotifications awesomeNotifications = AwesomeNotifications();
     String fileName = url.split('/').last;
@@ -1151,6 +1151,7 @@ abstract class Utility {
       String filePath = '$folderPath/$fileName';
       File pdfFile = File(filePath);
       await pdfFile.writeAsBytes(Uint8List.fromList(response.bodyBytes));
+      await OpenFilex.open(filePath);
 
       // awesomeNotifications.createNotification(
       //   content: NotificationContent(

@@ -28,6 +28,13 @@ abstract class RouteManagement {
       Get.toNamed<void>(Routes.addCustomerScreen);
 
   static void goToCartScreen() => Get.toNamed<void>(Routes.cartScreen);
+
   static void goToOrderHistoryScreen() =>
       Get.toNamed<void>(Routes.orderHistoryScreen);
+
+  static void goToViewPDFScreen({
+    required String customerId,
+    required String orderId,
+  }) =>
+      Get.toNamed<void>(Routes.viewPDFScreen, arguments: [customerId, orderId]);
 }

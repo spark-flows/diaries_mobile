@@ -21,7 +21,7 @@ class ScannerScreen extends StatelessWidget {
               formats: [BarcodeFormat.qrCode],
             ),
             fit: BoxFit.cover,
-            tapToFocus: true,
+            // tapToFocus: true,
             onDetect: (BarcodeCapture capture) {
               controller.getProductApi(
                 srjobno: capture.barcodes.first.rawValue ?? '',

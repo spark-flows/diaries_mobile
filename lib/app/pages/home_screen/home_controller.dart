@@ -1,16 +1,22 @@
+import 'dart:async';
+
 import 'package:diaries/app/app.dart';
 import 'package:diaries/data/helpers/connect_helper.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
+import 'package:diaries/domain/models/pdf_genrate_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class HomeController extends GetxController {
   HomeController(this.bottomBarPresenter);
 
   final HomePresenter bottomBarPresenter;
+
+  final debouncer = Debouncer(milliseconds: 500);
 
   List<HomeModel> homeList = [
     HomeModel(
@@ -145,8 +151,12 @@ class HomeController extends GetxController {
       discountedPrice = 0;
       totalPrice = 0;
       discountController.text = '0';
+      RouteManagement.goToViewPDFScreen(
+        customerId: response?.data.customerid ?? '',
+        orderId: response?.data.orderid ?? '',
+      );
       Get.find<Repository>().clearData(customerId);
-      RouteManagement.goToHomeScreen();
+      // RouteManagement.goToHomeScreen();
       Utility.closeLoader();
       update();
     } else {
@@ -155,81 +165,64 @@ class HomeController extends GetxController {
     }
   }
 
+  GetPdfModelData? pdfModel;
+
+  Future<void> getPDFApi({
+    required String customerId,
+    required String orderId,
+  }) async {
+    var response = await bottomBarPresenter.getPdfApi(
+      isLoading: false,
+      customerId: customerId,
+      orderId: orderId,
+    );
+    pdfModel = null;
+    if (response?.data != null) {
+      pdfModel = response?.data;
+      update();
+    }
+  }
+
+  DateTime focusedDay = DateTime.now();
+  DateTime? selectedDay;
+
   List<CustomerOrderHistoryDoc> orderHistoryDocList = [];
   PagingController<int, CustomerOrderHistoryDoc>
   customerOrderHistoryPagingController = PagingController(firstPageKey: 1);
 
-  // Future<void> postOrderHistoryApi(pageKey, {required String date}) async {
-  //   var response = await bottomBarPresenter.postOrderHistoryApi(
-  //     page: pageKey,
-  //     limit: 50,
-  //     customerId: customerId,
-  //     date: date,
-  //   );
-  //   if (response?.data != null) {
-  //     if (pageKey == 1) {
-  //       orderHistoryDocList.clear();
-  //     }
-  //     orderHistoryDocList = response?.data ?? [];
+  TextEditingController searchTextController = TextEditingController();
 
-  //     final isLastPage = orderHistoryDocList.length < 10;
-  //     if (isLastPage) {
-  //       customerOrderHistoryPagingController.appendLastPage(
-  //         orderHistoryDocList,
-  //       );
-  //     } else {
-  //       var nextPageKey = pageKey + 1;
-  //       customerOrderHistoryPagingController.appendPage(
-  //         orderHistoryDocList,
-  //         nextPageKey,
-  //       );
-  //     }
-  //     update();
-  //   } else {
-  //     Utility.closeLoader();
-  //     Utility.errorMessage(response?.message ?? "");
-  //   }
-  // }
-
-  Future<void> postOrderHistoryApi(int pageKey, {required String date}) async {
+  Future<void> postOrderHistoryApi(int pageKey) async {
+    String formattedDate = selectedDay?.toIso8601String() ?? "";
     try {
-      // Call API
       final response = await bottomBarPresenter.postOrderHistoryApi(
         page: pageKey,
         limit: 50,
         customerId: customerId,
-        date: date,
+        date: formattedDate ?? '',
+        search: searchTextController.text,
       );
 
-      // Check if data is valid
-      if (response != null && response.data.isNotEmpty) {
-        final newItems = response.data;
+      customerOrderHistoryPagingController.itemList ??= [];
+      if (response != null) {
+        final newItems = response.data.docs;
 
-        final isLastPage = newItems.length < 10;
+        final isLastPage = newItems.length < 50;
         if (isLastPage) {
           customerOrderHistoryPagingController.appendLastPage(newItems);
         } else {
-          final nextPageKey = pageKey + 1;
           customerOrderHistoryPagingController.appendPage(
             newItems,
-            nextPageKey,
+            pageKey + 1,
           );
         }
-
-        update();
       } else {
-        // No data or empty list
         customerOrderHistoryPagingController.appendLastPage([]);
-        Utility.errorMessage(response?.message ?? "No order history found");
       }
     } catch (error) {
-      Utility.closeLoader();
       customerOrderHistoryPagingController.error = error;
-      Utility.errorMessage("Failed to fetch order history: $error");
     }
   }
-
-  //// Add new Customer Detail
 
   GlobalKey<FormState> salesKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
@@ -243,6 +236,12 @@ class HomeController extends GetxController {
   TextEditingController discountController = TextEditingController(text: '0');
 
   bool expanded = false;
+
+  /// =========================== view PDF Screen =========================== ///
+
+  final GlobalKey<SfPdfViewerState> pdfViewerKey = GlobalKey();
+  bool isLoading = true;
+  bool hasError = false;
 }
 
 class HomeModel {
@@ -251,4 +250,16 @@ class HomeModel {
   void Function()? onTap;
 
   HomeModel({this.name, this.icon, this.onTap});
+}
+
+class Debouncer {
+  final int milliseconds;
+  Timer? _timer;
+
+  Debouncer({required this.milliseconds});
+
+  run(VoidCallback action) {
+    _timer?.cancel();
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
 }

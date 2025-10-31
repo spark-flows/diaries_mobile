@@ -14,7 +14,7 @@ abstract class Routes {
   static const orderHistoryScreen = _Paths.orderHistoryScreen;
   static const profileScreen = _Paths.profileScreen;
   static const selectOptionsScreen = _Paths.selectOptionsScreen;
-  
+  static const viewPDFScreen = _Paths.viewPDFScreen;
   }
 
 abstract class _Paths {
@@ -31,6 +31,5 @@ abstract class _Paths {
   static const orderHistoryScreen = '/OrderHistoryScreen';
   static const profileScreen = '/profileScreen';
   static const selectOptionsScreen = '/SelectOptionsScreen';
-  
-  
+  static const viewPDFScreen = '/viewPDFScreen';
 }

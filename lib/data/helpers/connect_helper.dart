@@ -156,6 +156,22 @@ class ConnectHelper {
     return response;
   }
 
+  Future<ResponseModel> getPdfApi({
+    bool isLoading = false,
+    required String customerId,
+    required String orderId,
+  }) async {
+    var data = {"customerid": customerId, "orderid": orderId};
+    var response = await apiWrapper.makeRequest(
+      EndPoints.orderPdfApi,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+
   Future<ResponseModel> postCreateCustomer({
     bool isLoading = false,
     required String customerid,
@@ -221,12 +237,14 @@ class ConnectHelper {
     required int page,
     required int limit,
     required String customerid,
+    required String search,
     required String date,
   }) async {
     var data = {
       'page': page,
       'limit': limit,
       'customerid': customerid,
+      'search': search,
       'date': date,
     };
     var response = await apiWrapper.makeRequest(
