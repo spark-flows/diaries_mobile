@@ -25,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
             isCenter: true,
           ),
           body:
-              Utility.profileData != null
+              controller.profileData != null
                   ? ListView(
                     physics: ClampingScrollPhysics(),
                     padding:
@@ -72,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
                           color: ColorsValue.textFieldBg,
                         ),
                         child: Text(
-                          Utility.profileData?.userData?.name ?? "",
+                          controller.profileData?.userData?.name ?? " - ",
                           style: Styles.txtBlackColorW70014.copyWith(
                             fontSize:
                                 Utility.isTablet()
@@ -102,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                           color: ColorsValue.textFieldBg,
                         ),
                         child: Text(
-                          Utility.profileData?.userData?.email ?? "",
+                          controller.profileData?.userData?.email ?? "",
                           style: Styles.txtBlackColorW70014.copyWith(
                             fontSize:
                                 Utility.isTablet()
@@ -132,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
                           color: ColorsValue.textFieldBg,
                         ),
                         child: Text(
-                          Utility.profileData?.userData?.mobile ?? "",
+                          controller.profileData?.userData?.mobile ?? "",
                           style: Styles.txtBlackColorW70014.copyWith(
                             fontSize:
                                 Utility.isTablet()
@@ -162,7 +162,7 @@ class ProfileScreen extends StatelessWidget {
                           color: ColorsValue.textFieldBg,
                         ),
                         child: Text(
-                          "${Utility.profileData?.userData?.branchid?.name}, ${Utility.profileData?.userData?.branchid?.location ?? ""}",
+                          "${controller.profileData?.userData?.name}, ${controller.profileData?.userData?.branchname ?? ""}",
                           style: Styles.txtBlackColorW70014.copyWith(
                             fontSize:
                                 Utility.isTablet()

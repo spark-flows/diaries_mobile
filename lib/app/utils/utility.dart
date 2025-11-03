@@ -22,7 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 abstract class Utility {
   static bool isFilter = false;
-  static ProfileData? profileData;
+  static ProfileModelData? profileData;
 
   static Future<bool> isNetworkAvailable() async {
     var connectivityResult = await Connectivity().checkConnectivity();
@@ -1129,10 +1129,7 @@ abstract class Utility {
   }
 
   //DownloadPdfFile and Save
-  static Future<void> downloadAndSavePDF(
-    String url,
-    String folderName,
-  ) async {
+  static Future<void> downloadAndSavePDF(String url, String folderName) async {
     // late AwesomeNotifications awesomeNotifications = AwesomeNotifications();
     String fileName = url.split('/').last;
 

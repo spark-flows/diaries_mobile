@@ -7,7 +7,7 @@ String profileModelToJson(ProfileModel data) => json.encode(data.toJson());
 
 class ProfileModel {
   String? message;
-  ProfileData? data;
+  ProfileModelData? data;
   int? status;
   bool? isSuccess;
 
@@ -15,7 +15,7 @@ class ProfileModel {
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
     message: json["Message"],
-    data: json["Data"] == null ? null : ProfileData.fromJson(json["Data"]),
+    data: json["Data"] == null ? null : ProfileModelData.fromJson(json["Data"]),
     status: json["Status"],
     isSuccess: json["IsSuccess"],
   );
@@ -28,20 +28,23 @@ class ProfileModel {
   };
 }
 
-class ProfileData {
-  UserData? userData;
+class ProfileModelData {
+  ProfileModelUserData? userData;
   PermissionData? permissionData;
 
-  ProfileData({this.userData, this.permissionData});
+  ProfileModelData({this.userData, this.permissionData});
 
-  factory ProfileData.fromJson(Map<String, dynamic> json) => ProfileData(
-    userData:
-        json["userData"] == null ? null : UserData.fromJson(json["userData"]),
-    permissionData:
-        json["permissionData"] == null
-            ? null
-            : PermissionData.fromJson(json["permissionData"]),
-  );
+  factory ProfileModelData.fromJson(Map<String, dynamic> json) =>
+      ProfileModelData(
+        userData:
+            json["userData"] == null
+                ? null
+                : ProfileModelUserData.fromJson(json["userData"]),
+        permissionData:
+            json["permissionData"] == null
+                ? null
+                : PermissionData.fromJson(json["permissionData"]),
+      );
 
   Map<String, dynamic> toJson() => {
     "userData": userData?.toJson(),
@@ -52,9 +55,10 @@ class ProfileData {
 class PermissionData {
   String? id;
   String? rolename;
-  List<ProfilePermission>? permission;
+  List<ProfileModelPermission>? permission;
   bool? status;
   bool? isDeleted;
+  List<dynamic>? departmentids;
   String? deletedBy;
   String? createdBy;
   String? updatedBy;
@@ -68,6 +72,7 @@ class PermissionData {
     this.permission,
     this.status,
     this.isDeleted,
+    this.departmentids,
     this.deletedBy,
     this.createdBy,
     this.updatedBy,
@@ -82,11 +87,17 @@ class PermissionData {
     permission:
         json["permission"] == null
             ? []
-            : List<ProfilePermission>.from(
-              json["permission"]!.map((x) => ProfilePermission.fromJson(x)),
+            : List<ProfileModelPermission>.from(
+              json["permission"]!.map(
+                (x) => ProfileModelPermission.fromJson(x),
+              ),
             ),
     status: json["status"],
     isDeleted: json["isDeleted"],
+    departmentids:
+        json["departmentids"] == null
+            ? []
+            : List<dynamic>.from(json["departmentids"]!.map((x) => x)),
     deletedBy: json["deletedBy"],
     createdBy: json["createdBy"],
     updatedBy: json["updatedBy"],
@@ -106,6 +117,10 @@ class PermissionData {
             : List<dynamic>.from(permission!.map((x) => x.toJson())),
     "status": status,
     "isDeleted": isDeleted,
+    "departmentids":
+        departmentids == null
+            ? []
+            : List<dynamic>.from(departmentids!.map((x) => x)),
     "deletedBy": deletedBy,
     "createdBy": createdBy,
     "updatedBy": updatedBy,
@@ -115,139 +130,150 @@ class PermissionData {
   };
 }
 
-class ProfilePermission {
+class ProfileModelPermission {
   String? collectionname;
-  bool? all;
   bool? create;
   bool? edit;
   bool? delete;
   bool? view;
-  bool? globalview;
+  bool? status;
   bool? isglobal;
   bool? isown;
   bool? isassign;
-  bool? isbranch;
   String? id;
 
-  ProfilePermission({
+  ProfileModelPermission({
     this.collectionname,
-    this.all,
     this.create,
     this.edit,
     this.delete,
     this.view,
-    this.globalview,
+    this.status,
     this.isglobal,
     this.isown,
     this.isassign,
-    this.isbranch,
     this.id,
   });
 
-  factory ProfilePermission.fromJson(Map<String, dynamic> json) =>
-      ProfilePermission(
+  factory ProfileModelPermission.fromJson(Map<String, dynamic> json) =>
+      ProfileModelPermission(
         collectionname: json["collectionname"],
-        all: json["all"],
         create: json["create"],
         edit: json["edit"],
         delete: json["delete"],
         view: json["view"],
-        globalview: json["globalview"],
+        status: json["status"],
         isglobal: json["isglobal"],
         isown: json["isown"],
         isassign: json["isassign"],
-        isbranch: json["isbranch"],
         id: json["_id"],
       );
 
   Map<String, dynamic> toJson() => {
     "collectionname": collectionname,
-    "all": all,
     "create": create,
     "edit": edit,
     "delete": delete,
     "view": view,
-    "globalview": globalview,
+    "status": status,
     "isglobal": isglobal,
     "isown": isown,
     "isassign": isassign,
-    "isbranch": isbranch,
     "_id": id,
   };
 }
 
-class UserData {
+class ProfileModelUserData {
   String? id;
   String? code;
   String? name;
   String? email;
+  String? countrycode;
   String? mobile;
   String? profilepic;
   bool? isVerified;
   bool? isActive;
-  ProfileRoleid? roleid;
-  Branchid? branchid;
+  String? roleid;
+  String? rolename;
+  String? branchid;
+  String? branchname;
   bool? status;
   String? availability;
+  ProfileModelSalestarget? salestarget;
   dynamic deletedBy;
-  CreatedBy? createdBy;
-  dynamic updatedBy;
-  String? address;
+  dynamic createdBy;
+  ProfileModelUpdatedBy? updatedBy;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
   String? channelid;
+  DateTime? pswdResetAt;
 
-  UserData({
+  ProfileModelUserData({
     this.id,
     this.code,
     this.name,
     this.email,
+    this.countrycode,
     this.mobile,
     this.profilepic,
     this.isVerified,
     this.isActive,
     this.roleid,
+    this.rolename,
     this.branchid,
+    this.branchname,
     this.status,
     this.availability,
+    this.salestarget,
     this.deletedBy,
     this.createdBy,
     this.updatedBy,
-    this.address,
     this.createdAt,
     this.updatedAt,
     this.v,
     this.channelid,
+    this.pswdResetAt,
   });
 
-  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
+  factory ProfileModelUserData.fromJson(
+    Map<String, dynamic> json,
+  ) => ProfileModelUserData(
     id: json["_id"],
     code: json["code"],
     name: json["name"],
     email: json["email"],
+    countrycode: json["countrycode"],
     mobile: json["mobile"],
     profilepic: json["profilepic"],
     isVerified: json["isVerified"],
     isActive: json["isActive"],
-    roleid: json["roleid"] == null ? null : ProfileRoleid.fromJson(json["roleid"]),
-    branchid:
-        json["branchid"] == null ? null : Branchid.fromJson(json["branchid"]),
+    roleid: json["roleid"],
+    rolename: json["rolename"],
+    branchid: json["branchid"],
+    branchname: json["branchname"],
     status: json["status"],
     availability: json["availability"],
-    deletedBy: json["deletedBy"],
-    createdBy:
-        json["createdBy"] == null
+    salestarget:
+        json["salestarget"] == null
             ? null
-            : CreatedBy.fromJson(json["createdBy"]),
-    updatedBy: json["updatedBy"],
-    address: json["address"],
+            : ProfileModelSalestarget.fromJson(json["salestarget"]),
+    deletedBy: json["deletedBy"],
+    createdBy: json["createdBy"],
+    updatedBy:
+        json["updatedBy"] == null
+            ? null
+            : ProfileModelUpdatedBy.fromJson(json["updatedBy"]),
     createdAt:
         json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt:
         json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
     channelid: json["channelid"],
+    pswdResetAt:
+        json["pswd_reset_at"] == null
+            ? null
+            : DateTime.parse(json["pswd_reset_at"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -255,70 +281,64 @@ class UserData {
     "code": code,
     "name": name,
     "email": email,
+    "countrycode": countrycode,
     "mobile": mobile,
     "profilepic": profilepic,
     "isVerified": isVerified,
     "isActive": isActive,
     "roleid": roleid,
-    "branchid": branchid?.toJson(),
+    "rolename": rolename,
+    "branchid": branchid,
+    "branchname": branchname,
     "status": status,
     "availability": availability,
+    "salestarget": salestarget?.toJson(),
     "deletedBy": deletedBy,
-    "createdBy": createdBy?.toJson(),
-    "updatedBy": updatedBy,
-    "address": address,
+    "createdBy": createdBy,
+    "updatedBy": updatedBy?.toJson(),
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
     "channelid": channelid,
+    "pswd_reset_at": pswdResetAt?.toIso8601String(),
   };
 }
 
-class Branchid {
-  String? id;
-  String? name;
-  String? location;
+class ProfileModelSalestarget {
+  int? monthlytarget;
+  int? currentmonthachieved;
 
-  Branchid({this.id, this.name, this.location});
+  ProfileModelSalestarget({this.monthlytarget, this.currentmonthachieved});
 
-  factory Branchid.fromJson(Map<String, dynamic> json) =>
-      Branchid(id: json["_id"], name: json["name"], location: json["location"]);
+  factory ProfileModelSalestarget.fromJson(Map<String, dynamic> json) =>
+      ProfileModelSalestarget(
+        monthlytarget: json["monthlytarget"],
+        currentmonthachieved: json["currentmonthachieved"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
-    "name": name,
-    "location": location,
+    "monthlytarget": monthlytarget,
+    "currentmonthachieved": currentmonthachieved,
   };
 }
 
-class CreatedBy {
+class ProfileModelUpdatedBy {
   String? id;
   String? name;
   String? profilepic;
 
-  CreatedBy({this.id, this.name, this.profilepic});
+  ProfileModelUpdatedBy({this.id, this.name, this.profilepic});
 
-  factory CreatedBy.fromJson(Map<String, dynamic> json) => CreatedBy(
-    id: json["_id"],
-    name: json["name"],
-    profilepic: json["profilepic"],
-  );
+  factory ProfileModelUpdatedBy.fromJson(Map<String, dynamic> json) =>
+      ProfileModelUpdatedBy(
+        id: json["_id"],
+        name: json["name"],
+        profilepic: json["profilepic"],
+      );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "name": name,
     "profilepic": profilepic,
   };
-}
-
-class ProfileRoleid {
-  String? id;
-  String? rolename;
-
-  ProfileRoleid({this.id, this.rolename});
-
-  factory ProfileRoleid.fromJson(Map<String, dynamic> json) =>
-      ProfileRoleid(id: json["_id"], rolename: json["rolename"]);
-
-  Map<String, dynamic> toJson() => {"_id": id, "rolename": rolename};
 }

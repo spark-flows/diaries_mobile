@@ -24,7 +24,7 @@ class SelectOptionsScreen extends StatelessWidget {
             actions: [
               GestureDetector(
                 onTap: () {
-                  // RouteManagement.goToProfileScreen();
+                  RouteManagement.goToProfileScreen();
                 },
                 child: Image.asset(
                   AssetConstants.usera,

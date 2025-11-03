@@ -32,4 +32,5 @@ abstract class _Paths {
   static const profileScreen = '/profileScreen';
   static const selectOptionsScreen = '/SelectOptionsScreen';
   static const viewPDFScreen = '/viewPDFScreen';
+
 }

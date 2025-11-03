@@ -29,7 +29,7 @@ class ProfileController extends GetxController {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "${'log_out'.tr} ?",
+                  "Logout ?",
                   style: Styles.txtBlackColorW70020.copyWith(
                     fontSize:
                         Utility.isTablet() ? Dimens.twentyFour : Dimens.twenty,
@@ -37,7 +37,7 @@ class ProfileController extends GetxController {
                 ),
                 Dimens.boxHeight20,
                 Text(
-                  "logout_des".tr,
+                  "Are You sure you want to logout ?",
                   style: Styles.txtBlackColorW60016.copyWith(
                     fontSize:
                         Utility.isTablet() ? Dimens.twenty : Dimens.sixteen,
@@ -54,7 +54,7 @@ class ProfileController extends GetxController {
                           Get.back();
                         },
                         heightBtn: Dimens.fourtyEight,
-                        text: 'cancle'.tr,
+                        text: 'Cancle',
                         textStyle: Styles.txtBlackColorW70016.copyWith(
                           fontSize:
                               Utility.isTablet()
@@ -70,12 +70,15 @@ class ProfileController extends GetxController {
                       child: CustomButton(
                         onPressed: () {
                           Get.find<DeviceRepository>().deleteAllSecuredValues();
+                          Get.find<DeviceRepository>().deleteBox();
                           RouteManagement.goToAuthScreen();
+                          // Get.find<DeviceRepository>().deleteAllSecuredValues();
+                          // RouteManagement.goToAuthScreen();
                           // postLogoutApi();
                         },
                         isBorder: false,
                         heightBtn: Dimens.fourtyEight,
-                        text: 'log_out'.tr,
+                        text: 'Log Out',
                         textStyle: Styles.whiteColorW60016.copyWith(
                           fontSize:
                               Utility.isTablet()
@@ -95,7 +98,7 @@ class ProfileController extends GetxController {
     );
   }
 
-  ProfileData? profileData = ProfileData();
+  ProfileModelData? profileData = ProfileModelData();
 
   Future<void> getProfileApi() async {
     var response = await profilePreneter.getProfileApi(isLoading: false);

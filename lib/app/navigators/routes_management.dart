@@ -32,6 +32,8 @@ abstract class RouteManagement {
   static void goToOrderHistoryScreen() =>
       Get.toNamed<void>(Routes.orderHistoryScreen);
 
+  static void goToProfileScreen() => Get.toNamed<void>(Routes.profileScreen);
+
   static void goToViewPDFScreen({
     required String customerId,
     required String orderId,

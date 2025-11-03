@@ -3,6 +3,8 @@ import 'package:diaries/app/pages/home_screen/screens/productDetail.dart';
 import 'package:diaries/app/pages/home_screen/screens/show_options.dart';
 import 'package:diaries/app/pages/home_screen/screens/view_pdf.dart';
 import 'package:diaries/app/pages/pages.dart';
+import 'package:diaries/app/pages/profile_screen/profile_bindings.dart';
+import 'package:diaries/app/pages/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 
 import '../pages/home_screen/screens/add_customer.dart';
@@ -107,6 +109,13 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: ViewPDFinFullScreen.new,
       binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<ProfileScreen>(
+      name: _Paths.profileScreen,
+      transitionDuration: transitionDuration,
+      page: ProfileScreen.new,
+      binding: ProfileBindings(),
       transition: Transition.fadeIn,
     ),
   ];
