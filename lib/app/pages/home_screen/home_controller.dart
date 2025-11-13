@@ -29,6 +29,11 @@ class HomeController extends GetxController {
       icon: AssetConstants.order_history_icon,
       onTap: () => RouteManagement.goToOrderHistoryScreen(),
     ),
+    HomeModel(
+      name: 'PD',
+      icon: AssetConstants.pd_main_icon,
+      onTap: () => RouteManagement.goToOrderHistoryScreen(),
+    ),
   ];
 
   int currentIndex = 0;
