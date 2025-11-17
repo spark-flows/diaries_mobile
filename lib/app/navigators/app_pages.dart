@@ -3,6 +3,7 @@ import 'package:diaries/app/pages/home_screen/screens/productDetail.dart';
 import 'package:diaries/app/pages/home_screen/screens/show_options.dart';
 import 'package:diaries/app/pages/home_screen/screens/view_pdf.dart';
 import 'package:diaries/app/pages/pages.dart';
+import 'package:diaries/app/pages/product_development/product_development_page.dart';
 import 'package:diaries/app/pages/profile_screen/profile_bindings.dart';
 import 'package:diaries/app/pages/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
@@ -116,6 +117,14 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: ProfileScreen.new,
       binding: ProfileBindings(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage<PDevelopmentScreen>(
+      name: _Paths.pDevelopment,
+      transitionDuration: transitionDuration,
+      page: PDevelopmentScreen.new,
+      binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),
   ];

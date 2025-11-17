@@ -9,4 +9,5 @@ class EndPoints {
   static String createOrder = 'api/order/add';
   static String orderHistory = 'api/order';
   static String orderPdfApi = 'api/order/pdf';
+  static String productDevelopment = 'api/productdevelopement';
 }

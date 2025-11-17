@@ -32,7 +32,7 @@ class HomeController extends GetxController {
     HomeModel(
       name: 'PD',
       icon: AssetConstants.pd_main_icon,
-      onTap: () => RouteManagement.goToOrderHistoryScreen(),
+      onTap: () => RouteManagement.goToPDevelopmentScreen(),
     ),
   ];
 
@@ -204,7 +204,7 @@ class HomeController extends GetxController {
         page: pageKey,
         limit: 50,
         customerId: customerId,
-        date: formattedDate ?? '',
+        date: formattedDate,
         search: searchTextController.text,
       );
 

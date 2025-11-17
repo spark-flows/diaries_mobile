@@ -1,6 +1,7 @@
 import 'package:diaries/data/data.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
+import 'package:diaries/domain/models/getAllDevelopment_model.dart';
 import 'package:diaries/domain/models/models.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:diaries/domain/models/pdf_genrate_model.dart';

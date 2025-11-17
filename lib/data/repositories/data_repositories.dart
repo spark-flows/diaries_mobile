@@ -187,6 +187,16 @@ class DataRepository extends DomainRepository {
     isLoading: isLoading,
   );
 
+  Future<ResponseModel> postGetAllDevelopmentList({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+  }) async => await connectHelper.postGetAllDevelopmentList(
+    page: page,
+    limit: limit,
+    isLoading: isLoading,
+  );
+
   Future<ResponseModel> getProductApi({
     bool isLoading = false,
     required String srjobno,

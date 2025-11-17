@@ -30,7 +30,7 @@ class AuthScreen extends StatelessWidget {
                         controller.postLoginApi();
                       }
                     },
-                    text: 'Log in',
+                    text: 'Sign in',
                     textStyle: Styles.whiteColorW80018.copyWith(
                       fontSize:
                           Utility.isTablet() ? Dimens.twenty : Dimens.eighteen,
@@ -47,7 +47,7 @@ class AuthScreen extends StatelessWidget {
                       style: Styles.txtGreyColorW40014,
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Log In',
+                          text: 'Sign Up',
                           style: Styles.appColorW70016,
                           recognizer:
                               TapGestureRecognizer()
@@ -173,7 +173,7 @@ class AuthScreen extends StatelessWidget {
                         style: Styles.txtGreyColorW40014,
                         children: <TextSpan>[
                           TextSpan(
-                            text: 'Get help logging in.',
+                            text: 'Get help Signed In',
                             style: Styles.appColorW70016,
                             recognizer:
                                 TapGestureRecognizer()

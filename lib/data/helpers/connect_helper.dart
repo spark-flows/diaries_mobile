@@ -257,6 +257,22 @@ class ConnectHelper {
     return response;
   }
 
+  Future<ResponseModel> postGetAllDevelopmentList({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+  }) async {
+    var data = {'page': page, 'limit': limit};
+    var response = await apiWrapper.makeRequest(
+      EndPoints.productDevelopment,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+
   Future<ResponseModel> postAddToCart({
     bool isLoading = false,
     required String orderId,

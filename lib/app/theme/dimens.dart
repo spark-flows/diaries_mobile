@@ -512,7 +512,7 @@ abstract class Dimens {
     bottom: twenty,
   );
 
-  static EdgeInsets edgeInsets20_10_20_10 = EdgeInsets.only(
+  static EdgeInsets   edgeInsets20_10_20_10 = EdgeInsets.only(
     left: twenty,
     top: ten,
     right: twenty,

@@ -1,5 +1,5 @@
-import 'package:diaries/app/pages/pages.dart';
-import 'package:diaries/domain/domain.dart';
+import 'package:diaries/app/pages/product_development/product_development_page.dart';
+import 'package:diaries/domain/usecases/pDevelopment_usercases.dart';
 import 'package:get/get.dart';
 
 // coverage:ignore-file
@@ -10,7 +10,9 @@ class PDevelopmentBinding extends Bindings {
     Get.lazyPut<PDevelopmentController>(
       () => PDevelopmentController(
         Get.put(
-          PDevelopmentPresenter(Get.put(PDevelopmentUseCases(Get.find()), permanent: true)),
+          PDevelopmentPresenter(
+            Get.put(PDevelopmentUseCases(Get.find()), permanent: true),
+          ),
         ),
       ),
     );

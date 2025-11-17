@@ -5,6 +5,7 @@ import 'package:diaries/device/device.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
+import 'package:diaries/domain/models/getAllDevelopment_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:diaries/domain/models/pdf_genrate_model.dart';
 import 'package:diaries/domain/models/profile_model.dart';
@@ -298,6 +299,26 @@ class Repository {
       );
       var customerOrderHistory = customerOrderHistoryFromJson(response.data);
       return customerOrderHistory;
+    } catch (_) {
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
+  Future<DevelopmentModel?> postGetAllDevelopmentList({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+  }) async {
+    try {
+      var response = await _dataRepository.postGetAllDevelopmentList(
+        page: page,
+        limit: limit,
+        isLoading: isLoading,
+      );
+      var developmentModel = developmentModelFromJson(response.data);
+      return developmentModel;
     } catch (_) {
       Utility.closeDialog();
       UnimplementedError();
