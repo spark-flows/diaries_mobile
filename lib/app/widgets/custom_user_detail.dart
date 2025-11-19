@@ -1,6 +1,6 @@
-import 'package:diaries/app/theme/colors_value.dart';
-import 'package:diaries/app/theme/dimens.dart';
+import 'package:diaries/app/app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class ProjectCard extends StatelessWidget {
@@ -42,23 +42,10 @@ class ProjectCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text(title, style: Styles.color33415570014),
               Row(
                 children: [
-                  Text(
-                    "Status :-",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: ColorsValue.txtBlackColor,
-                    ),
-                  ),
+                  Text("Status :-", style: Styles.txtBlackColorW60014),
                   Dimens.boxWidth10,
                   Container(
                     decoration: BoxDecoration(
@@ -66,41 +53,32 @@ class ProjectCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Padding(
-                      padding: Dimens.edgeInsets10_06_10_06,
-                      child: Text(
-                        status,
-                        style: TextStyle(
-                          color: ColorsValue.colorF8FAFC,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      padding: Dimens.edgeInsets06_04_06_04,
+                      child: Text(status, style: Styles.colorF8FAFCW50010),
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          Dimens.boxHeight6,
           Row(
             children: [
-              const Icon(Icons.calendar_month, size: 18),
-              const SizedBox(width: 5),
+              Icon(
+                Icons.calendar_month,
+                size: 18,
+                color: ColorsValue.txtGreyColor,
+              ),
+              Dimens.boxWidth5,
               Text(
                 DateFormat('dd-MM-yyyy').format(date),
-                style: const TextStyle(fontSize: 15),
+                style: Styles.txtGreyColorW60014,
               ),
             ],
           ),
-
-          const SizedBox(height: 12),
-
-          /// Divider with dots
-          Row(children: const [Expanded(child: Divider(thickness: 1))]),
-
-          const SizedBox(height: 12),
-
-          /// Concept & No. of Design
+          Dimens.boxHeight12,
+          SvgPicture.asset(AssetConstants.custom_divider_icon),
+          Dimens.boxHeight12,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -108,7 +86,7 @@ class ProjectCard extends StatelessWidget {
               _infoText("No. Of Design :", noOfDesign),
             ],
           ),
-          const SizedBox(height: 12),
+          Dimens.boxHeight12,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -119,10 +97,7 @@ class ProjectCard extends StatelessWidget {
               _infoText("End Date :", DateFormat('dd-MM-yyyy').format(endDate)),
             ],
           ),
-
-          const SizedBox(height: 12),
-
-          /// Designer Name
+          Dimens.boxHeight12,
           _infoText("Designer Name :", designerName),
         ],
       ),
@@ -134,20 +109,8 @@ class ProjectCard extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: "$title ",
-        style: const TextStyle(
-          fontSize: 15,
-          color: Colors.black87,
-          fontWeight: FontWeight.w600,
-        ),
-        children: [
-          TextSpan(
-            text: value,
-            style: const TextStyle(
-              fontWeight: FontWeight.w400,
-              color: Colors.black54,
-            ),
-          ),
-        ],
+        style: Styles.txtBlackColorW60014,
+        children: [TextSpan(text: value, style: Styles.txtGreyColorW40014)],
       ),
     );
   }

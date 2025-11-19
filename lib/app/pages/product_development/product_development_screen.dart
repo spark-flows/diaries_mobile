@@ -25,9 +25,18 @@ class PDevelopmentScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           backgroundColor: ColorsValue.textFieldBg,
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              RouteManagement.goToAddConceptScreen();
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(100),
+            ),
+            child: Icon(Icons.add),
+          ),
           appBar: AppBar(
             title: Text(
-              'Product Development',
+              'Concept',
               style: Styles.appColorW50012.copyWith(
                 fontSize: 18,
                 color: ColorsValue.blackColor,
@@ -86,32 +95,28 @@ class PDevelopmentScreen extends StatelessWidget {
                       },
                       child: Card(
                         elevation: 0,
-                        color: ColorsValue.appBg,
+                        color: ColorsValue.greyColor,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          side: BorderSide(color: ColorsValue.textFieldBg),
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            color: ColorsValue.lineColor,
+                            width: 1,
+                          ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 4,
-                            right: 4,
-                            top: 4,
-                            bottom: 4,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text(
-                                'Select Date',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Dimens.boxWidth5,
+                              Text('Filter', style: Styles.color010101W50014),
+                              SizedBox(width: 6),
                               SvgPicture.asset(
-                                AssetConstants.calender_icon,
+                                AssetConstants.filter_icon,
+                                width: 18,
+                                height: 18,
                                 colorFilter: const ColorFilter.mode(
                                   Colors.black87,
                                   BlendMode.srcIn,
@@ -175,13 +180,28 @@ class PDevelopmentScreen extends StatelessWidget {
                                   ),
                                 ),
                             itemBuilder: (context, item, index) {
+                              Color getStatusColor() {
+                                switch (item.status.toString().toLowerCase()) {
+                                  case 'delivered':
+                                    return const Color(0xFF468F73);
+                                  case 'pending':
+                                    return const Color(0xFFEBBD87);
+                                  case 'cancel':
+                                    return const Color(0xFFD80032);
+                                  case 'processing':
+                                    return const Color(0xFF6F42C1);
+                                  default:
+                                    return Colors.grey;
+                                }
+                              }
+
                               return ProjectCard(
-                                title: item.name ?? '',
-                                status: item.status ?? '',
-                                statusColor: Colors.pink,
+                                title: item.name ?? ' - ',
+                                status: item.status ?? ' - ',
+                                statusColor: getStatusColor(),
                                 date: item.startDate ?? DateTime.now(),
-                                conceptNo: item.conceptno ?? '',
-                                noOfDesign: item.designno ?? '',
+                                conceptNo: item.conceptno ?? ' - ',
+                                noOfDesign: item.designno ?? ' - ',
                                 startDate: item.startDate ?? DateTime.now(),
                                 endDate: item.endDate ?? DateTime.now(),
                                 designerName:

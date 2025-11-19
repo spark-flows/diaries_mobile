@@ -23,5 +23,8 @@ abstract class AssetConstants {
   static const String trannsict_icon = "assets/svg/transict_icon.svg";
   static const String order_history_icon = "assets/svg/Order_icon.svg";
   static const String pd_main_icon  = "assets/svg/Vector.svg";
+  static const String custom_divider_icon  = "assets/svg/custom_divider.svg";
+  static const String filter_icon  = "assets/svg/filter_icon.svg";
+  // static const String calender_icon  = "assets/svg/calender_icon.svg";
   static const String ssss = "";
 }

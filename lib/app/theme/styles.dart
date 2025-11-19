@@ -25,6 +25,12 @@ abstract class Styles {
     fontWeight: FontWeight.w700,
   );
 
+  static TextStyle color010101W50014 = GoogleFonts.jost(
+    color: ColorsValue.color010101,
+    fontSize: Dimens.fourteen,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle txtBlackColorW70030 = GoogleFonts.jost(
     color: ColorsValue.txtBlackColor,
     fontSize: Dimens.thirty,
@@ -47,6 +53,12 @@ abstract class Styles {
     color: ColorsValue.txtBlackColor,
     fontSize: Dimens.fourteen,
     fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle colorF8FAFCW50010 = GoogleFonts.jost(
+    color: ColorsValue.colorF8FAFC,
+    fontSize: Dimens.ten,
+    fontWeight: FontWeight.w500,
   );
 
   static TextStyle txtBlackColorW60012 = GoogleFonts.jost(
@@ -275,5 +287,11 @@ abstract class Styles {
     color: ColorsValue.blackColor,
     fontSize: Dimens.fourteen,
     fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle color33415570014 = GoogleFonts.jost(
+    color: ColorsValue.color334155,
+    fontSize: Dimens.fourteen,
+    fontWeight: FontWeight.w700,
   );
 }

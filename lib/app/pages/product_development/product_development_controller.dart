@@ -41,4 +41,32 @@ class PDevelopmentController extends GetxController {
       customerDevelopmentPagingController.error = error;
     }
   }
+
+  /// Add Concept Screen
+  ///
+  GlobalKey<FormState> conceptKey = GlobalKey<FormState>();
+  TextEditingController conceptNameTC = TextEditingController();
+  TextEditingController conceptNoTC = TextEditingController();
+  TextEditingController startDateTc = TextEditingController();
+  TextEditingController endDateTC = TextEditingController();
+  TextEditingController designerNameTC = TextEditingController();
+  TextEditingController categoryTC = TextEditingController();
+  TextEditingController gwTC = TextEditingController();
+  TextEditingController dwTC = TextEditingController();
+  TextEditingController styleTC = TextEditingController();
+  TextEditingController noDeignTC = TextEditingController();
+  TextEditingController remarkTC = TextEditingController();
+  TextEditingController remark2TC = TextEditingController();
+
+  String? selectDesignerName;
+  List<String> designerList = ['Designer 1', 'Designer 2', 'Designer 3'];
+
+  String? selectCategory;
+  List<String> categoryList = ['Category 1', 'Category 2', 'Category 3'];
+
+  String? selectStyle;
+  List<String> styleList = ['Styles 1', 'Styles 2', 'Styles 3'];
+
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
 }

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 import '../pages/home_screen/screens/add_customer.dart';
 import '../pages/home_screen/screens/cart_screen.dart';
+import '../pages/product_development/screens/add_concept.dart';
 
 part 'app_routes.dart';
 
@@ -124,6 +125,14 @@ class AppPages {
       name: _Paths.pDevelopment,
       transitionDuration: transitionDuration,
       page: PDevelopmentScreen.new,
+      binding: PDevelopmentBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage<AddConceptScreen>(
+      name: _Paths.addConceptScreen,
+      transitionDuration: transitionDuration,
+      page: AddConceptScreen.new,
       binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),

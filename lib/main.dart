@@ -77,7 +77,6 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeMode.light,
               getPages: AppPages.pages,
               initialRoute: Routes.splashScreen,
-              // initialRoute: Routes.viewPDFScreen,
               translations: TranslationsFile(),
               navigatorKey: Get.key,
               enableLog: true,
