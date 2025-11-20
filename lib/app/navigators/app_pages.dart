@@ -4,6 +4,7 @@ import 'package:diaries/app/pages/home_screen/screens/show_options.dart';
 import 'package:diaries/app/pages/home_screen/screens/view_pdf.dart';
 import 'package:diaries/app/pages/pages.dart';
 import 'package:diaries/app/pages/product_development/product_development_page.dart';
+import 'package:diaries/app/pages/product_development/screens/view_concept.dart';
 import 'package:diaries/app/pages/profile_screen/profile_bindings.dart';
 import 'package:diaries/app/pages/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import '../pages/home_screen/screens/add_customer.dart';
 import '../pages/home_screen/screens/cart_screen.dart';
 import '../pages/product_development/screens/add_concept.dart';
+import '../pages/product_development/screens/concept_detail.dart';
 
 part 'app_routes.dart';
 
@@ -133,6 +135,21 @@ class AppPages {
       name: _Paths.addConceptScreen,
       transitionDuration: transitionDuration,
       page: AddConceptScreen.new,
+      binding: PDevelopmentBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage<ConceptDetailScreen>(
+      name: _Paths.conceptDetailScreen,
+      transitionDuration: transitionDuration,
+      page: ConceptDetailScreen.new,
+      binding: PDevelopmentBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<ViewConceptScreen>(
+      name: _Paths.ViewConceptScreen,
+      transitionDuration: transitionDuration,
+      page: ViewConceptScreen.new,
       binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),

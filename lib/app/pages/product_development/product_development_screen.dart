@@ -195,17 +195,22 @@ class PDevelopmentScreen extends StatelessWidget {
                                 }
                               }
 
-                              return ProjectCard(
-                                title: item.name ?? ' - ',
-                                status: item.status ?? ' - ',
-                                statusColor: getStatusColor(),
-                                date: item.startDate ?? DateTime.now(),
-                                conceptNo: item.conceptno ?? ' - ',
-                                noOfDesign: item.designno ?? ' - ',
-                                startDate: item.startDate ?? DateTime.now(),
-                                endDate: item.endDate ?? DateTime.now(),
-                                designerName:
-                                    item.designer?.name ?? 'Design Name',
+                              return GestureDetector(
+                                onTap: () {
+                                  RouteManagement.goToConceptDetailScreen();
+                                },
+                                child: ProjectCard(
+                                  title: item.name ?? ' - ',
+                                  status: item.status ?? ' - ',
+                                  statusColor: getStatusColor(),
+                                  date: item.startDate ?? DateTime.now(),
+                                  conceptNo: item.conceptno ?? ' - ',
+                                  noOfDesign: item.designno ?? ' - ',
+                                  startDate: item.startDate ?? DateTime.now(),
+                                  endDate: item.endDate ?? DateTime.now(),
+                                  designerName:
+                                      item.designer?.name ?? 'Design Name',
+                                ),
                               );
                             },
                           ),

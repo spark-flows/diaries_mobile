@@ -12,6 +12,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.isCenter = false,
     this.actions,
     this.style,
+    this.backgroundColor,
     this.paddingBackArrow,
   });
 
@@ -21,12 +22,13 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   bool isCenter;
   List<Widget>? actions;
   TextStyle? style;
+  Color? backgroundColor;
   EdgeInsetsGeometry? paddingBackArrow;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: ColorsValue.whiteColor,
+      backgroundColor: backgroundColor ?? ColorsValue.whiteColor,
       centerTitle: isCenter ? true : false,
       automaticallyImplyLeading: false,
       leadingWidth:

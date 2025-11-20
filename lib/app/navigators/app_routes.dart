@@ -17,7 +17,8 @@ abstract class Routes {
   static const viewPDFScreen = _Paths.viewPDFScreen;
   static const pDevelopment = _Paths.pDevelopment;
   static const addConceptScreen = _Paths.addConceptScreen;
-  
+  static const conceptDetailScreen = _Paths.conceptDetailScreen;  
+  static const viewConceptScreen = _Paths.ViewConceptScreen;  
   }
 
 abstract class _Paths {
@@ -37,6 +38,6 @@ abstract class _Paths {
   static const viewPDFScreen = '/viewPDFScreen';
   static const pDevelopment = '/pDevelopment';
   static const addConceptScreen = '/AddConceptScreen';
-  
-
+  static const conceptDetailScreen = '/ConceptDetailScreen';
+  static const ViewConceptScreen = '/ViewConceptScreen';
 }
