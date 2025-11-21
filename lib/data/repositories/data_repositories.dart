@@ -187,6 +187,14 @@ class DataRepository extends DomainRepository {
     isLoading: isLoading,
   );
 
+  Future<ResponseModel> postGetOneProduction({
+    bool isLoading = false,
+    required String conceptid,
+  }) async => await connectHelper.postGetOneProduction(
+    conceptid: conceptid,
+    isLoading: isLoading,
+  );
+  
   Future<ResponseModel> postGetAllDevelopmentList({
     bool isLoading = false,
     required int page,

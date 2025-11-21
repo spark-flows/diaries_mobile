@@ -273,6 +273,21 @@ class ConnectHelper {
     return response;
   }
 
+  Future<ResponseModel> postGetOneProduction({
+    bool isLoading = false,
+    required String conceptid,
+  }) async {
+    var data = {'conceptid': conceptid};
+    var response = await apiWrapper.makeRequest(
+      EndPoints.getOneProductDevelopment,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+
   Future<ResponseModel> postAddToCart({
     bool isLoading = false,
     required String orderId,

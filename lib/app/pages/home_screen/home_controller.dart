@@ -32,7 +32,7 @@ class HomeController extends GetxController {
     HomeModel(
       name: 'PD',
       icon: AssetConstants.pd_main_icon,
-      onTap: () => RouteManagement.goToPDevelopmentScreen(),
+      onTap: () => RouteManagement.goToMainProductDevelopmentScreen(),
     ),
   ];
 

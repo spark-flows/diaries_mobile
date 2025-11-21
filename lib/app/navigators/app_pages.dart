@@ -3,16 +3,20 @@ import 'package:diaries/app/pages/home_screen/screens/productDetail.dart';
 import 'package:diaries/app/pages/home_screen/screens/show_options.dart';
 import 'package:diaries/app/pages/home_screen/screens/view_pdf.dart';
 import 'package:diaries/app/pages/pages.dart';
+import 'package:diaries/app/pages/product_development/allocated_to_designer/add_allocated_designer.dart';
+import 'package:diaries/app/pages/product_development/allocated_to_designer/allocated_designer_list.dart';
+import 'package:diaries/app/pages/product_development/main_product_development.dart';
 import 'package:diaries/app/pages/product_development/product_development_page.dart';
-import 'package:diaries/app/pages/product_development/screens/view_concept.dart';
+import 'package:diaries/app/pages/product_development/add_concept_screen/view_concept.dart';
+import 'package:diaries/app/pages/product_development/recive_from_designer/recive_designer_list.dart';
 import 'package:diaries/app/pages/profile_screen/profile_bindings.dart';
 import 'package:diaries/app/pages/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 
 import '../pages/home_screen/screens/add_customer.dart';
 import '../pages/home_screen/screens/cart_screen.dart';
-import '../pages/product_development/screens/add_concept.dart';
-import '../pages/product_development/screens/concept_detail.dart';
+import '../pages/product_development/add_concept_screen/add_concept.dart';
+import '../pages/product_development/add_concept_screen/concept_detail.dart';
 
 part 'app_routes.dart';
 
@@ -77,7 +81,6 @@ class AppPages {
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),
-
     GetPage<AddCustomerScreen>(
       name: _Paths.addCustomerScreen,
       transitionDuration: transitionDuration,
@@ -85,7 +88,6 @@ class AppPages {
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),
-
     GetPage<SelectOptionsScreen>(
       name: _Paths.selectOptionsScreen,
       transitionDuration: transitionDuration,
@@ -93,7 +95,6 @@ class AppPages {
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),
-
     GetPage<CartScreen>(
       name: _Paths.cartScreen,
       transitionDuration: transitionDuration,
@@ -122,7 +123,6 @@ class AppPages {
       binding: ProfileBindings(),
       transition: Transition.fadeIn,
     ),
-
     GetPage<PDevelopmentScreen>(
       name: _Paths.pDevelopment,
       transitionDuration: transitionDuration,
@@ -130,7 +130,6 @@ class AppPages {
       binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),
-
     GetPage<AddConceptScreen>(
       name: _Paths.addConceptScreen,
       transitionDuration: transitionDuration,
@@ -138,7 +137,6 @@ class AppPages {
       binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),
-
     GetPage<ConceptDetailScreen>(
       name: _Paths.conceptDetailScreen,
       transitionDuration: transitionDuration,
@@ -147,9 +145,37 @@ class AppPages {
       transition: Transition.fadeIn,
     ),
     GetPage<ViewConceptScreen>(
-      name: _Paths.ViewConceptScreen,
+      name: _Paths.viewConceptScreen,
       transitionDuration: transitionDuration,
       page: ViewConceptScreen.new,
+      binding: PDevelopmentBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<MainProductDevelopment>(
+      name: _Paths.mainProductDevelopment,
+      transitionDuration: transitionDuration,
+      page: MainProductDevelopment.new,
+      binding: PDevelopmentBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<AllocatedDesignerList>(
+      name: _Paths.allocatedDesignerList,
+      transitionDuration: transitionDuration,
+      page: AllocatedDesignerList.new,
+      binding: PDevelopmentBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<AddAllocatedScreen>(
+      name: _Paths.addAllocatedScreen,
+      transitionDuration: transitionDuration,
+      page: AddAllocatedScreen.new,
+      binding: PDevelopmentBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<ReciveDesignerList>(
+      name: _Paths.reciveDesignerList,
+      transitionDuration: transitionDuration,
+      page: ReciveDesignerList.new,
       binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),

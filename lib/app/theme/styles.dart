@@ -294,4 +294,10 @@ abstract class Styles {
     fontSize: Dimens.fourteen,
     fontWeight: FontWeight.w700,
   );
+
+  static TextStyle color969FB340016 = GoogleFonts.jost(
+    color: ColorsValue.color334155,
+    fontSize: Dimens.sixteen,
+    fontWeight: FontWeight.w400,
+  );
 }

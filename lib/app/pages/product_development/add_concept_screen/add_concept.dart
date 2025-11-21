@@ -1,5 +1,6 @@
 import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/product_development/product_development_page.dart';
+import 'package:diaries/app/widgets/custom_upload.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class AddConceptScreen extends StatelessWidget {
             onTapBack: () {
               Get.back();
             },
-            title: "Add Customer",
+            title: "Add Consept",
             isCenter: true,
           ),
           bottomNavigationBar: Padding(
@@ -348,6 +349,9 @@ class AddConceptScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                 ),
                 Dimens.boxHeight20,
+                Text("Reference Image", style: Styles.txtBlackColorW70014),
+                Dimens.boxHeight4,
+                UploadCardButton(title: "Upload File".tr),
               ],
             ),
           ),

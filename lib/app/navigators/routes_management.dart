@@ -42,6 +42,14 @@ abstract class RouteManagement {
 
   static void goToViewConceptScreen() => Get.toNamed<void>(Routes.viewConceptScreen);
 
+  static void goToMainProductDevelopmentScreen() => Get.toNamed<void>(Routes.mainProductDevelopment);
+
+  static void goToAllocatedDesignerListScreen() => Get.toNamed<void>(Routes.allocatedDesignerList);
+
+  static void goToAddAllocatedScreen() => Get.toNamed<void>(Routes.addAllocatedScreen);
+
+  static void goToReciveDesignerListScreen() => Get.toNamed<void>(Routes.reciveDesignerList);
+
   static void goToViewPDFScreen({
     required String customerId,
     required String orderId,

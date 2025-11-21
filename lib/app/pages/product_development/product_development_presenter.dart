@@ -1,4 +1,5 @@
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
+import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:diaries/domain/usecases/pDevelopment_usercases.dart';
 
 class PDevelopmentPresenter {
@@ -14,5 +15,13 @@ class PDevelopmentPresenter {
     isLoading: isLoading,
     page: page,
     limit: limit,
+  );
+
+  Future<GetOneConcept?> postGetOneProduction({
+    bool isLoading = false,
+    required String conceptid,
+  }) async => await pDevelopmentUseCases.postGetOneProduction(
+    conceptid: conceptid,
+    isLoading: isLoading,
   );
 }

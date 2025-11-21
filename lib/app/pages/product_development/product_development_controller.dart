@@ -1,6 +1,9 @@
-import 'package:diaries/app/pages/home_screen/home_page.dart';
+import 'dart:convert';
+
+import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/product_development/product_development_page.dart';
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
+import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -9,6 +12,24 @@ class PDevelopmentController extends GetxController {
   PDevelopmentController(this.pDevelopmentPresenter);
 
   final PDevelopmentPresenter pDevelopmentPresenter;
+
+  List<HomeModel> productDevelopmentList = [
+    HomeModel(
+      name: 'Add Concept',
+      icon: AssetConstants.add_concept_icon,
+      onTap: () => RouteManagement.goToPDevelopmentScreen(),
+    ),
+    HomeModel(
+      name: 'Allocated To Designer',
+      icon: AssetConstants.allocate_designer_icon,
+      onTap: () => RouteManagement.goToAllocatedDesignerListScreen(),
+    ),
+    HomeModel(
+      name: 'Receive Form Designer',
+      icon: AssetConstants.receview_designer_icon,
+      onTap: () => RouteManagement.goToReciveDesignerListScreen(),
+    ),
+  ];
 
   TextEditingController searchTC = TextEditingController();
   final debouncer = Debouncer(milliseconds: 500);
@@ -69,4 +90,27 @@ class PDevelopmentController extends GetxController {
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
+
+  GetOneConcept? getOneConcept;
+
+  Future<void> postGetOneProduction({required String conceptId}) async {
+    var response = await pDevelopmentPresenter.postGetOneProduction(
+      conceptid: conceptId,
+      isLoading: true,
+    );
+    if (response?.status == 200) {
+      if (response?.data == null) {
+        getOneConcept = response!.data;
+      }
+
+      Get.back();
+      Utility.snacBar(
+        jsonDecode(response?.message ?? ""),
+        ColorsValue.appColor,
+      );
+    } else {
+      Utility.errorMessage(jsonDecode(response?.message ?? ""));
+    }
+    update();
+  }
 }

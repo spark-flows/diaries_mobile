@@ -1,5 +1,6 @@
 import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/product_development/product_development_controller.dart';
+import 'package:diaries/app/widgets/custom_full_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -147,14 +148,17 @@ class ViewConceptScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Remark", style: Styles.txtBlackColorW40012),
-                    Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.", style: Styles.txtBlackColorW60012),
+                    Text(
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                      style: Styles.txtBlackColorW60012,
+                    ),
                     Dimens.boxHeight10,
                   ],
                 ),
               ),
               Dimens.boxHeight10,
               Container(
-                padding: Dimens.edgeInsets20,
+                padding: Dimens.edgeInsets10,
                 color: ColorsValue.whiteColor,
                 width: double.maxFinite,
                 child: Column(
@@ -163,27 +167,44 @@ class ViewConceptScreen extends StatelessWidget {
                     Text("Remark", style: Styles.txtBlackColorW40012),
                     Dimens.boxHeight10,
                     SizedBox(
-                      height: 150,
+                      height: 100,
                       child: ListView.builder(
                         physics: AlwaysScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount: 12,
+                        padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Container(
-                            width: 150,
-                            color: Colors.amber,
-                          ),
-                        );
-                      },),
+                          return GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder:
+                                    (_) => ReferenceViewer(
+                                      images: [
+                                        "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
+                                        "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
+                                        "https://www.dreamstime.com/stock-photo-beautiful-view-nature-mountains-near-konigssee-lake-bavaria-germany-blue-sky-clouds-image97444419",
+                                        "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
+                                        "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
+                                        
+                                      ],
+                                    ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Container(width: 100, color: Colors.amber),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Dimens.boxHeight10,
                   ],
                 ),
               ),
-              Dimens.boxHeight10,
             ],
           ),
         );
