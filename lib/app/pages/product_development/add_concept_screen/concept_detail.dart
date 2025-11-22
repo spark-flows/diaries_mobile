@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:diaries/app/navigators/navigators.dart';
 import 'package:diaries/app/pages/product_development/product_development_controller.dart';
 import 'package:diaries/app/theme/theme.dart';
@@ -13,12 +15,17 @@ class ConceptDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PDevelopmentController>(
-      initState: (state) {
+      initState: (state) async {
+        final conceptId = Get.arguments[0];
         final controller = Get.find<PDevelopmentController>();
+        await controller.postGetOneProduction(conceptId: conceptId);
       },
       builder: (controller) {
+        final isAllocatedEditScreen = Get.arguments[1];
+        final isShowEdit = Get.arguments[2];
         return GetBuilder<PDevelopmentController>(
           builder: (controller) {
+            final element = controller.getOneConcept;
             return Scaffold(
               backgroundColor: ColorsValue.textFieldBg,
               appBar: AppBarWidget(
@@ -26,23 +33,29 @@ class ConceptDetailScreen extends StatelessWidget {
                 onTapBack: () {
                   Get.back();
                 },
-                title: " Test User ",
+                title: element?.name ?? " - ",
                 isCenter: true,
                 actions: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: Padding(
-                      padding: Dimens.edgeInsetsRight10,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SvgPicture.asset(AssetConstants.edit_icon),
-                          Dimens.boxWidth5,
-                          Text("Edit"),
-                        ],
-                      ),
-                    ),
-                  ),
+                  isShowEdit
+                      ? GestureDetector(
+                        onTap: () {
+                          isAllocatedEditScreen
+                              ? RouteManagement.goToEditAllocatedScreen()
+                              : RouteManagement.goToAddConceptScreen();
+                        },
+                        child: Padding(
+                          padding: Dimens.edgeInsetsRight10,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SvgPicture.asset(AssetConstants.edit_icon),
+                              Dimens.boxWidth5,
+                              Text("Edit"),
+                            ],
+                          ),
+                        ),
+                      )
+                      : SizedBox.shrink(),
                 ],
               ),
               bottomNavigationBar: Padding(
@@ -133,8 +146,8 @@ class ConceptDetailScreen extends StatelessWidget {
                                   height: Dimens.twelve,
                                 ),
                                 Text(
-                                  Utility.getFormatedTime(
-                                    '2025-11-16T06:32:04.000Z',
+                                  Utility.getFormattedTime(
+                                    element?.createdAt.toString(),
                                     'dd-MM-yyyy',
                                   ),
                                   style: Styles.txtBlackColorW60012,
@@ -144,13 +157,15 @@ class ConceptDetailScreen extends StatelessWidget {
                             Container(
                               padding: Dimens.edgeInsets06_04_06_04,
                               decoration: BoxDecoration(
-                                color: ColorsValue.appColor,
+                                color: controller.getStatusColor(
+                                  element?.status ?? 'Pending',
+                                ),
                                 borderRadius: BorderRadius.circular(
                                   Dimens.four,
                                 ),
                               ),
                               child: Text(
-                                'Pending',
+                                element?.status ?? ' - ',
                                 style: Styles.whiteColorW50010,
                               ),
                             ),
@@ -174,11 +189,16 @@ class ConceptDetailScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("01", style: Styles.txtBlackColorW60012),
-                            Text("10", style: Styles.txtBlackColorW60012),
+                            Text(
+                              element?.conceptno ?? "",
+                              style: Styles.txtBlackColorW60012,
+                            ),
+                            Text(
+                              element?.designno ?? "",
+                              style: Styles.txtBlackColorW60012,
+                            ),
                           ],
                         ),
-
                         Dimens.boxHeight10,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,40 +215,58 @@ class ConceptDetailScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "25-05-2025",
+                              Utility.getFormattedTime(
+                                element?.startDate.toString() ??
+                                    "2025-11-16T06:32:04.000Z",
+                                'dd-MM-yyyy',
+                              ),
+
                               style: Styles.txtBlackColorW60012,
                             ),
                             Text(
-                              '25-05-2025',
+                              Utility.getFormattedTime(
+                                element?.endDate.toString() ??
+                                    "2025-11-16T06:32:04.000Z",
+                                'dd-MM-yyyy',
+                              ),
                               style: Styles.txtBlackColorW60012,
                             ),
                           ],
                         ),
-                        Dimens.boxHeight10,
-                        Text(
-                          "Designer Name",
-                          style: Styles.txtBlackColorW40012,
-                        ),
-                        Dimens.boxHeight6,
-                        Text(
-                          "Designer Name",
-                          style: Styles.txtBlackColorW60012,
-                        ),
-                        Dimens.boxHeight10,
-                        Text("Remark ", style: Styles.txtBlackColorW40012),
-                        Dimens.boxHeight6,
-                        Text(
-                          "Designer Name",
-                          style: Styles.txtBlackColorW60012,
-                        ),
-                        Dimens.boxHeight10,
-                        Text("Remark 02 ", style: Styles.txtBlackColorW40012),
-                        Dimens.boxHeight6,
-                        Text(
-                          "Designer Name",
-                          style: Styles.txtBlackColorW60012,
-                        ),
-                        Dimens.boxHeight10,
+                        if ((element?.designer?.name.isNotEmpty ?? false) &&
+                            element?.designer?.name != "") ...[
+                          Dimens.boxHeight10,
+                          Text(
+                            "Designer Name",
+                            style: Styles.txtBlackColorW40012,
+                          ),
+                          Dimens.boxHeight6,
+                          Text(
+                            element?.designer?.name ?? "",
+                            style: Styles.txtBlackColorW60012,
+                          ),
+                        ],
+                        if ((element?.remark1?.isNotEmpty ?? false) &&
+                            element?.remark1 != "") ...[
+                          Dimens.boxHeight10,
+                          Text("Remark ", style: Styles.txtBlackColorW40012),
+                          Dimens.boxHeight6,
+                          Text(
+                            element?.remark1 ?? " - ",
+                            style: Styles.txtBlackColorW60012,
+                          ),
+                        ],
+                        if ((element?.remark2?.isNotEmpty ?? false) &&
+                            element?.remark2 != "") ...[
+                          Dimens.boxHeight10,
+                          Text("Remark 02 ", style: Styles.txtBlackColorW40012),
+                          Dimens.boxHeight6,
+                          Text(
+                            element?.remark2 ?? " - ",
+                            style: Styles.txtBlackColorW60012,
+                          ),
+                          Dimens.boxHeight10,
+                        ],
                       ],
                     ),
                   ),

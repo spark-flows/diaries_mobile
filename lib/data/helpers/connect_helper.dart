@@ -172,6 +172,52 @@ class ConnectHelper {
     return response;
   }
 
+  Future<ResponseModel> createConcept({
+    bool isLoading = false,
+    required String conceptId,
+    required String name,
+    required String conceptNo,
+    required String startDate,
+    required String endDate,
+    required String designer,
+    required String designNo,
+    required String status,
+    required String remark1,
+    required String category,
+    required String style,
+    required String noDesignMade,
+    required int goldWt,
+    required int diamondWt,
+    required List<String> images,
+  }) async {
+    var data = {
+      "conceptid": conceptNo,
+      "name": name,
+      "conceptno": conceptNo,
+      "startDate": startDate,
+      "endDate": endDate,
+      "designer": designer,
+      "designno": designNo,
+      "status": status,
+      "remark1": remark1,
+      "category": category,
+      "style": style,
+      "nodesign_made": noDesignMade,
+      "gold_wt": goldWt,
+      "diamond_wt": diamondWt,
+      "images": images,
+    };
+
+    var response = await apiWrapper.makeRequest(
+      EndPoints.createConcept,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+
   Future<ResponseModel> postCreateCustomer({
     bool isLoading = false,
     required String customerid,

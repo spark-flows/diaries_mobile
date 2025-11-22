@@ -28,15 +28,6 @@ class AllocatedDesignerList extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           backgroundColor: ColorsValue.textFieldBg,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              RouteManagement.goToAddAllocatedScreen();
-            },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(100),
-            ),
-            child: Icon(Icons.add),
-          ),
           appBar: AppBar(
             title: Text(
               'Allocated To Designer',
@@ -200,7 +191,10 @@ class AllocatedDesignerList extends StatelessWidget {
 
                               return GestureDetector(
                                 onTap: () {
-                                  RouteManagement.goToConceptDetailScreen();
+                                  RouteManagement.goToConceptDetailScreen(
+                                    conceptId: item.id ?? "",
+                                    isAllocated: true,
+                                  );
                                 },
                                 child: ProjectCard(
                                   title: item.name ?? ' - ',

@@ -165,10 +165,10 @@ class AppPages {
       binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),
-    GetPage<AddAllocatedScreen>(
-      name: _Paths.addAllocatedScreen,
+    GetPage<EditAllocatedScreen>(
+      name: _Paths.editAllocatedScreen,
       transitionDuration: transitionDuration,
-      page: AddAllocatedScreen.new,
+      page: EditAllocatedScreen.new,
       binding: PDevelopmentBinding(),
       transition: Transition.fadeIn,
     ),

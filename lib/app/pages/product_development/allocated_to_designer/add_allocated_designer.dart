@@ -4,8 +4,8 @@ import 'package:diaries/app/widgets/custom_upload.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddAllocatedScreen extends StatelessWidget {
-  const AddAllocatedScreen({super.key});
+class EditAllocatedScreen extends StatelessWidget {
+  const EditAllocatedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AddAllocatedScreen extends StatelessWidget {
             onTapBack: () {
               Get.back();
             },
-            title: "Add Allocated Designer",
+            title: "Edit",
             isCenter: true,
           ),
           bottomNavigationBar: Padding(

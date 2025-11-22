@@ -11,4 +11,5 @@ class EndPoints {
   static String orderPdfApi = 'api/order/pdf';
   static String productDevelopment = 'api/productdevelopement';
   static String getOneProductDevelopment = 'api/productdevelopement/getone';
+  static String createConcept = 'api/productdevelopement/create';
 }

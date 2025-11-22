@@ -1,5 +1,6 @@
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
+import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:get/get.dart';
 
 import 'app_pages.dart';
@@ -34,21 +35,29 @@ abstract class RouteManagement {
 
   static void goToProfileScreen() => Get.toNamed<void>(Routes.profileScreen);
 
-  static void goToPDevelopmentScreen() => Get.toNamed<void>(Routes.pDevelopment);
+  static void goToPDevelopmentScreen() =>
+      Get.toNamed<void>(Routes.pDevelopment);
 
-  static void goToAddConceptScreen() => Get.toNamed<void>(Routes.addConceptScreen);
-  
-  static void goToConceptDetailScreen() => Get.toNamed<void>(Routes.conceptDetailScreen);
+  static void goToAddConceptScreen() =>
+      Get.toNamed<void>(Routes.addConceptScreen);
 
-  static void goToViewConceptScreen() => Get.toNamed<void>(Routes.viewConceptScreen);
+  static void goToConceptDetailScreen({required String conceptId,required bool isAllocated,bool isShowEdit = true}) =>
+      Get.toNamed<void>(Routes.conceptDetailScreen, arguments: [conceptId,isAllocated,isShowEdit]);
 
-  static void goToMainProductDevelopmentScreen() => Get.toNamed<void>(Routes.mainProductDevelopment);
+  static void goToViewConceptScreen() =>
+      Get.toNamed<void>(Routes.viewConceptScreen);
 
-  static void goToAllocatedDesignerListScreen() => Get.toNamed<void>(Routes.allocatedDesignerList);
+  static void goToMainProductDevelopmentScreen() =>
+      Get.toNamed<void>(Routes.mainProductDevelopment);
 
-  static void goToAddAllocatedScreen() => Get.toNamed<void>(Routes.addAllocatedScreen);
+  static void goToAllocatedDesignerListScreen() =>
+      Get.toNamed<void>(Routes.allocatedDesignerList);
 
-  static void goToReciveDesignerListScreen() => Get.toNamed<void>(Routes.reciveDesignerList);
+  static void goToEditAllocatedScreen() =>
+      Get.toNamed<void>(Routes.editAllocatedScreen);
+
+  static void goToReciveDesignerListScreen() =>
+      Get.toNamed<void>(Routes.reciveDesignerList);
 
   static void goToViewPDFScreen({
     required String customerId,

@@ -28,18 +28,9 @@ class ReciveDesignerList extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           backgroundColor: ColorsValue.textFieldBg,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              RouteManagement.goToAddAllocatedScreen();
-            },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(100),
-            ),
-            child: Icon(Icons.add),
-          ),
           appBar: AppBar(
             title: Text(
-              'Allocated To Designer',
+              'Recive From Designer',
               style: Styles.appColorW50012.copyWith(
                 fontSize: 18,
                 color: ColorsValue.blackColor,
@@ -200,7 +191,10 @@ class ReciveDesignerList extends StatelessWidget {
 
                               return GestureDetector(
                                 onTap: () {
-                                  RouteManagement.goToConceptDetailScreen();
+                                  RouteManagement.goToConceptDetailScreen(
+                                    conceptId: item.id ?? "",isAllocated: false,
+                                    isShowEdit: false
+                                  );
                                 },
                                 child: ProjectCard(
                                   title: item.name ?? ' - ',

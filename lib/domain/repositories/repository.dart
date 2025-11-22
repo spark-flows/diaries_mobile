@@ -345,6 +345,24 @@ class Repository {
     }
   }
 
+  Future<GetOneConcept?> postGetOneProduction({
+    bool isLoading = false,
+    required String conceptid,
+  }) async {
+    try {
+      var response = await _dataRepository.postGetOneProduction(
+        conceptid: conceptid,
+        isLoading: isLoading,
+      );
+      var getOneConceptModel = getOneConceptFromJson(response.data);
+      return getOneConceptModel;
+    } catch (_) {
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
   Future<PostCreateUser?> postCreateCustomer({
     bool isLoading = false,
     required String customerid,

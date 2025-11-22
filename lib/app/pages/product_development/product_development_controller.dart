@@ -4,6 +4,7 @@ import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/product_development/product_development_page.dart';
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
 import 'package:diaries/domain/models/get_one_concept_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -91,26 +92,40 @@ class PDevelopmentController extends GetxController {
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
 
-  GetOneConcept? getOneConcept;
+  GetOneConceptData? getOneConcept;
 
   Future<void> postGetOneProduction({required String conceptId}) async {
     var response = await pDevelopmentPresenter.postGetOneProduction(
       conceptid: conceptId,
       isLoading: true,
     );
+    getOneConcept = null;
     if (response?.status == 200) {
-      if (response?.data == null) {
-        getOneConcept = response!.data;
+      if (response?.data != null) {
+        getOneConcept = response?.data;
       }
-
-      Get.back();
-      Utility.snacBar(
-        jsonDecode(response?.message ?? ""),
-        ColorsValue.appColor,
+      update();
+      print(
+        'Print GetOneConcept Data and Also this is For Internal testing Purpose =============>>>>>>>>>>>  $getOneConcept',
       );
     } else {
       Utility.errorMessage(jsonDecode(response?.message ?? ""));
     }
     update();
+  }
+
+  Color getStatusColor(String? status) {
+    switch (status.toString().toLowerCase()) {
+      case 'delivered':
+        return const Color(0xFF468F73);
+      case 'pending':
+        return const Color(0xFFEBBD87);
+      case 'cancel':
+        return const Color(0xFFD80032);
+      case 'processing':
+        return const Color(0xFF6F42C1);
+      default:
+        return Colors.grey;
+    }
   }
 }

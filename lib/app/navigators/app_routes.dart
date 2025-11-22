@@ -21,7 +21,7 @@ abstract class Routes {
   static const viewConceptScreen = _Paths.viewConceptScreen;
   static const mainProductDevelopment = _Paths.mainProductDevelopment;
   static const allocatedDesignerList = _Paths.allocatedDesignerList;
-  static const addAllocatedScreen = _Paths.addAllocatedScreen;
+  static const editAllocatedScreen = _Paths.editAllocatedScreen;
   static const reciveDesignerList = _Paths.reciveDesignerList;
   }
 
@@ -46,6 +46,6 @@ abstract class _Paths {
   static const viewConceptScreen = '/ViewConceptScreen';
   static const mainProductDevelopment = '/mainProductDevelopment';
   static const allocatedDesignerList = '/allocatedDesignerList';
-  static const addAllocatedScreen = '/addAllocatedScreen';
+  static const editAllocatedScreen = '/editAllocatedScreen';
   static const reciveDesignerList = '/reciveDesignerList';
 }

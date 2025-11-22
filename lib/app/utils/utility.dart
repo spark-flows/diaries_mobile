@@ -99,11 +99,20 @@ abstract class Utility {
   }
 
   /// createDate '2018-04-10T04:00:00.000Z' To Time
-  static String getFormatedTime(String dateTime, String dateTimeformat) {
-    var date = DateTime.parse(dateTime);
-    var format = DateFormat(dateTimeformat);
-    return format.format(date);
+  static String getFormattedTime(String? dateTime, String dateTimeFormat) {
+  if (dateTime == null || dateTime.trim().isEmpty) {
+    return "--";
   }
+
+  try {
+    final date = DateTime.parse(dateTime);
+    final format = DateFormat(dateTimeFormat);
+    return format.format(date);
+  } catch (e) {
+    return "--";
+  }
+}
+
 
   static String formatToHHMMA(String time) {
     // Parse "5:15PM" into DateTime

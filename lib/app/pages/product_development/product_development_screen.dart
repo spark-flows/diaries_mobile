@@ -197,7 +197,10 @@ class PDevelopmentScreen extends StatelessWidget {
 
                               return GestureDetector(
                                 onTap: () {
-                                  RouteManagement.goToConceptDetailScreen();
+                                  RouteManagement.goToConceptDetailScreen(
+                                    conceptId: item.id ?? "",
+                                    isAllocated: false,
+                                  );
                                 },
                                 child: ProjectCard(
                                   title: item.name ?? ' - ',

@@ -2,7 +2,6 @@ import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/product_development/product_development_controller.dart';
 import 'package:diaries/app/widgets/custom_full_screen_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class ViewConceptScreen extends StatelessWidget {
@@ -11,7 +10,9 @@ class ViewConceptScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PDevelopmentController>(
+      initState: (state) {},
       builder: (controller) {
+        final element = controller.getOneConcept;
         return Scaffold(
           backgroundColor: ColorsValue.textFieldBg,
           appBar: AppBarWidget(
@@ -45,8 +46,14 @@ class ViewConceptScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Flora", style: Styles.txtBlackColorW60012),
-                        Text("10", style: Styles.txtBlackColorW60012),
+                        Text(
+                          element?.name ?? " - ",
+                          style: Styles.txtBlackColorW60012,
+                        ),
+                        Text(
+                          element?.conceptno ?? " - ",
+                          style: Styles.txtBlackColorW60012,
+                        ),
                       ],
                     ),
 
@@ -62,14 +69,29 @@ class ViewConceptScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("25-05-2025", style: Styles.txtBlackColorW60012),
-                        Text('25-05-2025', style: Styles.txtBlackColorW60012),
+                        Text(
+                          Utility.getFormattedTime(
+                            element?.startDate.toString() ?? " - ",
+                            'dd-MM-yyyy',
+                          ),
+                          style: Styles.txtBlackColorW60012,
+                        ),
+                        Text(
+                          Utility.getFormattedTime(
+                            element?.endDate.toString() ?? " - ",
+                            'dd-MM-yyyy',
+                          ),
+                          style: Styles.txtBlackColorW60012,
+                        ),
                       ],
                     ),
                     Dimens.boxHeight10,
                     Text("Designer Name", style: Styles.txtBlackColorW40012),
                     Dimens.boxHeight6,
-                    Text("Designer Name", style: Styles.txtBlackColorW60012),
+                    Text(
+                      element?.designer?.name ?? " - ",
+                      style: Styles.txtBlackColorW60012,
+                    ),
                     Dimens.boxHeight10,
                   ],
                 ),
@@ -96,7 +118,10 @@ class ViewConceptScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Flora", style: Styles.txtBlackColorW60012),
-                        Text("10", style: Styles.txtBlackColorW60012),
+                        Text(
+                          element?.category?.name ?? " - ",
+                          style: Styles.txtBlackColorW60012,
+                        ),
                       ],
                     ),
 
@@ -112,8 +137,14 @@ class ViewConceptScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("25-05-2025", style: Styles.txtBlackColorW60012),
-                        Text('25-05-2025', style: Styles.txtBlackColorW60012),
+                        Text(
+                          element?.goldWt ?? '',
+                          style: Styles.txtBlackColorW60012,
+                        ),
+                        Text(
+                          element?.diamondWt ?? '',
+                          style: Styles.txtBlackColorW60012,
+                        ),
                       ],
                     ),
                     Dimens.boxHeight10,
@@ -131,8 +162,14 @@ class ViewConceptScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("25-05-2025", style: Styles.txtBlackColorW60012),
-                        Text('25-05-2025', style: Styles.txtBlackColorW60012),
+                        Text(
+                          element?.style?.name ?? " ",
+                          style: Styles.txtBlackColorW60012,
+                        ),
+                        Text(
+                          element?.designno ?? '',
+                          style: Styles.txtBlackColorW60012,
+                        ),
                       ],
                     ),
                     Dimens.boxHeight10,
@@ -149,7 +186,7 @@ class ViewConceptScreen extends StatelessWidget {
                   children: [
                     Text("Remark", style: Styles.txtBlackColorW40012),
                     Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                      element?.remark1 ?? ' - ',
                       style: Styles.txtBlackColorW60012,
                     ),
                     Dimens.boxHeight10,
@@ -171,7 +208,7 @@ class ViewConceptScreen extends StatelessWidget {
                       child: ListView.builder(
                         physics: AlwaysScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        itemCount: 12,
+                        itemCount: element?.images?.length,
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
@@ -182,20 +219,21 @@ class ViewConceptScreen extends StatelessWidget {
                                 barrierDismissible: true,
                                 builder:
                                     (_) => ReferenceViewer(
-                                      images: [
-                                        "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
-                                        "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
-                                        "https://www.dreamstime.com/stock-photo-beautiful-view-nature-mountains-near-konigssee-lake-bavaria-germany-blue-sky-clouds-image97444419",
-                                        "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
-                                        "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
-                                        
-                                      ],
+                                      images:
+                                          element?.images ??
+                                          [
+                                            // "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
+                                            // "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
+                                            // "https://www.dreamstime.com/stock-photo-beautiful-view-nature-mountains-near-konigssee-lake-bavaria-germany-blue-sky-clouds-image97444419",
+                                            // "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
+                                            // "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
+                                          ],
                                     ),
                               );
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
-                              child: Container(width: 100, color: Colors.amber),
+                              child: Image.network(element?.images?[index] ?? ""),
                             ),
                           );
                         },

@@ -194,7 +194,43 @@ class DataRepository extends DomainRepository {
     conceptid: conceptid,
     isLoading: isLoading,
   );
-  
+
+  Future<ResponseModel> createConcept({
+    bool isLoading = false,
+    required String conceptId,
+    required String name,
+    required String conceptNo,
+    required String startDate,
+    required String endDate,
+    required String designer,
+    required String designNo,
+    required String status,
+    required String remark1,
+    required String category,
+    required String style,
+    required String noDesignMade,
+    required int goldWt,
+    required int diamondWt,
+    required List<String> images,
+  }) async => await connectHelper.createConcept(
+    isLoading: isLoading,
+    conceptId: conceptNo,
+    name: name,
+    conceptNo: conceptNo,
+    startDate: startDate,
+    endDate: endDate,
+    designer: designer,
+    designNo: designNo,
+    status: status,
+    remark1: remark1,
+    category: category,
+    style: style,
+    noDesignMade: noDesignMade,
+    goldWt: goldWt,
+    diamondWt: diamondWt,
+    images: images,
+  );
+
   Future<ResponseModel> postGetAllDevelopmentList({
     bool isLoading = false,
     required int page,

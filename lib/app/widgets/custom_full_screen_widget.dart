@@ -33,13 +33,10 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          /// ------------------- BLURRED BACKGROUND -------------------
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
             child: Container(color: Colors.black.withOpacity(0.2)),
           ),
-
-          /// ------------------- CENTER POPUP -------------------
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.92,
@@ -51,7 +48,6 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  /// Close button
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
@@ -61,7 +57,7 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
                         child: const Icon(
                           Icons.close,
                           size: 28,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -90,7 +86,6 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
                           itemCount: widget.images.length,
                           itemBuilder: (context, index) {
                             bool active = index == selectedIndex;
-
                             return GestureDetector(
                               onTap: () {
                                 setState(() => selectedIndex = index);
@@ -98,12 +93,13 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  border: active
-                                      ? Border.all(
-                                          color: Colors.white,
-                                          width: 2,
-                                        )
-                                      : null,
+                                  border:
+                                      active
+                                          ? Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          )
+                                          : null,
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
@@ -117,67 +113,29 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
                               ),
                             );
                           },
-                          separatorBuilder: (_, __) => const SizedBox(width: 10),
+                          separatorBuilder:
+                              (_, __) => const SizedBox(width: 10),
                         ),
-
-                        // /// LEFT FADE GRADIENT
-                        // Positioned(
-                        //   left: 0,
-                        //   top: 0,
-                        //   bottom: 0,
-                        //   child: Container(
-                        //     width: 60,
-                        //     decoration: const BoxDecoration(
-                        //       gradient: LinearGradient(
-                        //         begin: Alignment.centerLeft,
-                        //         end: Alignment.centerRight,
-                        //         colors: [
-                        //           Colors.black54,
-                        //           Colors.transparent
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-
-                        // /// RIGHT FADE GRADIENT
-                        // Positioned(
-                        //   right: 0,
-                        //   top: 0,
-                        //   bottom: 0,
-                        //   child: Container(
-                        //     width: 60,
-                        //     decoration: const BoxDecoration(
-                        //       gradient: LinearGradient(
-                        //         begin: Alignment.centerRight,
-                        //         end: Alignment.centerLeft,
-                        //         colors: [
-                        //           Colors.black54,
-                        //           Colors.transparent
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-
-                        /// LEFT Arrow Button
                         Positioned(
                           left: 10,
                           top: 45,
-                          child: _arrowButton(Icons.arrow_back_ios, previousImage),
+                          child: _arrowButton(
+                            Icons.arrow_back_ios,
+                            previousImage,
+                          ),
                         ),
-
-                        /// RIGHT Arrow Button
                         Positioned(
                           right: 10,
                           top: 45,
                           child: _arrowButton(
-                              Icons.arrow_forward_ios, nextImage),
+                            Icons.arrow_forward_ios,
+                            nextImage,
+                          ),
                         ),
                       ],
                     ),
                   ),
-Dimens.boxHeight15,
+                  Dimens.boxHeight15,
                 ],
               ),
             ),
