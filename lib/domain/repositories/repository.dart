@@ -5,6 +5,7 @@ import 'package:diaries/device/device.dart';
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
+import 'package:diaries/domain/models/create_concept.dart';
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
 import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
@@ -345,17 +346,45 @@ class Repository {
     }
   }
 
-  Future<GetOneConcept?> postGetOneProduction({
+  Future<CreateConceptModel?> postcreateConcept({
     bool isLoading = false,
-    required String conceptid,
+    required String conceptId,
+    required String name,
+    required String conceptNo,
+    required String startDate,
+    required String endDate,
+    required String designer,
+    required String designNo,
+    required String status,
+    required String remark1,
+    required String category,
+    required String style,
+    required String noDesignMade,
+    required int goldWt,
+    required int diamondWt,
+    required List<String> images,
   }) async {
     try {
-      var response = await _dataRepository.postGetOneProduction(
-        conceptid: conceptid,
+      var response = await _dataRepository.createConcept(
         isLoading: isLoading,
+        conceptId: conceptNo,
+        name: name,
+        conceptNo: conceptNo,
+        startDate: startDate,
+        endDate: endDate,
+        designer: designer,
+        designNo: designNo,
+        status: status,
+        remark1: remark1,
+        category: category,
+        style: style,
+        noDesignMade: noDesignMade,
+        goldWt: goldWt,
+        diamondWt: diamondWt,
+        images: images,
       );
-      var getOneConceptModel = getOneConceptFromJson(response.data);
-      return getOneConceptModel;
+      var createConceptModel = createConceptModelFromJson(response.data);
+      return createConceptModel;
     } catch (_) {
       Utility.closeDialog();
       UnimplementedError();

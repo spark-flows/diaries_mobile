@@ -23,6 +23,7 @@ class ConceptDetailScreen extends StatelessWidget {
       builder: (controller) {
         final isAllocatedEditScreen = Get.arguments[1];
         final isShowEdit = Get.arguments[2];
+        final conceptId = Get.arguments[0];
         return GetBuilder<PDevelopmentController>(
           builder: (controller) {
             final element = controller.getOneConcept;
@@ -41,7 +42,9 @@ class ConceptDetailScreen extends StatelessWidget {
                         onTap: () {
                           isAllocatedEditScreen
                               ? RouteManagement.goToEditAllocatedScreen()
-                              : RouteManagement.goToAddConceptScreen();
+                              : RouteManagement.goToAddConceptScreen(
+                                conceptId: conceptId,
+                              );
                         },
                         child: Padding(
                           padding: Dimens.edgeInsetsRight10,

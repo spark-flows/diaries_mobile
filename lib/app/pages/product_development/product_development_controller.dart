@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/product_development/product_development_page.dart';
+import 'package:diaries/domain/models/create_concept.dart';
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
 import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -108,6 +108,39 @@ class PDevelopmentController extends GetxController {
       print(
         'Print GetOneConcept Data and Also this is For Internal testing Purpose =============>>>>>>>>>>>  $getOneConcept',
       );
+    } else {
+      Utility.errorMessage(jsonDecode(response?.message ?? ""));
+    }
+    update();
+  }
+
+  CreateConceptModelData? crteateConceptModel;
+
+  Future<void> postcreateConcept({required String conceptId}) async {
+    var response = await pDevelopmentPresenter.postcreateConcept(
+      isLoading: true,
+      conceptId: conceptId,
+      name: conceptNameTC.text,
+      conceptNo: conceptNoTC.text,
+      startDate: "",
+      endDate: "",
+      designer: designerNameTC.text,
+      designNo: noDeignTC.text,
+      status: 'Pending',
+      remark1: remarkTC.text,
+      category: categoryTC.text,
+      style: styleTC.text,
+      noDesignMade: noDeignTC.text,
+      goldWt: int.parse(gwTC.text),
+      diamondWt: int.parse(dwTC.text),
+      images: [],
+    );
+    crteateConceptModel = null;
+    if (response?.status == 200) {
+      if (response?.data != null) {
+        crteateConceptModel = response?.data;
+      }
+      update();
     } else {
       Utility.errorMessage(jsonDecode(response?.message ?? ""));
     }

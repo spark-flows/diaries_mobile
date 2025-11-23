@@ -13,6 +13,7 @@ class AddConceptScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<PDevelopmentController>(
       builder: (controller) {
+        final conceptId = Get.arguments;
         return Scaffold(
           backgroundColor: ColorsValue.appBg,
           appBar: AppBarWidget(
@@ -26,6 +27,7 @@ class AddConceptScreen extends StatelessWidget {
             padding: Dimens.edgeInsets20,
             child: CustomButton(
               onPressed: () {
+                controller.postcreateConcept(conceptId: conceptId);
                 // controller.postCreateCustomer(
                 //   area: controller.areaController.text,
                 //   address: controller.adressController.text,

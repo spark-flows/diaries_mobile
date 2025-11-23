@@ -38,11 +38,17 @@ abstract class RouteManagement {
   static void goToPDevelopmentScreen() =>
       Get.toNamed<void>(Routes.pDevelopment);
 
-  static void goToAddConceptScreen() =>
-      Get.toNamed<void>(Routes.addConceptScreen);
+  static void goToAddConceptScreen({required String conceptId}) =>
+      Get.toNamed<void>(Routes.addConceptScreen, arguments: conceptId);
 
-  static void goToConceptDetailScreen({required String conceptId,required bool isAllocated,bool isShowEdit = true}) =>
-      Get.toNamed<void>(Routes.conceptDetailScreen, arguments: [conceptId,isAllocated,isShowEdit]);
+  static void goToConceptDetailScreen({
+    required String conceptId,
+    required bool isAllocated,
+    bool isShowEdit = true,
+  }) => Get.toNamed<void>(
+    Routes.conceptDetailScreen,
+    arguments: [conceptId, isAllocated, isShowEdit],
+  );
 
   static void goToViewConceptScreen() =>
       Get.toNamed<void>(Routes.viewConceptScreen);
