@@ -364,6 +364,84 @@ class ConnectHelper {
     );
     return response;
   }
+
+  Future<ResponseModel> postGetAllStyle({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async {
+    var data = {
+      "page": page,
+      "limit": limit,
+      "search": search,
+      "status": status,
+    };
+    var response = await apiWrapper.makeRequest(
+      EndPoints.getAllStyle,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+
+  Future<ResponseModel> postGetAllCategory({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async {
+    var data = {
+      "page": page,
+      "limit": limit,
+      "search": search,
+      "status": status,
+    };
+    var response = await apiWrapper.makeRequest(
+      EndPoints.getAllCategory,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+
+  Future<ResponseModel> postGetAllUser({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+    required String roleid,
+    required bool isDeleted,
+    required String sortfield,
+    required int sortoption,
+  }) async {
+    var data = {
+      "page": page,
+      "limit": limit,
+      "search": search,
+      "status": status,
+      "roleid": roleid,
+      "isDeleted": isDeleted,
+      "sortfield": sortfield,
+      "sortoption": sortoption,
+    };
+    var response = await apiWrapper.makeRequest(
+      EndPoints.getAllUser,
+      Request.post,
+      data,
+      isLoading,
+      Utility.commonHeader(),
+    );
+    return response;
+  }
+
 }
 
 class ProducModel {

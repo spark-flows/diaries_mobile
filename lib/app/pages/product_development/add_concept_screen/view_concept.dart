@@ -214,26 +214,23 @@ class ViewConceptScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder:
-                                    (_) => ReferenceViewer(
-                                      images:
-                                          element?.images ??
-                                          [
-                                            // "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
-                                            // "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
-                                            // "https://www.dreamstime.com/stock-photo-beautiful-view-nature-mountains-near-konigssee-lake-bavaria-germany-blue-sky-clouds-image97444419",
-                                            // "https://images.pexels.com/photos/1054655/pexels-photo-1054655.jpeg?_gl=1*1nbj9s1*_ga*MzE1MjI0OTAuMTc2Mzc0NjI2NA..*_ga_8JE65Q40S6*czE3NjM3NDYyNjQkbzEkZzAkdDE3NjM3NDYyNjQkajYwJGwwJGgw",
-                                            // "https://media.istockphoto.com/id/481826798/photo/young-mahout-showing-off-india.jpg?s=2048x2048&w=is&k=20&c=zuAFLsN9W9nqEhNDfBoeSyo8vPbR88FHj2Pwmk2PIpU=",
-                                          ],
-                                    ),
-                              );
+                              if (element?.images != null &&
+                                  element!.images!.isNotEmpty) {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder:
+                                      (_) => ReferenceViewer(
+                                        images: element.images ?? [],
+                                      ),
+                                );
+                              }
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
-                              child: Image.network(element?.images?[index] ?? ""),
+                              child: Image.network(
+                                element?.images?[index] ?? "",
+                              ),
                             ),
                           );
                         },

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:diaries/data/data.dart';
 import 'package:diaries/device/device.dart';
@@ -7,6 +8,9 @@ import 'package:diaries/domain/models/Product_detail_model.dart';
 import 'package:diaries/domain/models/cart_product_add_model.dart';
 import 'package:diaries/domain/models/create_concept.dart';
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
+import 'package:diaries/domain/models/get_al_styles_model.dart';
+import 'package:diaries/domain/models/get_all_categories.dart';
+import 'package:diaries/domain/models/get_all_user_model.dart';
 import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:diaries/domain/models/orderHistory_model.dart';
 import 'package:diaries/domain/models/pdf_genrate_model.dart';
@@ -275,7 +279,86 @@ class Repository {
       var cartProductModel = cartProductUpdateFromJson(response.data);
       return cartProductModel;
     } catch (e) {
-      print('This is The Error >>>>>>>>>>>>>>>>>>>>>>>>>>> $e');
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
+  Future<GetStyleModel?> postGetAllStyle({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async {
+    try {
+      var response = await _dataRepository.postGetAllStyle(
+        page: page,
+        limit: limit,
+        search: search,
+        status: status,
+        isLoading: isLoading,
+      );
+      var getAllStyleModel = getStyleModelFromJson(response.data);
+      return getAllStyleModel;
+    } catch (_) {
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
+  Future<GetCategoryModel?> postGetAllCategory({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async {
+    try {
+      var response = await _dataRepository.postGetAllCategory(
+        page: page,
+        limit: limit,
+        search: search,
+        status: status,
+        isLoading: isLoading,
+      );
+      var getAllCategoryModel = getCategoryModelFromJson(response.data);
+      return getAllCategoryModel;
+    } catch (_) {
+      Utility.closeDialog();
+      UnimplementedError();
+      return null;
+    }
+  }
+
+  Future<GetAllUserListModel?> postGetAllUser({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+    required String roleid,
+    required bool isDeleted,
+    required String sortfield,
+    required int sortoption,
+  }) async {
+    try {
+      var response = await _dataRepository.postGetAllUser(
+        page: page,
+        limit: limit,
+        search: search,
+        status: status,
+        roleid: roleid,
+        isDeleted: isDeleted,
+        sortfield: sortfield,
+        sortoption: sortoption,
+        isLoading: isLoading,
+      );
+      var getAllUserListModel = getAllUserListModelFromJson(response.data);
+      return getAllUserListModel;
+    } catch (_) {
       Utility.closeDialog();
       UnimplementedError();
       return null;
@@ -383,6 +466,10 @@ class Repository {
         diamondWt: diamondWt,
         images: images,
       );
+      final msg = jsonDecode(response.data)["Message"] ?? "";
+      if (response.statusCode == 400) {
+        Utility.snacBar(msg, ColorsValue.appColor);
+      }
       var createConceptModel = createConceptModelFromJson(response.data);
       return createConceptModel;
     } catch (_) {

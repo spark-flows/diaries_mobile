@@ -12,4 +12,8 @@ class EndPoints {
   static String productDevelopment = 'api/productdevelopement';
   static String getOneProductDevelopment = 'api/productdevelopement/getone';
   static String createConcept = 'api/productdevelopement/create';
+
+  static String getAllStyle = 'api/style';
+  static String getAllCategory = 'api/category';
+  static String getAllUser = 'api/users';
 }

@@ -23,7 +23,9 @@ class EditAllocatedScreen extends StatelessWidget {
           bottomNavigationBar: Padding(
             padding: Dimens.edgeInsets20,
             child: CustomButton(
-              onPressed: () {},
+              onPressed: () {
+                controller.postcreateConcept(conceptId: Get.arguments);
+              },
               text: "Save",
               textStyle: Styles.whiteColorW60016,
               backgroundColor: ColorsValue.appColor,
@@ -65,14 +67,14 @@ class EditAllocatedScreen extends StatelessWidget {
                     underline: Container(),
                     isDense: true,
                     isExpanded: true,
-                    value: controller.selectDesignerName,
+                    value: controller.selectStatus,
                     hint: Text('Select Status'),
                     onChanged: (value) {
-                      controller.selectDesignerName = value;
+                      controller.selectStatus = value;
                       controller.update();
                     },
                     items:
-                        controller.designerList
+                        controller.statusList
                             .map(
                               (option) => DropdownMenuItem(
                                 value: option,
@@ -85,7 +87,7 @@ class EditAllocatedScreen extends StatelessWidget {
                 Dimens.boxHeight20,
                 Text("Reference Image", style: Styles.txtBlackColorW70014),
                 Dimens.boxHeight4,
-                UploadCardButton(title: "Upload File".tr),
+                UploadCardButton(title: "Upload File".tr, images: []),
               ],
             ),
           ),

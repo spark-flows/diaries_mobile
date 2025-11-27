@@ -1,6 +1,5 @@
 import 'package:diaries/domain/domain.dart';
 import 'package:diaries/domain/models/Product_detail_model.dart';
-import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:get/get.dart';
 
 import 'app_pages.dart';
@@ -59,8 +58,8 @@ abstract class RouteManagement {
   static void goToAllocatedDesignerListScreen() =>
       Get.toNamed<void>(Routes.allocatedDesignerList);
 
-  static void goToEditAllocatedScreen() =>
-      Get.toNamed<void>(Routes.editAllocatedScreen);
+  static void goToEditAllocatedScreen(String conceptId) =>
+      Get.toNamed<void>(Routes.editAllocatedScreen, arguments: conceptId);
 
   static void goToReciveDesignerListScreen() =>
       Get.toNamed<void>(Routes.reciveDesignerList);

@@ -12,6 +12,12 @@ class AddConceptScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PDevelopmentController>(
+      initState: (state) {
+        final controller = Get.find<PDevelopmentController>();
+        controller.postGetAllCategory(status: '');
+        controller.postGetAllStyle(status: '');
+        controller.postGetAllUser();
+      },
       builder: (controller) {
         final conceptId = Get.arguments;
         return Scaffold(
@@ -27,7 +33,7 @@ class AddConceptScreen extends StatelessWidget {
             padding: Dimens.edgeInsets20,
             child: CustomButton(
               onPressed: () {
-                controller.postcreateConcept(conceptId: conceptId);
+                controller.postcreateConcept(conceptId: '');
                 // controller.postCreateCustomer(
                 //   area: controller.areaController.text,
                 //   address: controller.adressController.text,
@@ -191,7 +197,7 @@ class AddConceptScreen extends StatelessWidget {
                     color: ColorsValue.textFieldBg,
                     borderRadius: BorderRadius.circular(Dimens.ten),
                   ),
-                  child: DropdownButton<String>(
+                  child: DropdownButton<ListModel>(
                     underline: Container(),
                     isDense: true,
                     isExpanded: true,
@@ -206,7 +212,7 @@ class AddConceptScreen extends StatelessWidget {
                             .map(
                               (option) => DropdownMenuItem(
                                 value: option,
-                                child: Text(option),
+                                child: Text(option.name),
                               ),
                             )
                             .toList(),
@@ -223,7 +229,7 @@ class AddConceptScreen extends StatelessWidget {
                     color: ColorsValue.textFieldBg,
                     borderRadius: BorderRadius.circular(Dimens.ten),
                   ),
-                  child: DropdownButton<String>(
+                  child: DropdownButton<ListModel>(
                     underline: Container(),
                     isDense: true,
                     isExpanded: true,
@@ -238,7 +244,7 @@ class AddConceptScreen extends StatelessWidget {
                             .map(
                               (option) => DropdownMenuItem(
                                 value: option,
-                                child: Text(option),
+                                child: Text(option.name),
                               ),
                             )
                             .toList(),
@@ -290,7 +296,7 @@ class AddConceptScreen extends StatelessWidget {
                     color: ColorsValue.textFieldBg,
                     borderRadius: BorderRadius.circular(Dimens.ten),
                   ),
-                  child: DropdownButton<String>(
+                  child: DropdownButton<ListModel>(
                     underline: Container(),
                     isDense: true,
                     isExpanded: true,
@@ -305,7 +311,7 @@ class AddConceptScreen extends StatelessWidget {
                             .map(
                               (option) => DropdownMenuItem(
                                 value: option,
-                                child: Text(option),
+                                child: Text(option.name),
                               ),
                             )
                             .toList(),
@@ -353,7 +359,17 @@ class AddConceptScreen extends StatelessWidget {
                 Dimens.boxHeight20,
                 Text("Reference Image", style: Styles.txtBlackColorW70014),
                 Dimens.boxHeight4,
-                UploadCardButton(title: "Upload File".tr),
+                UploadCardButton(
+                  images: controller.images,
+                  title: "Upload File".tr,
+                  onTap: () async {
+                    List<String> images =
+                        await Utility.pickMultipleImagePaths();
+                    if (images.isNotEmpty) {
+                      controller.images = images;
+                    }
+                  },
+                ),
               ],
             ),
           ),

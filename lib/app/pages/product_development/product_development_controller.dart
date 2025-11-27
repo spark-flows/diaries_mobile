@@ -4,6 +4,9 @@ import 'package:diaries/app/app.dart';
 import 'package:diaries/app/pages/product_development/product_development_page.dart';
 import 'package:diaries/domain/models/create_concept.dart';
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
+import 'package:diaries/domain/models/get_al_styles_model.dart';
+import 'package:diaries/domain/models/get_all_categories.dart';
+import 'package:diaries/domain/models/get_all_user_model.dart';
 import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,17 +83,34 @@ class PDevelopmentController extends GetxController {
   TextEditingController remarkTC = TextEditingController();
   TextEditingController remark2TC = TextEditingController();
 
-  String? selectDesignerName;
-  List<String> designerList = ['Designer 1', 'Designer 2', 'Designer 3'];
+  ListModel? selectDesignerName;
+  List<ListModel> designerList = [
+    ListModel(name: 'Designer 1', nameId: '1'),
+    ListModel(name: 'Designer 2', nameId: '2'),
+    ListModel(name: 'Designer 3', nameId: '3'),
+  ];
 
-  String? selectCategory;
-  List<String> categoryList = ['Category 1', 'Category 2', 'Category 3'];
+  String? selectStatus;
+  List<String> statusList = ['Pending', 'Approved', 'Rejected'];
 
-  String? selectStyle;
-  List<String> styleList = ['Styles 1', 'Styles 2', 'Styles 3'];
+  ListModel? selectCategory;
+  List<ListModel> categoryList = [
+    ListModel(name: 'Category 1', nameId: '1'),
+    ListModel(name: 'Category 2', nameId: '2'),
+    ListModel(name: 'Category 3', nameId: '3'),
+  ];
+
+  ListModel? selectStyle;
+  List<ListModel> styleList = [
+    ListModel(name: 'Styles 1', nameId: '1'),
+    ListModel(name: 'Styles 2', nameId: '2'),
+    ListModel(name: 'Styles 3', nameId: '3'),
+  ];
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
+
+  List<String> images = [];
 
   GetOneConceptData? getOneConcept;
 
@@ -105,9 +125,6 @@ class PDevelopmentController extends GetxController {
         getOneConcept = response?.data;
       }
       update();
-      print(
-        'Print GetOneConcept Data and Also this is For Internal testing Purpose =============>>>>>>>>>>>  $getOneConcept',
-      );
     } else {
       Utility.errorMessage(jsonDecode(response?.message ?? ""));
     }
@@ -116,29 +133,198 @@ class PDevelopmentController extends GetxController {
 
   CreateConceptModelData? crteateConceptModel;
 
+  // Future<void> postcreateConcept({required String conceptId}) async {
+  //   String sDate = startDate.toIso8601String();
+  //   String eDate = endDate.toIso8601String();
+  //   var response = await pDevelopmentPresenter.postcreateConcept(
+  //     isLoading: true,
+  //     conceptId: conceptId,
+  //     name: conceptNameTC.text,
+  //     conceptNo: conceptNoTC.text,
+  //     startDate: sDate,
+  //     endDate: eDate,
+  //     designer: selectDesignerName?.nameId ?? '',
+  //     designNo: noDeignTC.text,
+  //     status: 'Pending',
+  //     remark1: remarkTC.text,
+  //     category: selectCategory?.nameId ?? '',
+  //     style: selectStyle?.nameId ?? "",
+  //     noDesignMade: noDeignTC.text,
+  //     goldWt: int.parse(gwTC.text),
+  //     diamondWt: int.parse(dwTC.text),
+  //     images: images,
+  //   );
+  //   crteateConceptModel = null;
+  //   if (response?.status == 200) {
+  //     if (response?.data != null) {
+  //       crteateConceptModel = response?.data;
+  //     }
+  //     update();
+  //   } else {
+  //     print('This is The Message ${response?.message}');
+  //     Utility.snacBar(
+  //       jsonDecode(response?.message ?? ""),
+  //       ColorsValue.appColor,
+  //     );
+  //   }
+  //   update();
+  // }
+
   Future<void> postcreateConcept({required String conceptId}) async {
+    String sDate = startDate.toIso8601String();
+    String eDate = endDate.toIso8601String();
+
+    Map<String, dynamic> requestBody = {"conceptId": conceptId};
+
+    if (conceptId.isEmpty) {
+      requestBody.addAll({
+        "name": conceptNameTC.text,
+        "conceptNo": conceptNoTC.text,
+        "startDate": sDate,
+        "endDate": eDate,
+        "designer": selectDesignerName?.nameId ?? "",
+        "designNo": noDeignTC.text,
+        "status": "Pending",
+        "remark1": remarkTC.text,
+        "category": selectCategory?.nameId ?? "",
+        "style": selectStyle?.nameId ?? "",
+        "noDesignMade": noDeignTC.text,
+        "goldWt": int.parse(gwTC.text),
+        "diamondWt": int.parse(dwTC.text),
+        "images": images,
+      });
+    } else {
+      requestBody.addAll({
+        "images": images,
+        "noDesignMade": noDeignTC.text,
+        "status": "Pending",
+      });
+    }
     var response = await pDevelopmentPresenter.postcreateConcept(
       isLoading: true,
       conceptId: conceptId,
-      name: conceptNameTC.text,
-      conceptNo: conceptNoTC.text,
-      startDate: "",
-      endDate: "",
-      designer: designerNameTC.text,
-      designNo: noDeignTC.text,
-      status: 'Pending',
-      remark1: remarkTC.text,
-      category: categoryTC.text,
-      style: styleTC.text,
-      noDesignMade: noDeignTC.text,
-      goldWt: int.parse(gwTC.text),
-      diamondWt: int.parse(dwTC.text),
-      images: [],
+      name: requestBody['name'],
+      conceptNo: requestBody['conceptNo'],
+      startDate: requestBody['startDate'],
+      endDate: requestBody['endDate'],
+      designer: requestBody['designer'],
+      designNo: requestBody['designNo'],
+      status: requestBody['status'],
+      remark1: requestBody['remark1'],
+      category: requestBody['category'],
+      style: requestBody['style'],
+      noDesignMade: requestBody['noDesignMade'],
+      goldWt: requestBody['goldWt'],
+      diamondWt: requestBody['diamondWt'],
+      images: requestBody['images'],
     );
     crteateConceptModel = null;
     if (response?.status == 200) {
       if (response?.data != null) {
         crteateConceptModel = response?.data;
+      }
+      update();
+    } else {
+      try {
+        final msg =
+            jsonDecode(response?.message ?? "")["Message"] ??
+            "Something went wrong";
+        Utility.snacBar(msg, ColorsValue.appColor);
+      } catch (e) {
+        Utility.snacBar("Invalid API response", ColorsValue.appColor);
+      }
+    }
+
+    update();
+  }
+
+  GetStyleModel? styleModel;
+
+  Future<void> postGetAllStyle({required String status}) async {
+    var response = await pDevelopmentPresenter.postGetAllStyle(
+      isLoading: true,
+      page: 1,
+      limit: 50,
+      search: '',
+      status: status,
+    );
+    styleList.clear();
+    styleModel = null;
+    if (response?.status == 200) {
+      if (response?.data != null) {
+        styleList =
+            response?.data?.docs!
+                .map((e) => ListModel(name: e.name ?? '', nameId: e.id ?? ''))
+                .toList() ??
+            [];
+      }
+      update();
+    } else {
+      Utility.errorMessage(jsonDecode(response?.message ?? ""));
+    }
+    update();
+  }
+
+  GetCategoryModel? categoryModel;
+
+  Future<void> postGetAllCategory({required String status}) async {
+    var response = await pDevelopmentPresenter.postGetAllCategory(
+      isLoading: true,
+      page: 1,
+      limit: 50,
+      search: '',
+      status: status,
+    );
+    categoryList.clear();
+    categoryModel = null;
+    if (response?.status == 200) {
+      if (response?.data != null) {
+        categoryList =
+            response?.data?.docs!
+                .map((e) => ListModel(name: e.name ?? '', nameId: e.id ?? ''))
+                .toList() ??
+            [];
+      }
+      update();
+    } else {
+      Utility.errorMessage(jsonDecode(response?.message ?? ""));
+    }
+    update();
+  }
+
+  GetAllUserListData? getAllUserListModel;
+
+  Future<void> postGetAllUser() async {
+    var response = await pDevelopmentPresenter.postGetAllUser(
+      isLoading: true,
+      page: 1,
+      limit: 50,
+      search: '',
+      status: '',
+      roleid: '',
+      isDeleted: false,
+      sortfield: 'name',
+      sortoption: 1,
+    );
+    getAllUserListModel = null;
+    designerList.clear();
+    if (response?.status == 200) {
+      if (response?.data != null) {
+        getAllUserListModel = response?.data;
+        final filteredDesigners =
+            response?.data?.docs
+                ?.where(
+                  (user) => (user.rolename ?? "").toLowerCase() == "designer",
+                )
+                .toList() ??
+            [];
+        designerList =
+            filteredDesigners
+                .map(
+                  (user) =>
+                      ListModel(name: user.name ?? '', nameId: user.id ?? ''),
+                )
+                .toList();
       }
       update();
     } else {
@@ -161,4 +347,11 @@ class PDevelopmentController extends GetxController {
         return Colors.grey;
     }
   }
+}
+
+class ListModel {
+  final String name;
+  final String nameId;
+
+  ListModel({required this.name, required this.nameId});
 }

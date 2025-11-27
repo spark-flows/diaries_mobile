@@ -1,5 +1,8 @@
 import 'package:diaries/domain/models/create_concept.dart';
 import 'package:diaries/domain/models/getAllDevelopment_model.dart';
+import 'package:diaries/domain/models/get_al_styles_model.dart';
+import 'package:diaries/domain/models/get_all_categories.dart';
+import 'package:diaries/domain/models/get_all_user_model.dart';
 import 'package:diaries/domain/models/get_one_concept_model.dart';
 import 'package:diaries/domain/usecases/pDevelopment_usercases.dart';
 
@@ -60,5 +63,55 @@ class PDevelopmentPresenter {
     goldWt: goldWt,
     diamondWt: diamondWt,
     images: images,
+  );
+
+  Future<GetStyleModel?> postGetAllStyle({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async => await pDevelopmentUseCases.postGetAllStyle(
+    isLoading: isLoading,
+    page: page,
+    limit: limit,
+    search: search,
+    status: status,
+  );
+
+  Future<GetCategoryModel?> postGetAllCategory({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async => await pDevelopmentUseCases.postGetAllCategory(
+    isLoading: isLoading,
+    page: page,
+    limit: limit,
+    search: search,
+    status: status,
+  );
+
+  Future<GetAllUserListModel?> postGetAllUser({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+    required String roleid,
+    required bool isDeleted,
+    required String sortfield,
+    required int sortoption,
+  }) async => await pDevelopmentUseCases.postGetAllUser(
+    isLoading: isLoading,
+    page: page,
+    limit: limit,
+    search: search,
+    status: status,
+    roleid: roleid,
+    isDeleted: isDeleted,
+    sortfield: sortfield,
+    sortoption: sortoption,
   );
 }

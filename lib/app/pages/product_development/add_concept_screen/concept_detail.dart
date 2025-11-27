@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:diaries/app/navigators/navigators.dart';
 import 'package:diaries/app/pages/product_development/product_development_controller.dart';
 import 'package:diaries/app/theme/theme.dart';
@@ -41,7 +39,9 @@ class ConceptDetailScreen extends StatelessWidget {
                       ? GestureDetector(
                         onTap: () {
                           isAllocatedEditScreen
-                              ? RouteManagement.goToEditAllocatedScreen()
+                              ? RouteManagement.goToEditAllocatedScreen(
+                                conceptId,
+                              )
                               : RouteManagement.goToAddConceptScreen(
                                 conceptId: conceptId,
                               );

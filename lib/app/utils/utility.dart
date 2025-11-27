@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
@@ -38,6 +39,15 @@ abstract class Utility {
     } catch (_) {
       return false;
     }
+  }
+
+  static Future<List<String>> pickMultipleImagePaths() async {
+    final ImagePicker picker = ImagePicker();
+    final List<XFile> files = await picker.pickMultiImage();
+
+    if (files.isEmpty) return [];
+
+    return files.map((file) => file.path).toList();
   }
 
   static bool isTablet() {
@@ -100,19 +110,18 @@ abstract class Utility {
 
   /// createDate '2018-04-10T04:00:00.000Z' To Time
   static String getFormattedTime(String? dateTime, String dateTimeFormat) {
-  if (dateTime == null || dateTime.trim().isEmpty) {
-    return "--";
-  }
+    if (dateTime == null || dateTime.trim().isEmpty) {
+      return "--";
+    }
 
-  try {
-    final date = DateTime.parse(dateTime);
-    final format = DateFormat(dateTimeFormat);
-    return format.format(date);
-  } catch (e) {
-    return "--";
+    try {
+      final date = DateTime.parse(dateTime);
+      final format = DateFormat(dateTimeFormat);
+      return format.format(date);
+    } catch (e) {
+      return "--";
+    }
   }
-}
-
 
   static String formatToHHMMA(String time) {
     // Parse "5:15PM" into DateTime

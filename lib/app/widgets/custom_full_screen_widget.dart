@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:diaries/app/theme/dimens.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +72,28 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
                       width: double.infinity,
                       child: Image.network(
                         widget.images[selectedIndex],
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value:
+                                  loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                            child: Icon(
+                              Icons.error_outline,
+                              color: Colors.white,
+                              size: 48,
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -108,6 +130,35 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
                                     width: 110,
                                     height: 110,
                                     fit: BoxFit.cover,
+                                    loadingBuilder: (
+                                      context,
+                                      child,
+                                      loadingProgress,
+                                    ) {
+                                      if (loadingProgress == null) return child;
+                                      return Container(
+                                        width: 110,
+                                        height: 110,
+                                        color: Colors.grey.withOpacity(0.3),
+                                        child: const Center(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        width: 110,
+                                        height: 110,
+                                        color: Colors.grey.withOpacity(0.3),
+                                        child: const Icon(
+                                          Icons.broken_image,
+                                          color: Colors.white,
+                                          size: 32,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -131,7 +182,7 @@ class _ReferenceViewerState extends State<ReferenceViewer> {
                             Icons.arrow_forward_ios,
                             nextImage,
                           ),
-                        ),
+                        ),  
                       ],
                     ),
                   ),

@@ -171,6 +171,56 @@ class DataRepository extends DomainRepository {
     isLoading: isLoading,
   );
 
+  Future<ResponseModel> postGetAllStyle({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async => await connectHelper.postGetAllStyle(
+    page: page,
+    limit: limit,
+    search: search,
+    status: status,
+    isLoading: isLoading,
+  );
+
+  Future<ResponseModel> postGetAllCategory({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+  }) async => await connectHelper.postGetAllCategory(
+    page: page,
+    limit: limit,
+    search: search,
+    status: status,
+    isLoading: isLoading,
+  );
+
+  Future<ResponseModel> postGetAllUser({
+    bool isLoading = false,
+    required int page,
+    required int limit,
+    required String search,
+    required String status,
+    required String roleid,
+    required bool isDeleted,
+    required String sortfield,
+    required int sortoption,
+  }) async => await connectHelper.postGetAllUser(
+    page: page,
+    limit: limit,
+    search: search,
+    status: status,
+    roleid: roleid,
+    isDeleted: isDeleted,
+    sortfield: sortfield,
+    sortoption: sortoption,
+    isLoading: isLoading,
+  );
+
   Future<ResponseModel> postOrderHistoryApi({
     bool isLoading = false,
     required String customerId,
