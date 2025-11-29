@@ -17,16 +17,87 @@ class AddConceptScreen extends StatelessWidget {
         controller.postGetAllCategory(status: '');
         controller.postGetAllStyle(status: '');
         controller.postGetAllUser();
+        controller.conceptNameTC.clear();
+        controller.conceptNoTC.clear();
+        final isEdit = Get.arguments[1];
+
+        if (isEdit && controller.getOneConcept != null) {
+          controller.conceptNameTC.text =
+              controller.getOneConcept?.name ?? "";
+          controller.conceptNoTC.text =
+              controller.getOneConcept?.conceptno ?? "";
+
+          controller.startDate = DateTime.parse(
+            controller.getOneConcept?.startDate.toString() ?? '',
+          );
+          controller.startDateTc.text =
+              controller.getOneConcept?.startDate.toString() ?? "";
+
+          controller.endDate = DateTime.parse(
+            controller.getOneConcept?.endDate.toString() ?? "",
+          );
+          controller.endDateTC.text =
+              controller.getOneConcept?.endDate.toString() ?? "";
+
+          controller.gwTC.text = controller.getOneConcept?.goldWt ?? "";
+          controller.dwTC.text =
+              controller.getOneConcept?.diamondWt ?? "";
+          controller.noDeignTC.text =
+              controller.getOneConcept?.nodesignMade ?? '';
+          controller.remarkTC.text =
+              controller.getOneConcept?.   remark1 ?? "";
+            controller.remark2TC.text =
+              controller.getOneConcept?.remark2 ?? "";
+
+          // controller.images = controller.getOneConcept?.images ?? [];
+
+          /// SET DROPDOWN SELECTED VALUES
+          // controller.selectDesignerName = ListModel(name: controller.getOneConcept?.designer?.name ?? "", nameId: controller.getOneConcept?.designer?.id ?? "");
+
+          // controller.selectCategory = ListModel(name: controller.getOneConcept?.category?.name ?? "", nameId: controller.getOneConcept?.category?.id ?? "");
+
+          // controller.selectStyle = ListModel(name: controller.getOneConcept?.style?.name ?? "", nameId: controller.getOneConcept?.style?.id ?? "");
+          // controller.styleList.firstWhere(
+          //   (x) => x.nameId == controller.getOneConcept?.style?.id,
+          // );
+
+          // controller.update();
+        } else {
+          // Clear/reset all fields for creating a new concept
+          controller.conceptNameTC.clear();
+          controller.conceptNoTC.clear();
+
+          controller.startDate = DateTime.now();
+          controller.startDateTc.text = '';
+
+          controller.endDate = DateTime.now();
+          controller.endDateTC.text = '';
+
+          controller.gwTC.text = '';
+          controller.dwTC.text = '';
+          controller.noDeignTC.text = '';
+          controller.remarkTC.text = '';
+          controller.remark2TC.text = '';
+
+          controller.images = [];
+
+          controller.selectDesignerName = null;
+          controller.selectCategory = null;
+          controller.selectStyle = null;
+
+          // controller.update();
+        }
       },
       builder: (controller) {
-        final conceptId = Get.arguments;
+        final conceptId = Get.arguments[0];
+        final isEdit = Get.arguments[1];
         return Scaffold(
           backgroundColor: ColorsValue.appBg,
           appBar: AppBarWidget(
             onTapBack: () {
               Get.back();
             },
-            title: "Add Consept",
+            title: !isEdit ? "Add Consept" : 'Edit Concept',
             isCenter: true,
           ),
           bottomNavigationBar: Padding(
@@ -45,7 +116,7 @@ class AddConceptScreen extends StatelessWidget {
                 //   zipCode: controller.zipCodeController.text,
                 // );
               },
-              text: "Save",
+              text: !isEdit ? "Save" : 'Update',
               textStyle: Styles.whiteColorW60016,
               backgroundColor: ColorsValue.appColor,
               heightBtn: Dimens.fifty,

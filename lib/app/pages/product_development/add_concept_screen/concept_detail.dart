@@ -44,6 +44,7 @@ class ConceptDetailScreen extends StatelessWidget {
                               )
                               : RouteManagement.goToAddConceptScreen(
                                 conceptId: conceptId,
+                                isEdit: true,
                               );
                         },
                         child: Padding(

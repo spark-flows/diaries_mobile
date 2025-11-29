@@ -27,7 +27,7 @@ class PDevelopmentScreen extends StatelessWidget {
           backgroundColor: ColorsValue.textFieldBg,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              RouteManagement.goToAddConceptScreen(conceptId: '');
+              RouteManagement.goToAddConceptScreen(conceptId: '',isEdit: false);
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(100),
@@ -200,6 +200,7 @@ class PDevelopmentScreen extends StatelessWidget {
                                   RouteManagement.goToConceptDetailScreen(
                                     conceptId: item.id ?? "",
                                     isAllocated: false,
+                                    isShowEdit:  true
                                   );
                                 },
                                 child: ProjectCard(

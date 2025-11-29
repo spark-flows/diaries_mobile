@@ -76,8 +76,8 @@ class PDevelopmentController extends GetxController {
   TextEditingController endDateTC = TextEditingController();
   TextEditingController designerNameTC = TextEditingController();
   TextEditingController categoryTC = TextEditingController();
-  TextEditingController gwTC = TextEditingController();
-  TextEditingController dwTC = TextEditingController();
+  TextEditingController gwTC = TextEditingController(text: '0');
+  TextEditingController dwTC = TextEditingController(text: '0');
   TextEditingController styleTC = TextEditingController();
   TextEditingController noDeignTC = TextEditingController();
   TextEditingController remarkTC = TextEditingController();
@@ -223,6 +223,7 @@ class PDevelopmentController extends GetxController {
       if (response?.data != null) {
         crteateConceptModel = response?.data;
       }
+      Get.back();
       update();
     } else {
       try {
@@ -231,7 +232,7 @@ class PDevelopmentController extends GetxController {
             "Something went wrong";
         Utility.snacBar(msg, ColorsValue.appColor);
       } catch (e) {
-        Utility.snacBar("Invalid API response", ColorsValue.appColor);
+        Utility.snacBar(e.toString(), ColorsValue.appColor);
       }
     }
 
@@ -284,6 +285,7 @@ class PDevelopmentController extends GetxController {
                 .map((e) => ListModel(name: e.name ?? '', nameId: e.id ?? ''))
                 .toList() ??
             [];
+            
       }
       update();
     } else {

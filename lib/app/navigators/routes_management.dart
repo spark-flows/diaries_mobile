@@ -37,13 +37,13 @@ abstract class RouteManagement {
   static void goToPDevelopmentScreen() =>
       Get.toNamed<void>(Routes.pDevelopment);
 
-  static void goToAddConceptScreen({required String conceptId}) =>
-      Get.toNamed<void>(Routes.addConceptScreen, arguments: conceptId);
+  static void goToAddConceptScreen({required String conceptId, required bool isEdit}) =>
+      Get.toNamed<void>(Routes.addConceptScreen, arguments: [conceptId, isEdit]);
 
   static void goToConceptDetailScreen({
     required String conceptId,
     required bool isAllocated,
-    bool isShowEdit = true,
+    required bool isShowEdit,
   }) => Get.toNamed<void>(
     Routes.conceptDetailScreen,
     arguments: [conceptId, isAllocated, isShowEdit],
