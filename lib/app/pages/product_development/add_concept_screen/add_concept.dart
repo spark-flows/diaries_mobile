@@ -12,16 +12,17 @@ class AddConceptScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PDevelopmentController>(
-      initState: (state) {
+      initState: (state) async{
         final controller = Get.find<PDevelopmentController>();
-        controller.postGetAllCategory(status: '');
-        controller.postGetAllStyle(status: '');
-        controller.postGetAllUser();
+        await controller.postGetAllCategory(status: '');
+        await controller.postGetAllStyle(status: '');
+        await controller.postGetAllUser();
         controller.conceptNameTC.clear();
         controller.conceptNoTC.clear();
         final isEdit = Get.arguments[1];
+        final conceptId = Get.arguments[0];
 
-        if (isEdit && controller.getOneConcept != null) {
+        if (isEdit && conceptId != null) {
           controller.conceptNameTC.text =
               controller.getOneConcept?.name ?? "";
           controller.conceptNoTC.text =
@@ -49,7 +50,7 @@ class AddConceptScreen extends StatelessWidget {
             controller.remark2TC.text =
               controller.getOneConcept?.remark2 ?? "";
 
-          // controller.images = controller.getOneConcept?.images ?? [];
+          controller.images = controller.getOneConcept?.images ?? [];
 
           /// SET DROPDOWN SELECTED VALUES
           // controller.selectDesignerName = ListModel(name: controller.getOneConcept?.designer?.name ?? "", nameId: controller.getOneConcept?.designer?.id ?? "");
@@ -60,32 +61,22 @@ class AddConceptScreen extends StatelessWidget {
           // controller.styleList.firstWhere(
           //   (x) => x.nameId == controller.getOneConcept?.style?.id,
           // );
-
-          // controller.update();
         } else {
-          // Clear/reset all fields for creating a new concept
           controller.conceptNameTC.clear();
           controller.conceptNoTC.clear();
-
           controller.startDate = DateTime.now();
           controller.startDateTc.text = '';
-
           controller.endDate = DateTime.now();
           controller.endDateTC.text = '';
-
           controller.gwTC.text = '';
           controller.dwTC.text = '';
           controller.noDeignTC.text = '';
           controller.remarkTC.text = '';
           controller.remark2TC.text = '';
-
           controller.images = [];
-
           controller.selectDesignerName = null;
           controller.selectCategory = null;
           controller.selectStyle = null;
-
-          // controller.update();
         }
       },
       builder: (controller) {
@@ -104,17 +95,7 @@ class AddConceptScreen extends StatelessWidget {
             padding: Dimens.edgeInsets20,
             child: CustomButton(
               onPressed: () {
-                controller.postcreateConcept(conceptId: '');
-                // controller.postCreateCustomer(
-                //   area: controller.areaController.text,
-                //   address: controller.adressController.text,
-                //   city: controller.cityController.text,
-                //   email: controller.emailController.text,
-                //   mobile: controller.mobileController.text,
-                //   name: controller.nameController.text,
-                //   state: controller.stateController.text,
-                //   zipCode: controller.zipCodeController.text,
-                // );
+                controller.postcreateConcept(conceptId: conceptId);
               },
               text: !isEdit ? "Save" : 'Update',
               textStyle: Styles.whiteColorW60016,

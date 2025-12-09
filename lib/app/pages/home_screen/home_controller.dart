@@ -102,9 +102,14 @@ class HomeController extends GetxController {
       customerId = response?.data.id ?? '';
       RouteManagement.goToCartScreen();
 
+      final finalAmount = localProductList.fold<double>(
+        0,
+            (sum, job) => sum + (job.price * job.quantity),
+      );
+
       await postAddToCart(
         customerId: customerId,
-        finalAmount: totalPrice.toString(),
+        finalAmount: finalAmount.toString(),
         userId: '',
         discount: discountController.text,
         orderId: '',
@@ -247,6 +252,20 @@ class HomeController extends GetxController {
   final GlobalKey<SfPdfViewerState> pdfViewerKey = GlobalKey();
   bool isLoading = true;
   bool hasError = false;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    mobileController.dispose();
+    emailController.dispose();
+    adressController.dispose();
+    stateController.dispose();
+    cityController.dispose();
+    areaController.dispose();
+    zipCodeController.dispose();
+    discountController.dispose();
+    super.dispose();
+  }
 }
 
 class HomeModel {

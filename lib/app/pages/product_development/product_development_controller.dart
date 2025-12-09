@@ -176,7 +176,7 @@ class PDevelopmentController extends GetxController {
 
     Map<String, dynamic> requestBody = {"conceptId": conceptId};
 
-    if (conceptId.isEmpty) {
+    // if (conceptId.isEmpty) {
       requestBody.addAll({
         "name": conceptNameTC.text,
         "conceptNo": conceptNoTC.text,
@@ -193,13 +193,13 @@ class PDevelopmentController extends GetxController {
         "diamondWt": int.parse(dwTC.text),
         "images": images,
       });
-    } else {
-      requestBody.addAll({
-        "images": images,
-        "noDesignMade": noDeignTC.text,
-        "status": "Pending",
-      });
-    }
+    // } else {
+    //   requestBody.addAll({
+    //     "images": images,
+    //     "noDesignMade": noDeignTC.text,
+    //     "status": "Pending",
+    //   });
+    // }
     var response = await pDevelopmentPresenter.postcreateConcept(
       isLoading: true,
       conceptId: conceptId,

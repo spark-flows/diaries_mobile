@@ -193,8 +193,8 @@ class AllocatedDesignerList extends StatelessWidget {
                                 onTap: () {
                                   RouteManagement.goToConceptDetailScreen(
                                     conceptId: item.id ?? "",
+                                    isShowEdit: true,
                                     isAllocated: true,
-                                    isShowEdit: true
                                   );
                                 },
                                 child: ProjectCard(

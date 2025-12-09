@@ -54,6 +54,7 @@ class UploadCardButton extends StatelessWidget {
                         Container(
                           margin: Dimens.edgeInsets6,
                           height: Get.height / 9.2,
+                          width:Get.width / 4,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: images.length,
@@ -69,7 +70,7 @@ class UploadCardButton extends StatelessWidget {
                         Expanded(
                           child: Container(
                             height: Get.height / 9.3,
-                            width: Get.height / 4,
+                            width: Get.height / 3,
                             decoration: BoxDecoration(
                               color: ColorsValue.textFieldBg,
                             ),

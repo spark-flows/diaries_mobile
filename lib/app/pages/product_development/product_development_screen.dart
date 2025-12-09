@@ -199,8 +199,8 @@ class PDevelopmentScreen extends StatelessWidget {
                                 onTap: () {
                                   RouteManagement.goToConceptDetailScreen(
                                     conceptId: item.id ?? "",
+                                    isShowEdit:  true,
                                     isAllocated: false,
-                                    isShowEdit:  true
                                   );
                                 },
                                 child: ProjectCard(

@@ -19,8 +19,8 @@ class ConceptDetailScreen extends StatelessWidget {
         await controller.postGetOneProduction(conceptId: conceptId);
       },
       builder: (controller) {
-        final isAllocatedEditScreen = Get.arguments[1];
-        final isShowEdit = Get.arguments[2];
+        final isAllocatedEditScreen = Get.arguments[1]?? false;
+        final isShowEdit = (Get.arguments.length > 2) ? Get.arguments[2] : true;
         final conceptId = Get.arguments[0];
         return GetBuilder<PDevelopmentController>(
           builder: (controller) {
